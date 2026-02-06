@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buda Hack Security | Write-ups</title>
+
+  <!-- Bootstrap + Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <!-- Your global CSS (untouched) -->
+  <link rel="stylesheet" href="assets/css/main.css">
+
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body{
+      background:#000;
+      color:#e5e7eb;
+      font-family:"Orbitron","Poppins",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      overflow-x:hidden;
+    }
+    a{ text-decoration:none; }
+
+    body::after{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background:repeating-linear-gradient(rgba(255,0,0,0.03) 0px, rgba(0,0,0,0.06) 2px);
+      opacity:.35;
+      z-index:0;
+      mix-blend-mode:overlay;
+    }
+    .scanlines::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background:linear-gradient(to bottom, transparent 50%, rgba(255,0,0,0.06) 51%);
+      background-size:100% 4px;
+      opacity:.4;
+      z-index:0;
+      mix-blend-mode:soft-light;
+    }
+
+    .navbar, header, .container, footer, .modal { position:relative; z-index:10; }
+
+    header.bg-black-red{
+      position:relative;
+      padding:70px 0;
+      text-align:center;
+      border-top:2px solid rgba(255,0,51,.75);
+      border-bottom:2px solid rgba(255,0,51,.75);
+      background:
+        radial-gradient(circle at 30% 10%, rgba(255,0,100,.35) 0%, rgba(0,0,0,1) 55%),
+        radial-gradient(circle at 80% 20%, rgba(255,0,51,.25) 0%, rgba(0,0,0,1) 60%);
+      box-shadow: inset 0 0 65px rgba(255,0,80,.25), 0 0 55px rgba(255,0,80,.18);
+      overflow:hidden;
+    }
+
+    #matrixCanvas{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      display:block;
+      opacity:.25;
+      pointer-events:none;
+      z-index:1;
+    }
+
+    .hero-wrap{ position:relative; z-index:2; padding:0 16px; }
+    .hero-tag{
+      font-family:monospace;
+      letter-spacing:4px;
+      color:#ff8bd3;
+      font-weight:700;
+      font-size:.85rem;
+      opacity:.95;
+    }
+
+    .hero-title{
+      margin:10px 0 6px;
+      font-weight:900;
+      font-size:clamp(2rem, 4vw, 3.0rem);
+      background:linear-gradient(90deg, #ffffff, #ff99ff, #ff0033);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-shadow:0 0 25px rgba(255,0,136,.75);
+      display:inline-block;
+    }
+
+    .hero-sub{
+      color:#ffddea;
+      opacity:.9;
+      font-size:.95rem;
+      margin:0;
+    }
+
+    .text-glitch{ display:inline-block; animation: glitchSkew 1.5s infinite alternate; }
+    @keyframes glitchSkew{
+      0%{transform:skew(0deg);opacity:.98}
+      50%{transform:skew(-3deg);opacity:1}
+      100%{transform:skew(3deg);opacity:.9}
+    }
+    .glitch-rgb{ animation: rgbShift .4s infinite alternate; }
+    @keyframes rgbShift{
+      0%{text-shadow:2px 0 #ff0033, -2px 0 #38bdf8}
+      100%{text-shadow:-2px 0 #ff0033, 2px 0 #38bdf8}
+    }
+
+    .typewriter{
+      overflow:hidden;
+      white-space:nowrap;
+      border-right:2px solid rgba(255,0,51,.9);
+      animation: typing 2.8s steps(44), blink .7s infinite;
+    }
+    @keyframes typing{ from{width:0} to{width:100%} }
+    @keyframes blink{ 50%{border-color:transparent} }
+
+    .filters-wrapper{ margin-top:28px; margin-bottom:10px; }
+    .filters-card{
+      background:#020617;
+      border-radius:14px;
+      border:1px solid #1e293b;
+      box-shadow:0 0 28px #000;
+      padding:16px 18px;
+    }
+    .filters-title{
+      font-size:.85rem;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      color:#9ca3af;
+      margin-bottom:10px;
+    }
+    .filter-group{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+
+    .filter-btn{
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid #334155;
+      background:#020617;
+      color:#e5e7eb;
+      font-size:.8rem;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      transition:.2s;
+      user-select:none;
+    }
+    .filter-btn:hover{
+      border-color:#ff3b8f;
+      box-shadow:0 0 10px rgba(255,0,136,0.30);
+    }
+    .filter-btn.active{
+      background:linear-gradient(90deg, #ff0033, #ff3b8f);
+      color:#020617;
+      border-color:#ff99ff;
+      box-shadow:0 0 16px rgba(255,0,136,0.55);
+      font-weight:800;
+    }
+
+    .search-input{
+      width:100%;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid #4b5563;
+      background:#020617;
+      color:#e5e7eb;
+      font-size:.86rem;
+      outline:none;
+      transition:.2s;
+    }
+    .search-input:focus{
+      border-color:#ff3b8f;
+      box-shadow:0 0 15px rgba(255,0,136,0.35);
+    }
+
+    .writeups-section{ margin-top:26px; margin-bottom:56px; }
+    .section-title{
+      font-size:1.4rem;
+      font-weight:900;
+      margin:18px 0;
+      text-align:center;
+      color:#e5e7eb;
+    }
+
+    .masonry-container{ position:relative; min-height:200px; }
+
+    .wu-item{
+      position:absolute;
+      width:260px;
+      transition:transform .35s ease, opacity .25s ease;
+      opacity:1;
+      will-change:transform, opacity;
+    }
+
+    .wu-item.hide{
+      opacity:0 !important;
+      pointer-events:none !important;
+      transform:translate(-9999px, -9999px) scale(.90) !important;
+    }
+
+    .wu-card{
+      background:#020617;
+      border-radius:14px;
+      padding:16px;
+      border:1px solid rgba(51,65,85,0.9);
+      box-shadow:0 0 18px rgba(15,23,42,0.9), 0 0 25px rgba(15,23,42,0.9);
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .wu-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 0 26px rgba(255,0,136,0.35), 0 0 40px rgba(8,47,73,0.8);
+    }
+
+    .wu-chip-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:6px;
+      gap:8px;
+    }
+    .wu-chip{
+      padding:3px 9px;
+      border-radius:999px;
+      border:1px solid rgba(255,0,51,.55);
+      font-size:.7rem;
+      color:#ffd6f6;
+      background:#020617;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      white-space:nowrap;
+    }
+    .wu-date{
+      font-size:.7rem;
+      color:#9ca3af;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      white-space:nowrap;
+    }
+
+    .difficulty-pill{
+      display:inline-block;
+      padding:3px 9px;
+      border-radius:999px;
+      font-size:.7rem;
+      margin-bottom:8px;
+      font-weight:700;
+      border:1px solid rgba(255,255,255,0.08);
+    }
+    .diff-easy{ background:rgba(34,197,94,0.12); color:#4ade80; }
+    .diff-medium{ background:rgba(250,204,21,0.15); color:#facc15; }
+    .diff-hard{ background:rgba(248,113,113,0.18); color:#f87171; }
+    .diff-crazy{ background:rgba(255,0,136,0.14); color:#ff99ff; }
+
+    .wu-thumb{
+      width:100%;
+      height:130px;
+      border-radius:10px;
+      overflow:hidden;
+      margin-bottom:8px;
+      background:radial-gradient(circle at top, #0f172a, #020617);
+      box-shadow:0 0 18px rgba(15,23,42,1);
+    }
+    .wu-thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter:drop-shadow(0 0 10px rgba(255,0,136,0.35));
+      transition:transform .35s ease;
+    }
+    .wu-card:hover .wu-thumb img{ transform:scale(1.05) translateY(-3px); }
+
+    .wu-title{
+      font-size:.98rem;
+      font-weight:900;
+      color:#e5f1ff;
+      margin-bottom:6px;
+      text-shadow:0 0 12px rgba(255,0,136,0.25);
+    }
+    .wu-desc{
+      font-size:.8rem;
+      color:#cbd5e1;
+      min-height:44px;
+      margin-bottom:10px;
+    }
+    .wu-btn{
+      display:block;
+      width:100%;
+      padding:8px 12px;
+      border-radius:10px;
+      background:linear-gradient(90deg, #ff0033, #ff3b8f);
+      color:#020617;
+      text-align:center;
+      font-size:.85rem;
+      font-weight:900;
+      box-shadow:0 0 15px rgba(255,0,136,0.35), 0 0 30px rgba(8,47,73,0.9);
+      transition:.25s ease;
+    }
+    .wu-btn:hover{
+      background:linear-gradient(90deg, #ff3b8f, #ff99ff);
+      transform:translateY(-2px);
+      box-shadow:0 0 22px rgba(255,0,136,0.55), 0 0 40px rgba(8,47,73,1);
+    }
+
+    @media (max-width: 768px){
+      .masonry-container{ position:static; }
+      .wu-item{ position:static; width:100%; transform:none !important; }
+      .wu-item.hide{ display:none !important; }
+    }
+  </style>
+</head>
+
+<body class="scanlines">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="index.html">
+      <img src="assets/img/la.png" alt="ByteZero Logo" class="navbar-logo me-2">
+      <span>Buda Hack Security</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header class="bg-black-red text-center">
+  <canvas id="matrixCanvas"></canvas>
+  <div class="hero-wrap">
+    <div class="hero-tag">BHS//WRITEUPS</div>
+
+    <h1 class="hero-title text-glitch glitch-rgb typewriter">
+      Welcome to my Write-ups
+    </h1>
+
+    <p class="hero-sub">Machines, labs, and technical reports by <strong>ByteZero</strong>.</p>
+  </div>
+</header>
+
+<div class="container filters-wrapper">
+  <div class="filters-card">
+    <div class="row g-3 align-items-center">
+
+      <div class="col-12 col-md-5">
+        <div class="filters-title">Platform</div>
+        <div class="filter-group" id="platformFilters">
+          <button class="filter-btn active" data-platform="all"><i class="bi bi-globe"></i> All</button>
+          <button class="filter-btn" data-platform="tryhackme"><i class="bi bi-flag"></i> TryHackMe</button>
+          <button class="filter-btn" data-platform="hackthebox"><i class="bi bi-bug"></i> HackTheBox</button>
+          <button class="filter-btn" data-platform="dockerlabs"><i class="bi bi-box"></i> DockerLabs</button>
+          <button class="filter-btn" data-platform="picoctf"><i class="bi bi-controller"></i> picoCTF</button>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="filters-title">Difficulty</div>
+        <div class="filter-group" id="diffFilters">
+          <button class="filter-btn active" data-diff="all">All</button>
+          <button class="filter-btn" data-diff="easy">Easy</button>
+          <button class="filter-btn" data-diff="medium">Medium</button>
+          <button class="filter-btn" data-diff="hard">Hard</button>
+          <button class="filter-btn" data-diff="crazy">Insane</button>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-3">
+        <div class="filters-title">Search</div>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search by title or description...">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="container writeups-section">
+  <h2 class="section-title">
+    <i class="bi bi-terminal-fill"></i> Uploaded Write-ups
+  </h2>
+
+  <div id="masonryContainer" class="masonry-container"></div>
+
+  <p id="emptyMsg" class="text-center text-secondary" style="display:none;">No write-ups yet.</p>
+</div>
+
+<footer class="footer text-center text-light py-4">
+  <div class="container">
+    <h5 class="footer-title">Buda Hack Security</h5>
+    <p class="footer-subtitle">Pentest explorations, labs & write-ups</p>
+
+    <div class="footer-social my-3">
+      <a href="https://github.com/buda-sys/buda-sys" class="social-link">
+        <i class="bi bi-github"></i>
+      </a>
+    
+      </a>
+      <a href="https://discord.gg/mqXsQYN3" class="social-link">
+        <i class="bi bi-discord"></i>
+      </a>
+      <a href="contact.html" class="social-link">
+        <i class="bi bi-envelope"></i>
+      </a>
+
+      <!-- DISCLAIMER -->
+      <a href="disclaimer.html" class="social-link" title="Legal Disclaimer & Responsible Use">
+        <i class="bi bi-shield-check"></i>
+      </a>
+    </div>
+
+    <p class="footer-copy mt-3 mb-0">
+      © 2025 <span class="text-success">Buda Hack Security</span> — All rights reserved.
+    </p>
+  </div>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+/* MATRIX */
+(function() {
+  const canvas = document.getElementById("matrixCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+
+  function resizeMatrix() {
+    canvas.width = window.innerWidth;
+    canvas.height = canvas.parentElement.offsetHeight;
+  }
+  resizeMatrix();
+  window.addEventListener("resize", resizeMatrix);
+
+  const letters = "01ZXCVBNMASDFGHJKLQWERTY!#$%&<>[]{}";
+  const fontSize = 14;
+  let columns = Math.floor(window.innerWidth / fontSize);
+  let drops = Array(columns).fill(1);
+
+  function drawMatrix() {
+    if (canvas.width !== window.innerWidth) {
+      resizeMatrix();
+      columns = Math.floor(canvas.width / fontSize);
+      drops = Array(columns).fill(1);
+    }
+
+    ctx.fillStyle = "rgba(0,0,0,0.08)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#ff0033";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = letters[Math.floor(Math.random() * letters.length)];
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+
+      ctx.fillText(text, x, y);
+
+      if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+    requestAnimationFrame(drawMatrix);
+  }
+  drawMatrix();
+})();
+
+/* HELPERS */
+function plataformaSlug(category) {
+  const c = (category || "").toLowerCase().trim();
+  if (c.includes("try")) return "tryhackme";
+  if (c.includes("hack")) return "hackthebox";
+  if (c.includes("docker")) return "dockerlabs";
+  if (c.includes("pico")) return "picoctf";
+  return c || "other";
+}
+function dificultadSlug(diff) {
+  const d = (diff || "").toLowerCase().trim();
+  const map = {
+    "easy":"easy",
+    "medium":"medium",
+    "hard":"hard",
+    "insane":"crazy",
+    "crazy":"crazy",
+
+    /* legacy spanish inputs (in case your JSON has them) */
+    "fácil":"easy","facil":"easy",
+    "medio":"medium","mediana":"medium","media":"medium",
+    "difícil":"hard","dificil":"hard",
+    "loco":"crazy"
+  };
+  return map[d] || d || "";
+}
+function diffClass(slug){
+  switch(slug){
+    case "easy": return "diff-easy";
+    case "medium": return "diff-medium";
+    case "hard": return "diff-hard";
+    case "crazy": return "diff-crazy";
+    default: return "";
+  }
+}
+function escapeHtml(s){
+  return (s ?? "").toString()
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+/* LOAD JSON + RENDER */
+async function loadWriteups(){
+  const container = document.getElementById("masonryContainer");
+  const emptyMsg = document.getElementById("emptyMsg");
+  container.innerHTML = "";
+
+  let data = [];
+  try{
+    const res = await fetch("data/writeups.json", { cache: "no-store" });
+    if(!res.ok) throw new Error("Unable to load data/writeups.json");
+    data = await res.json();
+  }catch(e){
+    console.error("JSON ERROR:", e);
+    emptyMsg.style.display = "block";
+    emptyMsg.textContent = "Could not load data/writeups.json (check path and filename).";
+    return [];
+  }
+
+  if(!Array.isArray(data) || data.length === 0){
+    emptyMsg.style.display = "block";
+    emptyMsg.textContent = "No write-ups yet.";
+    return [];
+  }
+  emptyMsg.style.display = "none";
+
+  const frag = document.createDocumentFragment();
+
+  data.forEach(doc => {
+    const category = doc.category || "Write-up";
+    const platform = plataformaSlug(category);
+
+    const diffSlug = dificultadSlug(doc.difficulty || "");
+    const thumb = doc.thumb || "assets/img/autothumbs/default.png";
+
+    const title = escapeHtml(doc.title || "Untitled");
+    const desc = escapeHtml((doc.description || "").slice(0, 160));
+    const dateTxt = escapeHtml(doc.date || "");
+
+    // ✅ VIEW button
+    const link = `ver.html?doc=${encodeURIComponent(doc.slug || "")}`;
+
+    const item = document.createElement("div");
+    item.className = "wu-item";
+    item.setAttribute("data-platform", platform);
+    item.setAttribute("data-diff", diffSlug);
+
+    item.innerHTML = `
+      <div class="wu-card">
+        <div class="wu-chip-row">
+          <span class="wu-chip"><i class="bi bi-hdd-network"></i> ${escapeHtml(category)}</span>
+          <span class="wu-date"><i class="bi bi-calendar-event"></i> ${dateTxt}</span>
+        </div>
+
+        ${diffSlug ? `<span class="difficulty-pill ${diffClass(diffSlug)}">${escapeHtml(doc.difficulty || "")}</span>` : ""}
+
+        <div class="wu-thumb">
+          <img src="${escapeHtml(thumb)}" alt="Thumbnail">
+        </div>
+
+        <h4 class="wu-title">${title}</h4>
+
+        <p class="wu-desc">${desc ? (desc + ".") : "<span class='text-secondary'>No description.</span>"}</p>
+
+        <a href="${escapeHtml(link)}" class="wu-btn">
+          <i class="bi bi-box-arrow-up-right"></i> View Write-up
+        </a>
+      </div>
+    `;
+
+    frag.appendChild(item);
+  });
+
+  container.appendChild(frag);
+  return Array.from(document.querySelectorAll(".wu-item"));
+}
+
+/* FILTERS + SEARCH + MASONRY */
+document.addEventListener("DOMContentLoaded", async () => {
+  const container = document.getElementById("masonryContainer");
+  const searchInput = document.getElementById("searchInput");
+
+  const platformButtons = Array.from(document.querySelectorAll("#platformFilters .filter-btn"));
+  const diffButtons = Array.from(document.querySelectorAll("#diffFilters .filter-btn"));
+
+  let items = await loadWriteups();
+
+  let activePlatform = "all";
+  let activeDiff = "all";
+  let searchQuery = "";
+
+  function setHidden(item, hidden) {
+    if (hidden) {
+      item.classList.add("hide");
+      item.style.opacity = "0";
+      item.style.pointerEvents = "none";
+      if (window.innerWidth <= 768) item.style.display = "none";
+    } else {
+      item.classList.remove("hide");
+      item.style.pointerEvents = "";
+      if (window.innerWidth <= 768) item.style.display = "block";
+    }
+  }
+
+  function applyFilters() {
+    const visible = [];
+
+    items.forEach(item => {
+      const platform = (item.getAttribute("data-platform") || "").toLowerCase();
+      const diff = (item.getAttribute("data-diff") || "").toLowerCase();
+      const text = (item.innerText || "").toLowerCase();
+
+      const matchPlatform = (activePlatform === "all" || platform === activePlatform);
+      const matchDiff = (activeDiff === "all" || diff === activeDiff);
+      const matchSearch = (!searchQuery || text.includes(searchQuery));
+
+      const show = (matchPlatform && matchDiff && matchSearch);
+      setHidden(item, !show);
+      if (show) visible.push(item);
+    });
+
+    layoutMasonry(visible);
+  }
+
+  function layoutMasonry(visibleItems) {
+    if (!container) return;
+
+    if (window.innerWidth <= 768) {
+      container.style.height = "auto";
+      visibleItems.forEach(i => { i.style.transform = "none"; i.style.opacity = "1"; });
+      return;
+    }
+
+    if (!visibleItems.length) {
+      container.style.height = "0px";
+      return;
+    }
+
+    const gap = 20;
+    const cardWidth = visibleItems[0].offsetWidth || 260;
+    const containerWidth = container.clientWidth || window.innerWidth;
+    const columns = Math.max(1, Math.floor(containerWidth / (cardWidth + gap)));
+
+    const colHeights = new Array(columns).fill(0);
+
+    visibleItems.forEach(item => {
+      item.style.position = "absolute";
+      item.style.opacity = "1";
+
+      const minHeight = Math.min(...colHeights);
+      const minColIndex = colHeights.indexOf(minHeight);
+
+      const x = minColIndex * (cardWidth + gap);
+      const y = colHeights[minColIndex];
+
+      item.style.transform = `translate(${x}px, ${y}px)`;
+      colHeights[minColIndex] += item.offsetHeight + gap;
+    });
+
+    const maxHeight = Math.max(...colHeights, 0);
+    container.style.height = maxHeight + "px";
+  }
+
+  window.addEventListener("load", applyFilters);
+  window.addEventListener("resize", applyFilters);
+
+  platformButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      platformButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      activePlatform = (btn.getAttribute("data-platform") || "all").toLowerCase();
+      applyFilters();
+    });
+  });
+
+  diffButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      diffButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeDiff = (btn.getAttribute("data-diff") || "all").toLowerCase();
+      applyFilters();
+    });
+  });
+
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      searchQuery = (searchInput.value || "").trim().toLowerCase();
+      applyFilters();
+    });
+  }
+
+  applyFilters();
+});
+</script>
+
+</body>
+</html>

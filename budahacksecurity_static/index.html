@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Buda Hack Security</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/terminal.css">
+
+    <link rel="shortcut icon" href="assets/img/favicon_ico/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon_ico/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon_ico/apple-touch-icon.png">
+    <link rel="manifest" href="assets/img/favicon_ico/site.webmanifest">
+
+    
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="assets/img/la.png" alt="Logo ByteZero" class="navbar-logo me-2">
+          <span>Buda Hack Security</span>
+        </a>
+
+        <button class="navbar-toggler" type="button"
+          data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- IZQUIERDA -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="gallery.html">Gallery</a>
+            </li>
+          </ul>
+
+         
+        </div>
+      </div>
+    </nav>
+
+    <section class="terminal-hero d-flex align-items-center">
+      <div class="container">
+        <div class="terminal mx-auto p-4">
+          <pre id="term-output" aria-live="polite" role="status"></pre>
+          <div class="term-input">
+            <span id="cursor" class="cursor">█</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero text-center py-5">
+      <div class="container">
+        <h1 class="display-4 neon">Welcome to Buda Hack Security</h1>
+        <p class="lead">Pentest explorations, labs and write-ups</p>
+      </div>
+    </section>
+
+    <div class="container my-5">
+      <div class="row justify-content-center text-center">
+
+        <div class="col-md-4 mb-4">
+          <div class="card bg-dark text-light border-success">
+            <img src="assets/img/logi.png" class="card-img-top" alt="Laboratorios de pentest y análisis de malware">
+            <div class="card-body">
+              <p class="card-text">Step-by-step labs on attack techniques and malware development for educational purposes.</p>
+              <a href="malwarelabs.html" class="btn btn-neon mt-3">Ir</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+          <div class="card bg-dark text-light border-success">
+            <img src="assets/img/logo.png" class="card-img-top" alt="Documentación de pentest y Red Team">
+            <div class="card-body">
+              <p class="card-text">Practical documentation for pentesting and Red Teams (guides and procedures).</p>
+              <a href="redteam.html" class="btn btn-neon mt-3">Ir</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+          <div class="card bg-dark text-light border-success">
+            <img src="assets/img/write.png" class="card-img-top" alt="Writeups de máquinas CTF TryHackMe Hack The Box DockerLabs">
+            <div class="card-body">
+              <p class="card-text">CTF machine write-ups (TryHackMe, Hack The Box, DockerLabs) with step-by-step solutions.</p>
+              <a href="writeups.html" class="btn btn-neon mt-3">Ir</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+ 
+
+    <div class="alert alert-warning fade show custom-alert" role="alert">
+      <strong>⚠️ Warning:</strong> All content on this site is for informational purposes <b>educational and ethical</b>.
+      I am not responsible for the misuse of the information learned.
+    </div>
+
+    <footer class="footer text-center text-light py-4">
+      <div class="container">
+        <h5 class="footer-title">Buda Hack Security</h5>
+        <p class="footer-subtitle">Pentest explorations, labs & write-ups</p>
+
+        <div class="footer-social my-3">
+          <a href="https://github.com/buda-sys/buda-sys" class="social-link">
+            <i class="bi bi-github"></i>
+          </a>
+        
+          <a href="https://discord.gg/mqXsQYN3" class="social-link">
+            <i class="bi bi-discord"></i>
+          </a>
+          <a href="contact.html" class="social-link">
+            <i class="bi bi-envelope"></i>
+          </a>
+
+          <a href="disclaimer.html" class="social-link" title="Legal Disclaimer & Responsible Use">
+            <i class="bi bi-shield-check"></i>
+          </a>
+        </div>
+
+        <p class="footer-copy mt-3 mb-0">
+          © 2025 <span class="text-success">Buda Hack Security</span> — All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    
+
+    <!-- BUY ME A COFFEE WIDGET (POPUP) -->
+    <script
+      data-name="BMC-Widget"
+      data-cfasync="false"
+      src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+      data-id="krav0"
+      data-description="Apoya a Buda Hack Security"
+      data-message="Gracias por el apoyo ☕"
+      data-color="#FF0033"
+      data-position="Right"
+      data-x_margin="18"
+      data-y_margin="18">
+    </script>
+
+    <script src="assets/js/terminal.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

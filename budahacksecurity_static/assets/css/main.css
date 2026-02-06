@@ -1,0 +1,327 @@
+.neon {
+  color: #ff1a1a; /* rojo base brillante */
+  text-shadow:
+    0 0 5px #ff1a1a,
+    0 0 10px #ff1a1a,
+    0 0 20px #ff1a1a,
+    0 0 40px #990000,
+    0 0 80px #660000;
+  transition: all 0.3s ease;
+  animation: flicker 3s infinite;
+}
+
+.neon:hover {
+  text-shadow:
+    0 0 10px #ff4d4d,
+    0 0 20px #ff4d4d,
+    0 0 40px #ff4d4d,
+    0 0 80px #ff1a1a,
+    0 0 120px #ff0000;
+}
+
+/* Animación tipo flicker */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    opacity: 0.3;
+  }
+}
+
+/* ====== NAVBAR ====== */
+.navbar {
+  background-color: #cc0000 !important; /* rojo fuerte */
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.4); /* brillo rojo */
+}
+
+/* Marca principal (ByteZero) */
+.navbar .navbar-brand {
+  color: #000000 !important; /* texto negro */
+  font-weight: 700;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Enlaces del menú */
+.navbar .nav-link {
+  color: #000000 !important; /* negro */
+  font-weight: 500;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Hover en los enlaces */
+.navbar .nav-link:hover {
+  color: #1a1a1a !important; /* un poco más oscuro */
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+/* Borde inferior opcional para darle estilo hacker */
+.navbar {
+  border-bottom: 2px solid #660000;
+}
+
+
+/* ===== LOGO NAVBAR ===== */
+.navbar-logo {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 50%; /* hace el logo circular */
+  border: 2px solid #000; /* borde negro o cámbialo según tu tema */
+  box-shadow: 0 0 6px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* efecto al pasar el mouse */
+.navbar-logo:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0,255,128,0.6); /* verde neón ByteZero */
+}
+
+
+
+
+.hero-text {
+  background: rgba(0, 0, 0, 0.85); /* negro translúcido */
+  padding: 20px 30px;
+  border-radius: 12px;
+  border: 1px solid #00ff80; /* borde verde neón */
+  box-shadow:
+    0 0 8px rgba(0,255,128,0.3),
+    0 0 16px rgba(0,255,128,0.2),
+    inset 0 0 6px rgba(0,255,128,0.15);
+  color: #e0e0e0;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* efecto al pasar el mouse */
+.hero-text:hover {
+  transform: scale(1.02);
+  box-shadow:
+    0 0 15px rgba(0,255,128,0.6),
+    0 0 30px rgba(0,255,128,0.4),
+    inset 0 0 10px rgba(0,255,128,0.2);
+}
+
+
+
+body {
+ background: linear-gradient(180deg, #000000 0%, #050505 100%);
+  color: #f0f0f0;;
+   font-family: 'Roboto Mono', monospace;
+}
+
+
+
+/* === EFECTO HOVER NEÓN VERDE PARA TARJETAS BOOTSTRAP === */
+
+.card {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0,255,128,0.15);
+  background-color: #0b0b0b;
+  box-shadow: 0 0 5px rgba(0,255,128,0.05);
+}
+
+/* Efecto al pasar el mouse */
+.card:hover {
+  transform: translateY(-8px) scale(1.05);
+  border-color: #00ff80;
+  box-shadow:
+    0 0 10px rgba(0,255,128,0.3),
+    0 0 25px rgba(0,255,128,0.2),
+    inset 0 0 8px rgba(0,255,128,0.15);
+}
+
+/* Imagen más brillante al pasar el mouse */
+.card img {
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+.card:hover img {
+  filter: brightness(1.25);
+  transform: scale(1.05);
+}
+
+/* Texto se ilumina en verde */
+.card:hover .card-text {
+  color: #00ff80;
+  text-shadow: 0 0 8px rgba(0,255,128,0.6);
+}
+
+/* ====== FOOTER BYTEZERO SIN LOGO ====== */
+.footer {
+  background-color: #000; /* negro puro */
+  border-top: 2px solid #00ff80; /* línea neón superior */
+  box-shadow: 0 -2px 15px rgba(0,255,128,0.3);
+  position: relative;
+}
+
+/* Título */
+.footer-title {
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #00ff80;
+  text-shadow: 0 0 8px rgba(0,255,128,0.6);
+}
+
+/* Subtítulo */
+.footer-subtitle {
+  color: #bdbdbd;
+  font-size: 0.95rem;
+}
+
+/* Redes sociales */
+.social-link {
+  color: #00ff80;
+  margin: 0 10px;
+  font-size: 1.5rem;
+  text-shadow: 0 0 6px rgba(0,255,128,0.4);
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(0,255,128,0.8);
+}
+
+/* Texto final */
+.footer-copy {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* ===== ALERTA PERSONALIZADA BYTEZERO ===== */
+.custom-alert {
+  background: linear-gradient(90deg, rgba(0,0,0,0.95), rgba(30,30,30,0.95));
+  color: #fff;
+  border: 1px solid #ffcc00;
+  box-shadow:
+    0 0 10px rgba(255,204,0,0.4),
+    0 0 25px rgba(255,204,0,0.2);
+  border-radius: 8px;
+  padding: 15px 20px;
+  font-family: 'Source Code Pro', monospace;
+  animation: glowPulse 2s infinite alternate ease-in-out;
+  text-align: center;
+}
+
+/* Efecto pulsante tipo neón */
+@keyframes glowPulse {
+  0% {
+    box-shadow:
+      0 0 5px rgba(255,204,0,0.3),
+      0 0 15px rgba(255,204,0,0.2);
+  }
+  100% {
+    box-shadow:
+      0 0 15px rgba(255,204,0,0.6),
+      0 0 30px rgba(255,204,0,0.4);
+  }
+}
+
+/* ====== MENÚ DESPLEGABLE BYTEZERO ====== */
+.navbar .dropdown-menu {
+  background: rgba(0, 0, 0, 0.95);
+  border: 1px solid #00ff80;
+  box-shadow: 0 0 10px rgba(0,255,128,0.3);
+  border-radius: 8px;
+  animation: dropdownFade 0.25s ease;
+}
+
+/* Animación suave al abrir */
+@keyframes dropdownFade {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ítems dentro del dropdown */
+.dropdown-item {
+  color: #cfcfcf;
+  font-family: 'Source Code Pro', monospace;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover neón */
+.dropdown-item:hover {
+  background: rgba(0, 255, 128, 0.1);
+  color: #00ff80;
+  text-shadow: 0 0 6px rgba(0,255,128,0.8);
+}
+
+/* Divider personalizado */
+.dropdown-divider {
+  border-color: rgba(0,255,128,0.2);
+}
+
+.btn-neon {
+  display: inline-block;
+  padding: 8px 18px;
+  font-weight: 600;
+  color: #001a00;
+  background: linear-gradient(90deg, #00ff80, #00cc66);
+  border: 1px solid rgba(0,255,128,0.9);
+  border-radius: 8px;
+  box-shadow:
+    0 0 8px rgba(0,255,128,0.25),
+    0 6px 20px rgba(0,0,0,0.6);
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+  text-decoration: none;
+}
+
+.btn-neon:hover,
+.btn-neon:focus {
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 20px rgba(0,255,128,0.8),
+    0 10px 30px rgba(0,0,0,0.65);
+  filter: brightness(1.05);
+  color: #001200;
+}
+
+/* versión de botón pequeño para mobile si lo necesitas */
+.btn-neon.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.88rem;
+  border-radius: 6px;
+}
+
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #ccc;
+  transition: color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #ff0000; /* Rojo ByteZero */
+  box-shadow: 0 2px 0 #ff0000;
+  text-shadow: 0 0 5px #ff0000aa;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+/* Yappy navbar button */
+.yappy-nav-btn{
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,255,140,.45);
+  background: rgba(2,6,23,.85);
+  color: #e5e7eb !important;
+  transition: all .2s ease;
+}
+
+.yappy-nav-btn:hover{
+  background: rgba(0,255,140,.15);
+  border-color: rgba(0,255,140,.8);
+  box-shadow: 0 0 12px rgba(0,255,140,.4);
+}
+
+/* Logo Yappy */
+.yappy-logo{
+  width: 18px;
+  height: 18px;
+}
+

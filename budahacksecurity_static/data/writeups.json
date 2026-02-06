@@ -1,0 +1,191 @@
+[
+  {
+    "slug": "mision-secundaria-1-advent-cyber-2025",
+    "file": "uploads/Mision_Secundaria_1_-_Advent_Cyber_2025.md",
+    "title": "Secondary Mission 1  Advent Cyber 2025",
+    "category": "TryHackMe",
+    "difficulty": "Media",
+    "date": "2025-12-12",
+    "thumb": "assets/img/autothumbs/tryhackme.png",
+    "description": "Write-up the Advent Cyber 2025."
+
+  },
+
+  {
+    "slug": "Skill-Assessment",
+    "file": "uploads/Skill-Assessment.md",
+    "title": "Skill Assessment - Password Attack",
+    "category": "HackTheBox",
+    "difficulty": "Easy",
+    "date": "2025-05-23",
+    "thumb": "assets/img/autothumbs/htb.png",
+    "description": "Write-up  Module Password Attacks"
+  },
+
+    {
+    "slug": "Skill-Assessment-web-attack",
+    "file": "uploads/Web-Attacks.md",
+    "title": "Web Attack - Skill Assessments",
+    "category": "HackTheBox",
+    "difficulty": "Easy",
+    "date": "2025-12-20",
+    "thumb": "assets/img/autothumbs/htb.png",
+    "description": "Write-up  Module Web Attack"
+
+  },
+    {
+    "slug": "Spookifier",
+    "file": "uploads/Spookifier.md",
+    "title": "Spookifier",
+    "category": "HackTheBox",
+    "difficulty": "Easy",
+    "date": "2026-01-12",
+    "thumb": "assets/img/autothumbs/htb.png",
+    "description": "Write-up challenge of Spookifier "
+
+  },
+    {
+    "slug": "Skill-Assessment-file-inclusion",
+    "file": "uploads/file-inclusion.md",
+    "title": "Skill Assessment - File Inclusion",
+    "category": "HackTheBox",
+    "difficulty": "Easy",
+    "date": "2026-01-04",
+    "thumb": "assets/img/autothumbs/htb.png",
+    "description": "Write-up Module File Inclusion"
+
+  },
+    {
+    "slug": "Skill-Assessment-brute-force",
+    "file": "uploads/brute-force.md",
+    "title": "Skill Assessment - Brute Force",
+    "category": "HackTheBox",
+    "difficulty": "Easy",
+    "date": "2025-11-28",
+    "thumb": "assets/img/autothumbs/htb.png",
+    "description": "Write-up module Brute Force"
+
+  },
+    {
+    "slug": "Skill-Assessment-footprinting",
+    "file": "uploads/footprinting.md",
+    "title": "Skill Assessment - Footprinting",
+    "category": "HackTheBox",
+    "difficulty": "Easy",
+    "date": "2025-05-17",
+    "thumb": "assets/img/autothumbs/htb.png",
+    "description": "Write-up module Footprinting"
+
+  },
+    {
+    "slug": "Skill-Assessment-mysql",
+    "file": "uploads/mysql.md",
+    "title": "Skill Assessment - MYSQL",
+    "category": "HackTheBox",
+    "difficulty": "Easy",
+    "date": "2026-01-15",
+    "thumb": "assets/img/autothumbs/htb.png",
+    "description": "Write-up module databases"
+
+  },
+    {
+    "slug": "Skill-Assessment-Payload",
+    "file": "uploads/payload.md",
+    "title": "Skill Assessment - Shell & Payloads",
+    "category": "HackTheBox",
+    "difficulty": "Easy",
+    "date": "2025-06-10",
+    "thumb": "assets/img/autothumbs/htb.png",
+    "description": "Write-up module Shell & Payloads "
+
+  },
+    {
+    "slug": "Skill-Assessment-XSS",
+    "file": "uploads/xss.md",
+    "title": "Skill Assessment - XSS",
+    "category": "HackTheBox",
+    "difficulty": "Easy",
+    "date": "2025-03-14",
+    "thumb": "assets/img/autothumbs/htb.png",
+    "description": "Write-up module Cross-Site Scripting"
+
+  },
+    {
+    "slug": "Lofi",
+    "file": "uploads/lo-Fi.md",
+    "title": "Lo-Fi",
+    "category": "TryHackMe",
+    "difficulty": "Easy",
+    "date": "2024-10-26",
+    "thumb": "assets/img/autothumbs/tryhackme.png",
+    "description": "Write-up  tryhackme machine"
+
+  },
+    {
+    "slug": "All In One",
+    "file": "uploads/All.md",
+    "title": "All In One",
+    "category": "TryHackMe",
+    "difficulty": "Easy",
+    "date": "2024-04-09",
+    "thumb": "assets/img/autothumbs/tryhackme.png",
+    "description": "Write-up tryhackme machine"
+
+  },
+    {
+    "slug": "Sherlocks",
+    "file": "uploads/Brutus.md",
+    "title": "Brutus",
+    "category": "HackTheBox",
+    "difficulty": "Easy",
+    "date": "2025-11-17",
+    "thumb": "assets/img/autothumbs/htb.png",
+    "description": "Write-up Sherlock"
+
+  },
+    {
+    "slug": "Crocc Crew",
+    "file": "uploads/Crocc.md",
+    "title": "Crocc Crew",
+    "category": "TryHackMe",
+    "difficulty": "Insane",
+    "date": "2025-10-11",
+    "thumb": "assets/img/autothumbs/tryhackme.png",
+    "description": "Write-up tryhackme machine"
+
+  },
+    {
+    "slug": "Attacktive",
+    "file": "uploads/attactive.md",
+    "title": "Attacktive Directory",
+    "category": "TryHackMe",
+    "difficulty": "Media",
+    "date": "2025-10-10",
+    "thumb": "assets/img/autothumbs/tryhackme.png",
+    "description": "Write-up tryhackme machine"
+
+  },
+    {
+    "slug": "Takedown",
+    "file": "uploads/takedown.md",
+    "title": "Takedown",
+    "category": "TryHackMe",
+    "difficulty": "Insane",
+    "date": "2024-12-30",
+    "thumb": "assets/img/autothumbs/tryhackme.png",
+    "description": "Write-up tryhackme machine"
+
+  },
+    {
+    "slug": "TwoMillon",
+    "file": "uploads/TwoMillion.md",
+    "title": "TwoMillion",
+    "category": "HackTheBox",
+    "difficulty": "Easy",
+    "date": "2025-04-16",
+    "thumb": "assets/img/autothumbs/htb.png",
+    "description": "Write-up Hack The Box machine"
+
+  }
+
+]

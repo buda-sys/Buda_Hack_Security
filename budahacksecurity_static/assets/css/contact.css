@@ -1,0 +1,265 @@
+/* ===========================
+   CONTACT TERMINAL + MATRIX
+=========================== */
+.contact-wrap{
+  min-height: calc(100vh - 160px);
+  padding: 40px 12px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at top, #0b1220, #000);
+}
+
+/* matrix overlay */
+.contact-wrap::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.75)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(56,189,248,.06) 0px,
+      rgba(56,189,248,.06) 1px,
+      transparent 1px,
+      transparent 22px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(34,197,94,.06) 0px,
+      rgba(34,197,94,.06) 1px,
+      transparent 1px,
+      transparent 18px
+    );
+  mix-blend-mode: screen;
+  pointer-events: none;
+  opacity: .85;
+}
+
+/* floating scanlines */
+.contact-wrap::after{
+  content:"";
+  position:absolute; inset:-40px 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,.04) 0px,
+    rgba(255,255,255,.04) 1px,
+    transparent 2px,
+    transparent 6px
+  );
+  opacity:.15;
+  pointer-events:none;
+  animation: scanMove 6s linear infinite;
+}
+@keyframes scanMove{
+  0% { transform: translateY(0); }
+  100% { transform: translateY(40px); }
+}
+
+.terminal-card{
+  position: relative;
+  max-width: 680px;
+  border-radius: 14px;
+  border: 1px solid rgba(56,189,248,.25);
+  background: rgba(2,6,23,.75);
+  box-shadow: 0 10px 45px rgba(0,0,0,.55);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.terminal-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding: 12px 14px;
+  background: rgba(0,0,0,.55);
+  border-bottom: 1px solid rgba(148,163,184,.18);
+}
+
+.dot{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+.dot.red{ background:#ff3b3b; }
+.dot.yellow{ background:#ffd24d; }
+.dot.green{ background:#22c55e; }
+
+.terminal-title{
+  margin-left: 6px;
+  font-size: .9rem;
+  color: #94a3b8;
+  letter-spacing: .4px;
+}
+
+.terminal-body{
+  padding: 22px 18px 18px;
+  color:#e5e7eb;
+}
+
+.terminal-h{
+  color:#38bdf8;
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+
+.terminal-p{
+  color:#a1a1aa;
+  margin: 0 0 18px;
+}
+
+.terminal-form .mt{ margin-top: 10px; display:block; }
+
+.tlabel{
+  display:block;
+  font-size:.85rem;
+  color:#94a3b8;
+  margin: 0 0 6px;
+}
+
+.tinput{
+  width:100%;
+  background: #020617;
+  border: 1px solid rgba(148,163,184,.22);
+  color:#e5e7eb;
+  border-radius: 10px;
+  padding: 12px 12px;
+  outline: none;
+  transition: .15s ease;
+}
+.tinput::placeholder{ color:#64748b; }
+.tinput:focus{
+  border-color: rgba(56,189,248,.75);
+  box-shadow: 0 0 0 .18rem rgba(56,189,248,.18);
+}
+
+.tbtn{
+  width:100%;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  color:#020617;
+  background: linear-gradient(135deg, #38bdf8, #22c55e);
+  transition: transform .12s ease, filter .12s ease;
+}
+.tbtn:hover{ filter: brightness(1.05); transform: translateY(-1px); }
+.tbtn:active{ transform: translateY(0); }
+
+.tback{
+  margin-top: 14px;
+  text-align:center;
+}
+.tback a{
+  color:#38bdf8;
+  text-decoration:none;
+}
+.tback a:hover{ text-decoration: underline; }
+
+.hint{
+  margin-top: 16px;
+  padding: 10px 12px;
+  border: 1px dashed rgba(148,163,184,.25);
+  border-radius: 12px;
+  color:#a1a1aa;
+  font-size:.9rem;
+  background: rgba(0,0,0,.35);
+}
+.prompt{ color:#22c55e; margin-right:6px; }
+
+
+
+/* ===========================
+   THANKS PAGE polish
+=========================== */
+.thanks-card{
+  max-width: 720px;
+}
+
+/* badge */
+.thanks-badge{
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  margin: 2px auto 14px;
+  font-size: 34px;
+  background: rgba(34,197,94,.12);
+  border: 1px solid rgba(34,197,94,.35);
+  box-shadow: 0 0 0 .18rem rgba(34,197,94,.08);
+  position: relative;
+}
+
+.thanks-badge::after{
+  content:"";
+  position:absolute;
+  inset:-10px;
+  border-radius: 22px;
+  border: 1px dashed rgba(56,189,248,.25);
+  opacity: .65;
+}
+
+/* actions */
+.thanks-actions{
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.thanks-actions .tbtn{
+  flex: 1;
+}
+
+/* ghost button variant */
+.tbtn-ghost{
+  background: transparent !important;
+  color: #e5e7eb !important;
+  border: 1px solid rgba(56,189,248,.35) !important;
+}
+
+.tbtn-ghost:hover{
+  filter: none !important;
+  transform: translateY(-1px);
+  background: rgba(56,189,248,.10) !important;
+}
+
+/* subtle entrance */
+.terminal-card{
+  animation: popIn .28s ease-out;
+}
+@keyframes popIn{
+  from{ transform: translateY(6px); opacity: 0; }
+  to{ transform: translateY(0); opacity: 1; }
+}
+
+/* responsive */
+@media (max-width: 520px){
+  .thanks-actions{
+    flex-direction: column;
+  }
+  .thanks-badge{
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    font-size: 30px;
+  }
+}
+
+
+.thanks-badge{
+  width: 150px;
+  height: 150px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  margin: 2px auto 14px;
+  background: rgba(47, 0, 78, 0.199);
+  border: 1px solid rgba(25, 0, 117, 0.35);
+  box-shadow: 0 0 0 .18rem rgba(32, 1, 82, 0.164);
+  position: relative;
+}
+
+/* 👇 ESTO ES LO IMPORTANTE PARA EL GIF */
+.thanks-badge img{
+  width: 145px;
+  height: 145px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(2, 1, 71, 0.55));
+}

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title id="page-title">Write-up | Buda Hack Security</title>
+
+  <!-- Bootstrap + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <!-- Tu CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/terminal.css">
+  <link rel="stylesheet" href="assets/css/ver.css">
+
+  <!-- Markdown + Highlight + Mermaid -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/dracula.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
+  <link rel="icon" href="assets/img/favicon_ico/favicon.ico">
+
+  <style>
+    /* ===== UX fixes (solo sidebar/index) ===== */
+    .back-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:12px;
+      font-weight:800;
+      color:#ff99cc;
+      cursor:pointer;
+      user-select:none;
+    }
+    .back-btn:hover{ color:#ff3b8f; }
+
+    /* panel sticky, pero el scroll solo del indice */
+    .sidebar-panel{
+      max-height: calc(100vh - 105px);
+      overflow: hidden; /* importante: evita que el panel entero scrollee */
+    }
+
+    .sidebar-top{
+      /* info siempre visible */
+      padding-bottom: 10px;
+    }
+
+    /* INDICE scrolleable */
+    #sidebar-index{
+      margin-top: 10px;
+      padding-right: 8px;
+      max-height: calc(100vh - 360px); /* ajusta si quieres más/menos */
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    #sidebar-index::-webkit-scrollbar{ width: 8px; }
+    #sidebar-index::-webkit-scrollbar-thumb{
+      background: rgba(255,0,85,.35);
+      border-radius: 999px;
+    }
+    #sidebar-index::-webkit-scrollbar-track{
+      background: rgba(0,0,0,.35);
+    }
+
+    .toggle-index{
+      cursor:pointer;
+      font-size:.85rem;
+      color:#9ca3af;
+      user-select:none;
+    }
+    .toggle-index:hover{ color:#ff99cc; }
+
+    /* colapsar SOLO el indice */
+    .sidebar-index-collapsed{
+      max-height: 0 !important;
+      overflow: hidden !important;
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+    }
+
+    /* Debug box para que no quedes a ciegas si falla JSON */
+    .debug-box{
+      margin: 14px 0 0;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,0,51,.08);
+      border: 1px solid rgba(255,0,51,.25);
+      color: #ffd1dc;
+      font-size: .85rem;
+      display: none;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="assets/img/la.png" alt="ByteZero Logo" class="navbar-logo me-2">
+        <span>Buda Hack Security</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid py-4">
+    <div class="row">
+
+      <!-- SIDEBAR -->
+      <aside class="col-md-3">
+        <div class="sidebar-panel position-sticky" style="top:85px;">
+
+          <div class="sidebar-top">
+            <!-- BACK -->
+            <div class="back-btn" onclick="location.href='writeups.html'">
+              <i class="bi bi-arrow-left"></i> Back to Write-ups
+            </div>
+
+            <h4 class="sidebar-title"><i class="bi bi-info-circle"></i> Information</h4>
+            <p><strong>Title:</strong> <span id="doc-title">—</span></p>
+            <p><strong>Category:</strong> <span id="doc-category">—</span></p>
+            <p><strong>Difficulty:</strong> <span id="doc-diff">—</span></p>
+            <p><strong>Date:</strong> <span id="doc-date">—</span></p>
+
+            <div id="debugBox" class="debug-box"></div>
+
+            <hr>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <h4 class="sidebar-title mb-0">
+                <i class="bi bi-list-stars"></i> Index
+              </h4>
+              <span class="toggle-index" id="toggleIndex" title="Collapse/Expand index">
+                <i class="bi bi-chevron-up"></i>
+              </span>
+            </div>
+          </div>
+
+          <ul id="sidebar-index" class="sidebar-index"></ul>
+        </div>
+      </aside>
+
+      <!-- CONTENT -->
+      <section class="col-md-9">
+
+        <div class="header-3d-hacker">
+          <canvas id="matrix-bg"></canvas>
+          <div id="particles"></div>
+          <div class="hud-grid"></div>
+          <div class="hud-scan"></div>
+
+          <div class="hud-content scroll-fade">
+            <h1 id="holo-title" class="holo-title">Write-up</h1>
+            <p class="hud-sub typewriter" data-text="Buda Hack Security — Red Team Write-Up"></p>
+
+            <div class="hud-meta">
+              <span><i class="bi bi-folder2"></i> <span id="meta-category">—</span></span>
+              <span><i class="bi bi-lightning-charge-fill"></i> <span id="meta-diff">—</span></span>
+              <span><i class="bi bi-calendar-event"></i> <span id="meta-date">—</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="writeup-content">
+          <div id="markdown-container"></div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+
+  <div id="lightbox"><img alt="preview"></div>
+  <div id="volver-arriba">↑</div>
+
+  <footer class="footer text-center text-light py-4">
+    <div class="container">
+      <h5 class="footer-title">Buda Hack Security</h5>
+      <p class="footer-subtitle">Pentest explorations, labs & write-ups</p>
+
+      <div class="footer-social my-3">
+        <a href="https://github.com/buda-sys/buda-sys" class="social-link"><i class="bi bi-github"></i></a>
+        <a href="https://discord.gg/mqXsQYN3" class="social-link"><i class="bi bi-discord"></i></a>
+        <a href="contact.html" class="social-link"><i class="bi bi-envelope"></i></a>
+        <a href="disclaimer.html" class="social-link" title="Legal Disclaimer & Responsible Use">
+          <i class="bi bi-shield-check"></i>
+        </a>
+      </div>
+
+      <p class="footer-copy mt-3 mb-0">
+        © 2025 <span class="text-success">Buda Hack Security</span> — All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- 1) LOAD META (JSON) + SET MD_FILE -->
+  <script>
+    const params = new URLSearchParams(location.search);
+    const slug = params.get("doc");
+
+    function normalizePath(p){
+      if(!p) return p;
+      let file = String(p).trim().replaceAll("\\","/");
+      file = file.replaceAll("/budahacksecurity/uploads/", "uploads/");
+      if (file.startsWith("/uploads/")) file = file.replace("/uploads/","uploads/");
+      if (file.startsWith("./")) file = file.slice(2);
+      file = file.replace(/\/{2,}/g,"/");
+      return file;
+    }
+
+    function showDebug(msg){
+      const box = document.getElementById("debugBox");
+      if(!box) return;
+      box.style.display = "block";
+      box.textContent = msg;
+    }
+
+    async function loadDocMeta() {
+      let docs = [];
+      try {
+        const res = await fetch("data/writeups.json", { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status} loading data/writeups.json`);
+        docs = await res.json();
+      } catch (e) {
+        console.error(e);
+        showDebug("JSON ERROR:\n" + (e.message || e));
+        document.getElementById("markdown-container").innerHTML =
+          "<p class='text-danger'>Error loading <b>data/writeups.json</b>. Check XAMPP path + JSON format.</p>";
+        return;
+      }
+
+      const doc = (docs || []).find(d => d.slug === slug) || (docs || [])[0];
+
+      if (!doc) {
+        document.getElementById("markdown-container").innerHTML =
+          "<p class='text-danger'>No documents found in writeups.json.</p>";
+        showDebug("No documents found in data/writeups.json");
+        return;
+      }
+
+      // Sidebar
+      document.getElementById("doc-title").textContent = doc.title || "—";
+      document.getElementById("doc-category").textContent = doc.category || "—";
+      document.getElementById("doc-diff").textContent = doc.difficulty || "—";
+      document.getElementById("doc-date").textContent = doc.date || "—";
+
+      // Header big title
+      const title = doc.title || "Write-up";
+      const holo = document.getElementById("holo-title");
+      holo.textContent = title;
+      holo.setAttribute("data-glitch", title);
+
+      document.getElementById("meta-category").textContent = doc.category || "—";
+      document.getElementById("meta-diff").textContent = doc.difficulty || "—";
+      document.getElementById("meta-date").textContent = doc.date || "—";
+
+      // Title tag
+      document.getElementById("page-title").textContent = `${title} | Buda Hack Security`;
+
+      // IMPORTANT: Set MD file path (normalized)
+      window.MD_FILE = normalizePath(doc.file);
+
+      // Debug (si quieres verlo)
+      // showDebug("MD_FILE:\n" + window.MD_FILE);
+      console.log("MD_FILE:", window.MD_FILE);
+    }
+
+    loadDocMeta();
+  </script>
+
+  <!-- 2) TOGGLE INDEX (solo colapsa el UL) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("toggleIndex");
+      const idx = document.getElementById("sidebar-index");
+      if (!btn || !idx) return;
+
+      btn.addEventListener("click", () => {
+        idx.classList.toggle("sidebar-index-collapsed");
+        btn.innerHTML = idx.classList.contains("sidebar-index-collapsed")
+          ? '<i class="bi bi-chevron-down"></i>'
+          : '<i class="bi bi-chevron-up"></i>';
+      });
+    });
+  </script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".scroll-fade").forEach(el => el.classList.add("visible"));
+  });
+</script>
+
+  <!-- 3) Render MD + Index + Mermaid + MP4 support -->
+  <script src="assets/js/writeup_superpro_static.js"></script>
+
+  <!-- Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

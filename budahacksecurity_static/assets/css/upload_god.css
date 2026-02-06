@@ -1,0 +1,539 @@
+/* ===============================================
+   BACKGROUND GLOBAL — DARK NEON
+=============================================== */
+
+body {
+    background: radial-gradient(circle at top, #220011 0, #020005 40%, #000 80%);
+    color: #f5f5f5;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.god-bg-overlay {
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 10% 0%, rgba(255,0,80,0.18), transparent 60%),
+        radial-gradient(circle at 90% 100%, rgba(255,0,120,0.18), transparent 60%);
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ===============================================
+   HEADER NIVEL DIOS
+=============================================== */
+
+.god-header {
+    position: relative;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    padding: 28px 22px 24px;
+    border-radius: 22px;
+    border: 1px solid #ff005544;
+    background: radial-gradient(circle at top left, rgba(255,0,70,0.25), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(120,0,40,0.3), transparent 65%),
+                rgba(3,0,8,0.92);
+    box-shadow:
+        0 0 40px rgba(255,0,90,0.3),
+        inset 0 0 18px rgba(0,0,0,0.9);
+    overflow: hidden;
+}
+
+/* MATRIX — NO BLOQUEA EL MOUSE */
+#matrix-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.22;
+    pointer-events: none;
+}
+
+/* PARTÍCULAS — TAMPOCO BLOQUEAN */
+#particles-header {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* CONTENIDO DEL HEADER */
+.god-header-inner {
+    position: relative;
+    z-index: 5;
+    pointer-events: auto; /* <— permite que el mouse llegue al título */
+}
+
+/* badge */
+.god-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid #ff6699;
+    color: #ffb7d6;
+    background: rgba(10,0,15,0.85);
+    box-shadow: 0 0 10px rgba(255,0,90,0.6);
+}
+
+/* TITULO NIVEL DIOS */
+.god-title {
+    margin-top: 10px;
+    font-size: clamp(1.9rem, 3vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #ffdce9;
+    text-shadow:
+        0 0 10px #ff0066,
+        0 0 20px rgba(255,0,120,0.8);
+}
+
+/* GLITCH */
+.god-title::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 2px;
+    top: 1px;
+    color: rgba(0,255,255,0.4);
+    mix-blend-mode: screen;
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+/* SUBTÍTULO */
+.god-subtitle {
+    margin-top: 8px;
+    font-size: 0.98rem;
+    opacity: 0.8;
+    color: #ffe0f1;
+    min-height: 1.2em;
+}
+
+/* META */
+.god-meta-row {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.god-meta-row span {
+    font-size: 0.82rem;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid #ff3a75;
+    background: rgba(10,0,12,0.9);
+    color: #ffc2dc;
+    box-shadow: 0 0 12px rgba(255,0,110,0.45);
+}
+
+/* ===============================================
+   PANELS
+=============================================== */
+
+.god-panel {
+    position: relative;
+    border-radius: 18px;
+    border: 1px solid #ff3c7c44;
+    background: linear-gradient(135deg, rgba(5,0,10,0.94), rgba(12,0,18,0.96));
+    box-shadow:
+        0 0 30px rgba(0,0,0,0.9),
+        0 0 35px rgba(255,0,100,0.25);
+    padding: 20px;
+}
+
+/* ===============================================
+   INPUTS — AHORA SÍ FUNCIONAN
+=============================================== */
+
+.god-input {
+    width: 100%;
+    background: rgba(5,0,10,0.9);
+    border-radius: 9px;
+    border: 1px solid #ff3f7b55;
+    padding: 8px 10px;
+    font-size: 0.93rem;
+    color: #ffe5f4;
+    outline: none;
+    transition: 0.2s;
+    pointer-events: auto; /* <— IMPORTANTE */
+}
+
+.god-input:focus {
+    border-color: #ff4f8f;
+    box-shadow: 0 0 12px rgba(255,0,100,0.5);
+    background: rgba(10,0,18,0.98);
+}
+
+/* ===============================================
+   DROPZONE
+=============================================== */
+
+.god-dropzone {
+    position: relative;
+    border-radius: 12px;
+    border: 1px dashed #ff4f8f88;
+    padding: 18px 14px;
+    text-align: center;
+    cursor: pointer;
+    background: rgba(10,0,16,0.9);
+    pointer-events: auto;
+}
+
+.god-preview-thumb {
+    width: 82px;
+    height: 82px;
+    border-radius: 9px;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid #ff6ea9aa;
+}
+
+/* ===============================================
+   PREVIEW MARKDOWN
+=============================================== */
+
+.god-md-preview {
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* ===============================================
+   TYPEWRITER
+=============================================== */
+
+.typewriter {
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #ff99cc;
+    animation: caretBlink 0.85s infinite;
+}
+
+@keyframes caretBlink {
+    50% { border-color: transparent; }
+}
+
+/* ===============================================
+   FIX INTERACCIÓN TÍTULO 3D
+=============================================== */
+
+/*  ESTE ES EL FIX CRÍTICO */
+.holo-title {
+    position: relative;
+    z-index: 20;
+    pointer-events: auto; /* PERMITE MOUSE */
+    transform-style: preserve-3d;
+    transition: transform 0.15s linear;
+}
+
+/* TODO LO QUE ESTÁ DETRÁS NO BLOQUEA */
+#matrix-bg,
+#particles-header,
+.god-bg-overlay {
+    pointer-events: none !important;
+}
+
+/* =====================================================
+   BOTÓN DIOS++ CON 3D, SHOCKWAVE y HACKER EFFECT
+===================================================== */
+
+.god-btn {
+    position: relative;
+    background: linear-gradient(135deg, #ff0055, #97000d);
+    border: none;
+    padding: 16px 24px;
+    border-radius: 14px;
+    cursor: pointer;
+    overflow: hidden;
+
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+
+    transform-style: preserve-3d;
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.35),
+        0 0 20px #ff007744;
+
+    transition: transform .2s ease, box-shadow .3s ease;
+}
+
+/* BORDE 3D real */
+.god-btn::before {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #40dd02, #520000, #ff0040);
+    background-size: 300% 300%;
+    z-index: -2;
+    animation: glow3D 4.5s infinite linear;
+    filter: blur(9px);
+}
+
+/* Shockwave al hacer click */
+.god-btn:active::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle, #ffffff66 0%, transparent 70%);
+    animation: shockwave 0.35s ease-out;
+    pointer-events: none;
+}
+
+@keyframes shockwave {
+    from { transform: scale(0.8); opacity: 0.9; }
+    to   { transform: scale(2.4); opacity: 0; }
+}
+
+@keyframes glow3D {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 200% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.god-btn:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow:
+        0 12px 22px rgba(0,0,0,0.45),
+        0 0 25px #ff44aa;
+}
+
+/* Texto principal animable (para JS) */
+.btn-text {
+    font-size: 1.04rem;
+    font-weight: bold;
+    text-shadow: 0 0 10px #ff5599;
+    display: inline-block;
+    min-height: 1.2em;
+}
+
+/* Subtexto */
+.btn-subtext {
+    font-size: 0.74rem;
+    opacity: 0.85;
+    letter-spacing: 0.4px;
+}
+
+/* =====================================================
+   BLACK ICE MODE — NETRUNNER FIREWALL
+===================================================== */
+
+.god-btn {
+    position: relative;
+    background: #0a0004;
+    border: none;
+    padding: 16px 24px;
+    border-radius: 14px;
+    cursor: pointer;
+
+    overflow: hidden;
+    color: #ff496d;
+    font-weight: 800;
+    letter-spacing: 0.7px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+
+    transform-style: preserve-3d;
+    text-shadow: 0 0 12px #ff0033bb;
+
+    box-shadow:
+        0 0 25px #ff002044,
+        inset 0 0 25px #ff002022,
+        0 0 8px #000 inset;
+
+    transition: transform .25s ease, box-shadow .3s ease;
+}
+
+/* ======= Borde vivo tipo ICE ======= */
+.god-btn::before {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: inherit;
+
+    background: 
+        conic-gradient(
+            from 0deg,
+            #ff0033,
+            #3b000e,
+            #190008,
+            #ff0022,
+            #3b000e
+        );
+
+    animation: icePulse 6s linear infinite;
+    filter: blur(12px);
+    z-index: -2;
+}
+
+@keyframes icePulse {
+    0%   { transform: rotate(0deg); filter: blur(10px); opacity: 0.9; }
+    50%  { transform: rotate(180deg); filter: blur(17px); opacity: 0.6; }
+    100% { transform: rotate(360deg); filter: blur(10px); opacity: 0.9; }
+}
+
+/* ======= Fractura de firewall ======= */
+.god-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-linear-gradient(
+            transparent 0 2px,
+            rgba(255,0,50,0.075) 3px 4px
+        );
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    opacity: 0.5;
+    animation: iceStatic 0.25s infinite steps(3);
+}
+
+@keyframes iceStatic {
+    0% { opacity: 0.45; transform: translateY(0); }
+    50% { opacity: 0.6; transform: translateY(-2px); }
+    100% { opacity: 0.45; transform: translateY(0); }
+}
+
+
+/* ======= Hover: “Firewall Hostile” ======= */
+.god-btn:hover {
+    transform: translateY(-4px) scale(1.05);
+
+    box-shadow:
+        0 0 50px #ff003388,
+        inset 0 0 40px #ff001855,
+        0 0 15px #ff002288;
+
+    text-shadow:
+        0 0 18px #ff2244,
+        0 0 25px #ff0033;
+}
+
+/* ======= Click: ICE Shock ======= */
+.god-btn:active {
+    transform: scale(0.94);
+}
+
+/* Shockwave estilo cortafuegos */
+.god-btn:active .btn-text {
+    animation: iceShock 0.2s ease;
+}
+
+@keyframes iceShock {
+    0%   { letter-spacing: 0.7px; text-shadow: 0 0 4px #ff0033; }
+    50%  { letter-spacing: 3px;   text-shadow: 0 0 35px #ff1133; }
+    100% { letter-spacing: 0.7px; text-shadow: 0 0 10px #ff0022; }
+}
+
+/* Subtexto */
+.btn-subtext {
+    opacity: 0.8;
+    color: #ff99aa;
+    letter-spacing: 0.3px;
+}
+
+
+/* =====================================================
+   INPUT FILE — BLOOD RED ICE (Negro + Rojo Sangre)
+===================================================== */
+
+#archivo.god-input {
+    width: 100%;
+    position: relative;
+    padding: 14px 14px 14px 165px; /* espacio del botón */
+    border-radius: 12px;
+
+    background: rgba(25, 0, 5, 0.92); /* negro sangre */
+    border: 1px solid rgba(255, 40, 60, 0.35);
+
+    color: #ffd3d7; /* rojo suave */
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: 0.25s ease;
+
+    box-shadow:
+        inset 0 0 18px rgba(255, 40, 60, 0.15),
+        0 0 14px rgba(255, 0, 50, 0.25);
+}
+
+/* Ocultar el botón real */
+#archivo.god-input::-webkit-file-upload-button,
+#archivo.god-input::file-selector-button {
+    visibility: hidden;
+}
+
+/* -----------------------------------------------------
+   BOTÓN CUSTOM “Seleccionar archivo”
+------------------------------------------------------ */
+#archivo.god-input::before {
+    content: "📂 Seleccionar archivo";
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+
+    padding: 8px 14px;
+    border-radius: 8px;
+
+    background: rgba(70, 0, 10, 0.55);     /* rojo sangre oscuro */
+    border: 1px solid rgba(255, 60, 90, 0.5);
+    color: #ffe8ec;
+
+    font-size: 0.82rem;
+    letter-spacing: .3px;
+    white-space: nowrap;
+    pointer-events: none;
+
+    box-shadow:
+        0 0 16px rgba(255, 40, 70, 0.35),
+        inset 0 0 25px rgba(255, 60, 90, 0.2);
+}
+
+/* -----------------------------------------------------
+   HOVER DEL INPUT
+------------------------------------------------------ */
+#archivo.god-input:hover {
+    background: rgba(40, 0, 10, 0.95);
+    border-color: rgba(255, 60, 90, 0.75);
+
+    box-shadow:
+        inset 0 0 25px rgba(255, 20, 60, 0.25),
+        0 0 20px rgba(255, 0, 70, 0.35);
+}
+
+/* Hover del botón */
+#archivo.god-input:hover::before {
+    background: rgba(120, 0, 20, 0.65);
+    border-color: rgba(255, 80, 110, 0.75);
+    color: #fff2f3;
+}
+
+/* -----------------------------------------------------
+   FOCUS “Blood Shield”
+------------------------------------------------------ */
+#archivo.god-input:focus {
+    outline: none;
+    border-color: rgba(255, 70, 100, 1);
+
+    box-shadow:
+        inset 0 0 35px rgba(255, 50, 80, 0.35),
+        0 0 45px rgba(255, 0, 70, 0.45);
+}
+

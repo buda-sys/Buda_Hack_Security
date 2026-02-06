@@ -1,0 +1,223 @@
+
+/* ========================================
+   TARJETA PRINCIPAL
+   ======================================== */
+
+.upload-card {
+    background: #000 !important;                  /* Negro puro */
+    border: 1px solid #3a3a3a !important;         /* Borde gris oscuro */
+    border-radius: 18px;
+    padding: 35px;
+    box-shadow: 
+        0 0 12px rgba(255, 0, 0, 0.2),
+        0 0 25px rgba(255, 0, 0, 0.15);
+    transition: 0.3s ease-in-out;
+}
+
+.upload-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 
+        0 0 18px rgba(255, 0, 0, 0.35),
+        0 0 45px rgba(255, 0, 0, 0.25);
+}
+
+
+/* ========================================
+   TÍTULO – NEGRO + NEÓN ROJO PRO
+   ======================================== */
+
+.upload-title {
+    color: #000 !important;   
+    font-size: 2.3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+
+    text-shadow:
+        0 0 5px rgba(255, 0, 0, 1),
+        0 0 12px rgba(255, 0, 0, 0.9),
+        0 0 25px rgba(255, 0, 0, 0.7),
+        0 0 45px rgba(255, 0, 0, 0.5),
+        0 0 60px rgba(255, 0, 0, 0.4);
+}
+
+.upload-title i {
+    color: #ff0000;
+    margin-right: 10px;
+    text-shadow:
+        0 0 10px rgba(255, 0, 0, 1),
+        0 0 20px rgba(255, 0, 0, 0.8);
+}
+
+
+/* ========================================
+   LABELS
+   ======================================== */
+
+.upload-label {
+    font-weight: 600;
+    color: #d0d0d0;
+    margin-bottom: 6px;
+}
+
+
+
+/* ========================================
+   INPUTS / SELECTS
+   ======================================== */
+
+.upload-input {
+    background: #000 !important;  
+    color: #eee !important;
+    border: 1px solid #444 !important;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: 0.25s ease-in-out;
+}
+
+.upload-input:hover {
+    border-color: #ff0000 !important;
+}
+
+.upload-input:focus {
+    border-color: #ff0000 !important;
+    box-shadow: 
+        0 0 8px rgba(255, 0, 0, 0.5),
+        0 0 18px rgba(255, 0, 0, 0.3) !important;
+}
+
+.upload-select {
+    cursor: pointer;
+}
+
+
+/* ========================================
+   BOTÓN ESTILO CYBERPUNK ROJO
+   ======================================== */
+
+.upload-btn {
+    background: transparent !important;
+    border: 2px solid #ff0000 !important;
+    color: #ff0000 !important;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: 0.25s ease-in-out;
+
+    box-shadow:
+        0 0 10px rgba(255, 0, 0, 0.25);
+}
+
+.upload-btn:hover {
+    background: #ff0000 !important;
+    color: #000 !important;
+
+    box-shadow:
+        0 0 15px rgba(255, 0, 0, 0.7),
+        0 0 30px rgba(255, 0, 0, 0.4);
+
+    transform: scale(1.03);
+}
+
+.glitch {
+    animation: glitch 0.2s linear;
+}
+
+@keyframes glitch {
+    0% { transform: skew(0deg); }
+    20% { transform: skew(10deg); }
+    40% { transform: skew(-10deg); }
+    60% { transform: skew(5deg); }
+    80% { transform: skew(-5deg); }
+    100% { transform: skew(0deg); }
+}
+
+/* ===============================
+   INPUT FILE ESTILO PROFESIONAL
+   =============================== */
+
+.custom-file-container {
+    margin-bottom: 20px;
+}
+
+.custom-file-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-file-btn {
+    background: #000;
+    border: 2px solid #ff0000;
+    padding: 10px 18px;
+    color: #ff0000;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 0 10px rgba(255,0,0,0.2);
+}
+
+.custom-file-btn:hover {
+    background: #ff0000;
+    color: #000;
+    box-shadow: 
+        0 0 15px rgba(255, 0, 0, 0.7),
+        0 0 25px rgba(255, 0, 0, 0.4);
+}
+
+.custom-file-name {
+    color: #c3c3c3;
+    font-size: 0.9rem;
+    padding-left: 5px;
+}
+
+/* Escondemos el input real */
+#archivo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 140px;
+    height: 40px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.custom-file-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#archivo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: 0;      /* invisible */
+    cursor: pointer; /* clickeable */
+}
+
+.custom-file-btn {
+    background: #76ff03;
+    color: #000;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.custom-file-name {
+    color: #aaa;
+}

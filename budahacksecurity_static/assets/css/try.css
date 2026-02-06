@@ -1,0 +1,607 @@
+
+
+/* Reset */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: #000;
+  color: #e5e7eb;
+  font-family: "Orbitron", "Poppins", sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+
+/* ============================================================
+   CRT + SCANLINES (no tapan el contenido)
+============================================================ */
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+      rgba(255,0,0,0.03) 0px,
+      rgba(0,0,0,0.06) 2px
+  );
+  opacity: 0.35;
+  z-index: 0;
+  mix-blend-mode: overlay;
+}
+
+.scanlines::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 50%, rgba(255,0,0,0.06) 51%);
+  background-size: 100% 4px;
+  opacity: 0.4;
+  z-index: 0;
+  mix-blend-mode: soft-light;
+}
+
+/* Forzar contenido encima */
+.navbar,
+header,
+.container,
+footer,
+.avatar-btn {
+  position: relative;
+  z-index: 10;
+}
+
+
+/* ============================================================
+   HEADER DIOS+++ USANDO bg-black-red (SIN CAMBIAR HTML)
+============================================================ */
+
+.bg-black-red {
+  position: relative;
+  padding: 90px 0;
+  background: radial-gradient(circle at top, #8b0000 0%, #250009 45%, #000 85%);
+  border-top: 2px solid #a60000;
+  border-bottom: 2px solid #a60000;
+  box-shadow:
+    inset 0 0 70px #ff000055,
+    0 0 45px #ff000066;
+  overflow: hidden;
+}
+
+/* Caja central simulada usando el h1 */
+.bg-black-red h1 {
+  display: inline-block;
+  padding: 40px 45px;
+  max-width: 1100px;
+  width: 90%;
+  margin: 0 auto;
+
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+
+  border-radius: 18px;
+  border: 1px solid #ff003355;
+
+  box-shadow:
+    inset 0 0 35px #ff000044,
+    0 0 45px #ff003377;
+}
+
+/* Texto principal */
+.neon-red {
+  color: #ffffff !important;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 900;
+  text-shadow:
+    0 0 10px #ffffffcc,
+    0 0 25px #ff000088;
+}
+
+
+/* Glitch suave */
+.text-glitch {
+  display: inline-block;
+  animation: glitchSkew 1.5s infinite alternate;
+}
+
+@keyframes glitchSkew {
+  0%   { transform: skew(0deg);  opacity: .98; }
+  50%  { transform: skew(-3deg); opacity: 1; }
+  100% { transform: skew(3deg);  opacity: .9; }
+}
+
+/* RGB Glitch */
+.glitch-rgb {
+  animation: rgbShift .4s infinite alternate;
+}
+
+@keyframes rgbShift {
+  0% { text-shadow: 2px 0 red, -2px 0 cyan; }
+  100% { text-shadow: -2px 0 red, 2px 0 cyan; }
+}
+
+/* Typing effect */
+.typewriter {
+  overflow: hidden;
+  display: inline-block;
+  border-right: 2px solid #ff0000;
+  white-space: nowrap;
+  animation: typing 3s steps(40), blink .7s infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+
+/* ============================================================
+   NAVBAR — FIX DEFINITIVO
+============================================================ */
+
+.navbar {
+  position: relative;
+  z-index: 200 !important;
+  background: rgb(179, 1, 1) !important;
+  backdrop-filter: blur(6px);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #000000 !important;
+  transition: all .25s ease;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #000000 !important;
+  text-shadow: 0 0 10px #ff0000;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+  color: #000000 !important;
+  font-weight: 700;
+  text-shadow: 0 0 12px #ffffffaa;
+}
+
+.navbar-dark .navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #000000;
+  box-shadow: 0 0 6px #000000aa;
+  transition: width .25s ease;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+
+/* ============================================================
+   AVATAR FLOTANTE
+============================================================ */
+
+.avatar-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 200;
+}
+
+.avatar-float {
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ff0000;
+  box-shadow: 0 0 20px #ff000060, 0 0 45px #8b000060;
+  animation: floaty 4.2s ease-in-out infinite, neonPulse 2s alternate infinite;
+}
+
+@keyframes floaty {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes neonPulse {
+  from { box-shadow: 0 0 12px #ff000060; }
+  to   { box-shadow: 0 0 32px #ff0000d0; }
+}
+
+.avatar-modal-img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 2px solid #ff0000;
+  box-shadow: 0 0 25px #ff0000aa, 0 0 45px #8b0000aa;
+}
+
+
+/* ============================================================
+   BUSCADOR
+============================================================ */
+
+.search-input {
+  width: 80%;
+  max-width: 650px;
+  padding: 12px 16px;
+  background: #0d0d0d;
+  border: 1px solid #ff000088;
+  color: #fff;
+  border-radius: 8px;
+  transition: .25s ease;
+}
+
+.search-input:focus {
+  border-color: #ff0000;
+  box-shadow: 0 0 20px #ff0000aa;
+  transform: scale(1.02);
+}
+
+
+/* ============================================================
+   BOTONES DE CATEGORÍA
+============================================================ */
+
+.category-btn {
+  margin: 5px;
+  padding: 8px 16px;
+  background: transparent;
+  color: #ff4d4d;
+  border: 1px solid #ff000099;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: .25s;
+}
+
+.category-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 12px #ff000088;
+}
+
+.category-btn.active {
+  color: #fff !important;
+  background: #ff0000 !important;
+  box-shadow: 0 0 20px #ff0000cc;
+}
+
+
+/* ============================================================
+   MASONRY GRID — TARJETAS COMPACTAS
+============================================================ */
+
+.masonry-container {
+  position: relative;
+  min-height: 400px;
+}
+
+.writeup-card {
+  position: absolute !important;
+  width: 300px;
+  transition: transform .35s ease, opacity .25s ease !important;
+}
+
+
+/* ============================================================
+   CARD INTERNA — CYBERPUNK COBALT
+============================================================ */
+
+.inner-card {
+  background: #020617;
+  border: 1px solid rgba(59,130,246,.35);
+  padding: 15px;
+  border-radius: 12px;
+  transition: .28s ease;
+  box-shadow: 0 0 15px rgba(59,130,246,.25), 0 0 40px rgba(0,0,0,.6);
+}
+
+.inner-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: rgba(59,130,246,.6);
+  box-shadow: 0 0 35px rgba(59,130,246,.55), 0 0 55px rgba(59,130,246,.35);
+}
+
+.inner-card h4 {
+  color: #60a5fa;
+  text-shadow: 0 0 10px rgba(96,165,250,.4);
+  font-weight: 700;
+}
+
+.inner-card p {
+  color: #cbd5e1;
+  margin-top: 8px;
+  font-size: 0.85rem;
+  max-height: 65px;
+  overflow: hidden;
+}
+
+
+/* dificultad badge */
+.difficulty-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  border-radius: 6px;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.easy   { background:#22c55e33; color:#22c55e; }
+.medium { background:#facc1533; color:#facc15; }
+.hard   { background:#ef444433; color:#ef4444; }
+.crazy  { background:#06b6d433; color:#06b6d4; }
+
+
+/* ============================================================
+   BOTÓN VER WRITEUP
+============================================================ */
+
+.btn-view {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #3b82f6;
+  border-radius: 8px;
+  color: #000 !important;
+  font-weight: 700;
+  text-align: center;
+  transition: .25s ease;
+  box-shadow: 0 0 12px rgba(59,130,246,.4);
+}
+
+.btn-view:hover {
+  background: #60a5fa;
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(96,165,250,.75);
+}
+
+
+/* ============================================================
+   ANIMACIONES CARDS + SCROLL
+============================================================ */
+
+.card-glitch {
+  animation: glitchCard .55s cubic-bezier(0.25,0.46,0.45,1.2);
+}
+
+@keyframes glitchCard {
+  0% { opacity: 0; transform: translateY(15px) skew(0deg); }
+  25% { opacity: 1; transform: translateY(0) skew(2deg); }
+  50% { transform: translateY(-2px) skew(-2deg); }
+  75% { transform: translateY(1px) skew(1deg); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+
+.fade-out {
+  opacity: 0 !important;
+  transform: scale(.90) !important;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+[data-animate] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all .6s ease;
+}
+
+[data-animate].show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===========================
+   🔥 FORCE HEADER OVERRIDE
+   =========================== */
+
+header.bg-black-red {
+  padding: 100px 0 !important;
+  background: radial-gradient(circle at top, #8b0000 0%, #2a0000 40%, #000 85%) !important;
+  box-shadow:
+    inset 0 0 80px #ff000077,
+    0 0 60px #ff000055 !important;
+}
+
+header.bg-black-red h1 {
+  display: inline-block !important;
+  padding: 40px 50px !important;
+  background: rgba(0, 0, 0, 0.55) !important;
+  border-radius: 18px !important;
+  border: 1px solid #ff003355 !important;
+  box-shadow:
+    inset 0 0 35px #ff000044,
+    0 0 45px #ff003377 !important;
+}
+
+/* ============================================================
+   HEADER TryHackMe — MISMO HTML, NUEVO LOOK (ROSADO NEÓN)
+============================================================ */
+
+.bg-black-red {
+  padding: 90px 0 80px;
+  background:
+    radial-gradient(circle at top,
+      #ff007a 0%,
+      #7a003a 35%,
+      #000 80%
+    ) !important;
+
+  border-bottom: 2px solid #ff007a55;
+  box-shadow:
+    inset 0 0 120px #ff007a55,
+    0 0 80px #ff007a33;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto matrix suave */
+.bg-black-red::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,0,122,.05) 0px,
+      rgba(0,0,0,.08) 2px
+    );
+  opacity: .35;
+  pointer-events: none;
+}
+
+/* TEXTO PRINCIPAL */
+.neon-red {
+  color: #ff4da6 !important;
+  font-weight: 800;
+  text-shadow:
+    0 0 10px #ff4da6aa,
+    0 0 30px #ff007a99,
+    0 0 60px #ff007a66;
+}
+
+/* Glitch RGB rosado */
+.glitch-rgb {
+  animation: rgbPink .45s infinite alternate;
+}
+
+@keyframes rgbPink {
+  0% {
+    text-shadow:
+      2px 0 #ff007a,
+      -2px 0 #00ffff;
+  }
+  100% {
+    text-shadow:
+      -2px 0 #ff007a,
+      2px 0 #00ffff;
+  }
+}
+
+/* Cursor typewriter rosado */
+.typewriter {
+  border-right: 3px solid #ff007a;
+}
+
+/* ============================================================
+   HEADER TRYHACKME — ESTILO UPLINK (MATCH VISUAL)
+============================================================ */
+
+.bg-black-red {
+  position: relative;
+  padding: 90px 0 !important;
+
+  /* Fondo igual al UPLINK */
+  background:
+    radial-gradient(circle at center,
+      rgba(255, 0, 140, 0.25) 0%,
+      rgba(120, 0, 60, 0.35) 35%,
+      #050007 75%),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 0, 120, 0.08) 0px,
+      rgba(0, 0, 0, 0.12) 2px
+    );
+
+  border-bottom: 1px solid rgba(255, 0, 140, 0.35);
+
+  box-shadow:
+    inset 0 0 120px rgba(255, 0, 140, 0.25),
+    0 0 80px rgba(255, 0, 120, 0.35);
+
+  overflow: hidden;
+}
+
+/* Línea glow inferior (como uplink) */
+.bg-black-red::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  width: 90%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ff2aa3,
+    #ff5fd2,
+    #ff2aa3,
+    transparent
+  );
+  box-shadow: 0 0 25px #ff2aa3;
+}
+
+/* ============================================================
+   TEXTO — ROSADO NEÓN UPLINK
+============================================================ */
+
+.bg-black-red h1 {
+  color: #ffd6f0 !important;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  text-shadow:
+    0 0 8px rgba(255, 140, 200, 0.9),
+    0 0 18px rgba(255, 0, 140, 0.85),
+    0 0 40px rgba(180, 0, 90, 0.9);
+
+  position: relative;
+  z-index: 2;
+}
+
+/* glitch más elegante (menos rojo puro) */
+.glitch-rgb {
+  animation: uplinkGlitch .45s infinite alternate;
+}
+
+@keyframes uplinkGlitch {
+  0% {
+    text-shadow:
+      2px 0 #ff2aa3,
+      -2px 0 #00f0ff;
+  }
+  100% {
+    text-shadow:
+      -2px 0 #ff2aa3,
+      2px 0 #00f0ff;
+  }
+}
+
+/* ============================================================
+   🔥 FIX MODAL (NO BLOQUEA INPUTS / CLICKS)
+   - Asegura que el modal quede por encima de overlays y efectos
+============================================================ */
+.modal {
+  z-index: 9999 !important;
+}
+.modal-backdrop {
+  z-index: 9998 !important;
+}
+.modal-dialog,
+.modal-content {
+  pointer-events: auto !important;
+}
+
+/* Apagar overlays CRT/scanlines solo cuando el modal está abierto */
+body.modal-open::after,
+body.modal-open .scanlines::before {
+  display: none !important;
+}

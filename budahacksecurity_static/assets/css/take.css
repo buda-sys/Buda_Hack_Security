@@ -1,0 +1,205 @@
+.writeup-content h2 {
+    color: #00ffae;
+}
+
+aside a:hover {
+    color: #00ffaa !important;
+}
+
+.writeup-header {
+    background: #0d0d0d;
+    border-bottom: 2px solid #00ffae;
+}
+
+.position-sticky {
+    position: sticky;
+    top: 80px;
+}
+
+/* === NEÓN ROJO GLOBAL === */
+
+body {
+    color: #ffd6d6; /* texto normal suave */
+    background: #000000 !important;
+}
+
+/* TITULOS NEON ROJO */
+h1, h2, h3, h4 {
+    color: #ff0033 !important;
+    text-shadow:
+        0 0 5px #ff0033,
+        0 0 10px #ff0033,
+        0 0 15px #ff1a4d,
+        0 0 25px #ff335c,
+        0 0 40px #ff0033;
+}
+
+/* LINKS NEON ROJO */
+a {
+    color: #ff335c !important;
+    text-shadow: 0 0 5px #ff335c;
+}
+
+a:hover {
+    color: #ff667a !important;
+    text-shadow:
+        0 0 10px #ff667a,
+        0 0 20px #ff667a;
+}
+
+/* SIDEBAR */
+aside .bg-dark {
+    background: #050505 !important;
+    border: 1px solid #ff335c55;
+    box-shadow:
+        0 0 10px #ff335c55,
+        0 0 20px #ff335c44,
+        0 0 30px #ff335c22;
+}
+
+aside ul li {
+    color: #ffccd5 !important;
+}
+
+/* LÍNEAS DIVISORAS NEÓN */
+hr {
+    border: none;
+    height: 2px;
+    background: #ff0033;
+    box-shadow:
+        0 0 10px #ff0033,
+        0 0 20px #ff0033;
+}
+
+/* CÓDIGO NEÓN ROJO */
+pre, code {
+    color: #ff0033 !important;
+    background: #0a0000 !important;
+    box-shadow:
+        0 0 8px #ff003366,
+        0 0 20px #ff003333;
+    border: 1px solid #ff003355 !important;
+}
+
+/* BLOQUES DE CONTENIDO NEÓN */
+.writeup-content {
+    padding: 15px;
+    background: #050505;
+    border: 1px solid #ff003322;
+    box-shadow:
+        0 0 20px #ff003322,
+        0 0 35px #ff003311;
+    border-radius: 10px;
+}
+
+/* TITULO PRINCIPAL */
+.writeup-header {
+    background: #0a0000;
+    border-bottom: 2px solid #ff0033;
+    box-shadow: 0 0 15px #ff003355;
+}
+
+.neon-red-animation {
+    animation: redPulse 2s infinite alternate;
+}
+
+@keyframes redPulse {
+    from {
+        text-shadow:
+            0 0 8px #ff0033,
+            0 0 16px #ff0033,
+            0 0 32px #ff1a4d,
+            0 0 48px #ff335c;
+    }
+    to {
+        text-shadow:
+            0 0 12px #ff335c,
+            0 0 24px #ff335c,
+            0 0 48px #ff1a4d,
+            0 0 70px #ff0033;
+    }
+}
+
+
+
+/* indice */
+
+.sidebar-index {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sidebar-index li {
+    margin-bottom: 8px;
+}
+
+.sidebar-index li a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #ff335c !important;
+    text-decoration: none;
+    font-size: 0.95rem;
+    text-shadow: 0 0 5px #ff335c;
+    transition: all .2s ease-in-out;
+}
+
+.sidebar-index li a:hover {
+    color: #ff6b81 !important;
+    text-shadow: 0 0 10px #ff6b81, 0 0 20px #ff6b81;
+    transform: translateX(5px);
+}
+
+/* informacion del room */
+
+.room-info p {
+    margin-bottom: 6px;
+    font-size: 0.92rem;
+    color: #ffccd5;
+}
+
+.info-label {
+    color: #ff335c;
+    text-shadow: 0 0 5px #ff335c;
+}
+
+
+/* Centrar mejor la columna derecha */
+.col-md-9.col-lg-9 {
+    margin: 0 auto;           /* Centra horizontalmente */
+    float: none;              /* Evita empujar hacia la derecha */
+    max-width: 850px;         /* Evita que el texto se disperse demasiado */
+}
+
+/* Asegura que el contenido tenga respiración */
+.writeup-content {
+    margin-top: 10px;
+    padding: 20px;
+}
+
+
+.difficulty-tag {
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    display: inline-block;
+    font-size: 0.85rem;
+    text-shadow: 0 0 6px currentColor;
+}
+
+.easy { 
+    color: #4ade80; /* Verde */
+}
+
+.medium { 
+    color: #facc15; /* Amarillo */
+}
+
+.hard { 
+    color: #f87171; /* Rojo */
+}
+
+.crazy { 
+    color: #8b5cf6; /* Morado */
+}

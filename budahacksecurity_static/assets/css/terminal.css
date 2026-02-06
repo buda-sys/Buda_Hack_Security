@@ -1,0 +1,229 @@
+/* assets/css/terminal.css
+   Estética: fondo Matrix morado + consola negra con texto verde neón */
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;700&display=swap');
+
+:root{
+  --bg-grad-top: #0b0b0b;   /* morado oscuro */
+  --bg-grad-bottom: #0a0410;/* casi negro */
+  --term-bg: rgba(2,2,2,0.92);
+  --accent-green: #00ff80;          /* verde neón */
+  --accent-green-dim: rgba(0,255,128,0.45);
+  --accent-purple: #b88cff;
+  --err-red: #ff4d4d;
+  --muted: rgba(255,255,255,0.06);
+}
+
+/* Hero container that replaces the image */
+.terminal-hero {
+  position: relative;
+  background: radial-gradient(1200px 600px at 20% 10%, rgba(184,140,255,0.08) 0%, rgba(10,4,16,0.0) 20%),
+              linear-gradient(180deg, var(--bg-grad-top) 0%, var(--bg-grad-bottom) 100%);
+  color: var(--accent-green);
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  padding: 40px 0;
+  overflow: hidden;
+}
+
+/* Terminal window */
+.terminal {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(0,0,0,0.88), rgba(8,8,10,0.95));
+  border-radius: 10px;
+  border: 1px solid rgba(0,255,128,0.12);
+  box-shadow:
+    0 0 25px rgba(184,140,255,0.15),
+    0 10px 40px rgba(3,3,6,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.02);
+  font-family: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  color: var(--accent-green);
+  line-height: 1.35;
+  font-size: 0.95rem;
+  height: 320px;
+  padding: 18px 12px;
+  overflow: auto;
+  position: relative;
+  z-index: 3; /* sobre el fondo animado */
+}
+
+/* Adaptación a pantallas pequeñas */
+@media (max-width: 768px) {
+  .terminal { height: 260px; font-size: 0.88rem; padding: 14px; }
+  .terminal-hero { min-height: 320px; padding: 28px 0; }
+}
+
+/* Contenido del terminal */
+#term-output {
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+  padding: 0 6px 6px 6px;
+}
+
+/* Cursor */
+.term-input {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+  margin-top: 6px;
+}
+.cursor {
+  display: inline-block;
+  animation: blink 800ms steps(1) infinite;
+  color: var(--accent-green);
+  text-shadow: 0 0 6px #00ff80, 0 0 12px #00ff80;
+  font-weight: 700;
+  margin-left: 6px;
+  user-select: none;
+}
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* líneas de overflow */
+.overflow-line {
+  display: block;
+  background: linear-gradient(90deg, rgba(0,255,128,0.05), rgba(0,255,128,0.02));
+  padding: 2px 8px;
+  margin: 4px 0;
+  border-left: 3px solid rgba(0,255,128,0.1);
+  font-weight: 700;
+  color: #caffd8;
+  transform-origin: left center;
+  will-change: transform;
+}
+
+/* errores y texto tenue */
+.err { color: var(--err-red); font-weight: 700; text-shadow: 0 0 8px rgba(255,77,77,0.4); }
+.dim { color: var(--accent-green-dim); font-weight: 500; }
+
+/* scrollbar */
+.terminal::-webkit-scrollbar { width: 10px; height: 10px; }
+.terminal::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(0,255,128,0.08), rgba(184,140,255,0.03));
+  border-radius: 999px;
+  border: 2px solid rgba(0,0,0,0.6);
+}
+.terminal::-webkit-scrollbar-track { background: transparent; }
+
+/* efecto hover */
+.terminal:hover {
+  box-shadow:
+    0 0 30px rgba(0,255,128,0.25),
+    0 18px 60px rgba(3,3,6,0.75),
+    inset 0 1px 0 rgba(255,255,255,0.02);
+  transition: box-shadow 220ms ease;
+}
+
+/* título opcional */
+.terminal-title {
+  font-size: 0.95rem;
+  color: var(--accent-green);
+  text-shadow: 0 0 8px rgba(0,255,128,0.3);
+  margin-bottom: 8px;
+}
+
+/* alta visibilidad */
+@media (prefers-contrast: more) {
+  .terminal { border-color: rgba(255,255,255,0.12); }
+  .cursor { color: #ffffff; }
+}
+
+/* === FONDO ESTILO MATRIX MORADO === */
+.terminal-hero {
+  position: relative;
+  background: radial-gradient(circle at center, #1a0b1f 0%, #000 90%);
+  overflow: hidden;
+}
+
+/* capa animada tipo matrix */
+.terminal-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+      0deg,
+      transparent 0%,
+      rgba(184,140,255,0.05) 1%,
+      transparent 2%
+  ),
+  repeating-linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(184,140,255,0.04) 0.5%,
+      transparent 1%
+  );
+  background-size: 3px 3px;
+  animation: matrixScroll 8s linear infinite;
+  opacity: 0.25;
+  z-index: 1;
+}
+
+/* halo morado suave */
+.terminal-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 50% 50%, rgba(184,140,255,0.12) 0%, transparent 60%);
+  animation: matrixPulse 6s ease-in-out infinite alternate;
+  z-index: 2;
+}
+
+
+
+/* === EFECTOS ADICIONALES PARA ANIMACIÓN TERMINAL === */
+
+/* líneas comunes */
+.line { display: block; white-space: pre-wrap; }
+
+/* carabela animada */
+.devil-frame {
+  color: var(--err-red);
+  text-align: center;
+  text-shadow:
+    0 0 8px rgba(255,77,77,0.6),
+    0 0 16px rgba(255,77,77,0.3);
+  font-family: "Source Code Pro", monospace;
+  animation: devilFade 5s ease-in-out;
+}
+
+@keyframes devilFade {
+  0% { opacity: 0; transform: scale(0.9); }
+  10%, 90% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.1); }
+}
+
+/* éxito tipo neón */
+.success {
+  color: var(--accent-green);
+  text-shadow:
+    0 0 6px var(--accent-green),
+    0 0 12px var(--accent-green-dim);
+  font-weight: 600;
+}
+
+/* texto tenue y error siguen tus variables */
+.dim { color: var(--accent-green-dim); }
+.err { color: var(--err-red); text-shadow: 0 0 8px rgba(255,77,77,0.5); }
+
+/* parpadeo rojo para la línea de error */
+.err.blink {
+  animation: blink-red 900ms steps(2, start) 3;
+  text-shadow: 0 0 12px rgba(255,77,77,0.7), 0 0 22px rgba(184,140,255,0.06);
+}
+@keyframes blink-red {
+  0%, 49% { opacity: 1; transform: translateY(0); }
+  50%, 100% { opacity: 0.12; transform: translateY(-2px); }
+}
+
+/* ya tienes .devil-frame y .success en tu CSS anterior; opcional: resaltar success aún más */
+.success {
+  color: var(--accent-green);
+  text-shadow: 0 0 8px var(--accent-green), 0 0 14px var(--accent-green-dim);
+  font-weight: 700;
+}
