@@ -107,7 +107,7 @@ Abrimos el binario wtmp.
 	cat wtmp
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/brutus/brutus.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/brutus/brutus.png" style="max-width:100%; border-radius:8px;">
 
 vemos que el binario se encuentra ofuscado utilizamos la herramienta que nos brindaron para desofuscar el binario `utmp.py`
 
@@ -116,7 +116,7 @@ vemos que el binario se encuentra ofuscado utilizamos la herramienta que nos bri
 	python3 utmp.py wtmp
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/brutus/brutus1.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/brutus/brutus1.png" style="max-width:100%; border-radius:8px;">
 
 ```bash
 bat -l java wtmp.txt | grep 'root' | grep '65.2.161.68'
@@ -180,7 +180,7 @@ Mar  6 06:39:38 ip-172-31-35-28 sudo: pam_unix(sudo:session): session opened for
 |[T1136.001](https://attack.mitre.org/techniques/T1136/001/)|[Cuenta local](https://attack.mitre.org/techniques/T1136/001/)|
 
 
-<img src="/budahacksecurity_static/uploads/md_images/brutus/brutus2.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/brutus/brutus2.png" style="max-width:100%; border-radius:8px;">
 
 
 ---

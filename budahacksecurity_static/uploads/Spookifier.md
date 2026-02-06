@@ -102,11 +102,11 @@ To confirm the SSTI vulnerability, we submit the following test payload:
 ${7*7}
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/spookifier/spooki.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/spookifier/spooki.png" style="max-width:100%; border-radius:8px;">
 
 Result:
 
-<img src="/budahacksecurity_static/uploads/md_images/spookifier/spooki2.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/spookifier/spooki2.png" style="max-width:100%; border-radius:8px;">
 
 The application returns the value `49`, confirming that expressions are being evaluated on the server side.
 
@@ -124,7 +124,7 @@ Next, we leverage a **PayloadsAllTheThings** payload to achieve remote command e
 
 The output confirms that the command is executed on the server.
 
-<img src="/budahacksecurity_static/uploads/md_images/spookifier/spooki3.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/spookifier/spooki3.png" style="max-width:100%; border-radius:8px;">
 
 Finally, we use the following payload to read the flag:
 

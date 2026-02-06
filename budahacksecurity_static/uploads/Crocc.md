@@ -180,13 +180,13 @@ nano /etc/hosts
 
 We proceed to **enumerate the identified ports**, starting with **port `80/HTTP`**, with the goal of analyzing the **web application** and detecting **possible attack vectors**.
 
-<img src="/budahacksecurity_static/uploads/md_images/croc/c1.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/croc/c1.png" style="max-width:100%; border-radius:8px;">
 
 When accessing the **cooctus** website, we observe a message indicating that the site **has been hacked by *crocc new***.
 
 Next, we proceed to review the **`robots.txt`** file, since it defines the paths that search engines can or cannot index, and in many cases reveals **interesting directories** that can be useful during the enumeration phase.
 
-<img src="/budahacksecurity_static/uploads/md_images/croc/c2.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/croc/c2.png" style="max-width:100%; border-radius:8px;">
 
 We identified **two relevant files**: a **backup of the database connection configuration**, `db-config.bak`, and a suspicious file identified as **`backdoor.php`**.
 
@@ -251,7 +251,7 @@ As a result, although valid credentials were identified, it was not possible to 
 
 **Backdoor.php**
 
-<img src="/budahacksecurity_static/uploads/md_images/croc/c3.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/croc/c3.png" style="max-width:100%; border-radius:8px;">
 
 Although the `backdoor.php` file appears to offer a command console, the tests performed show that **it is not possible to execute system commands**, which significantly limits its impact from a direct exploitation standpoint. Given this, we decided to continue enumerating other services and ports in search of additional attack vectors.
 
@@ -372,7 +372,7 @@ For this, we used the **rdesktop** tool, which can reveal relevant information d
 rdesktop -f -u "" 10.66.190.61
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/croc/c4.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/croc/c4.png" style="max-width:100%; border-radius:8px;">
 
 During the unauthenticated RDP connection, it was possible to see in the background of the system an **informational label** containing the text **`Visitor GuestLogin!`**.
 
@@ -616,7 +616,7 @@ Once it was confirmed that the **password-reset** account has a configured *Serv
 python3 /usr/share/doc/python3-impacket/examples/GetUserSPNs.py COOCTUS.CORP/visitor:GuestLogin! -dc-ip 10.65.146.94 -request
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/croc/c5.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/croc/c5.png" style="max-width:100%; border-radius:8px;">
 
 With the obtained Kerberos hash, we used **John the Ripper** to crack the password of the **password-reset** account, taking advantage of the fact that the process is performed offline without generating additional traffic in the domain.
 

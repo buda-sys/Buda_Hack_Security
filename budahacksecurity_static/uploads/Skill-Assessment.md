@@ -249,7 +249,7 @@ michaeljackson (Employee-Passwords_OLD)
 pwsafe Employee-Passwords_OLD.psafe3
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/password_attack/ps1.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/password_attack/ps1.png" style="max-width:100%; border-radius:8px;">
 
 Extracted credentials:
 
@@ -270,7 +270,7 @@ Using **Remmina**:
 proxychains4 remmina
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/password_attack/ps3.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/password_attack/ps3.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -282,11 +282,11 @@ From **Task Manager**:
 2. Right-click **Local Security Authority Process**
 3. Select **Create dump file**
 
-<img src="/budahacksecurity_static/uploads/md_images/password_attack/ps2.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/password_attack/ps2.png" style="max-width:100%; border-radius:8px;">
 
 Transfer `lsass.dmp` via shared folder:
 
-<img src="/budahacksecurity_static/uploads/md_images/password_attack/ps4.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/password_attack/ps4.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -335,7 +335,7 @@ copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\NTDS\NTDS.dit C:\Us
 reg save HKLM\system C:\Users\Administrator\system.save
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/password_attack/ps5.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/password_attack/ps5.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
