@@ -249,7 +249,7 @@ Reload the site:
 http://<IP>:8081
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/mcskidy/m.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/mcskidy/m.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
