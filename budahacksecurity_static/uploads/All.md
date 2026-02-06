@@ -12,7 +12,7 @@ At this stage, we proceed to **enumerate the target machine using `nmap`**, with
 nmap -p- --open -Pn -n -T5 -sS <Target-IP> -vvv
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -31,7 +31,7 @@ Next, we proceed to **enumerate each port individually** in order to:
 nmap -p80,22,21 -Pn -n --min-rate 5000 -sSVC <IP> -vvv -oN Scan
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all1.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all1.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -81,7 +81,7 @@ The connection was successful. However, after listing the contents of the FTP se
 * **No visible files or folders**
 * **No write permissions available**
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all2.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all2.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -89,7 +89,7 @@ The connection was successful. However, after listing the contents of the FTP se
 
 Accessing the target IP via a browser on **port 80** loads the **default Apache page**.
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all3.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all3.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -103,7 +103,7 @@ For this task, we used **`ffuf` (Fuzz Faster U Fool)**, a fast and efficient too
 ffuf -ic -c -w /usr/share/wordlists/dirbuster/directory-list-2-3-lower-case-medium.txt:FUZZ -u http://10.10.219.250/FUZZ -mc 301,200
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all4.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all4.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -124,11 +124,11 @@ Upon visiting the `hackathons` directory, we encountered the message:
 
 This message appears to be a **hint**.
 
-<img src="/budahacksecurity_static/uploads/md_images/all/5.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/5.png" style="max-width:100%; border-radius:8px;">
 
 After inspecting the page source, we found **two additional messages left by the directory creator**, one of which appeared to be an **encrypted password**.
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all6.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all6.png" style="max-width:100%; border-radius:8px;">
 
 By applying **Vigenère (Vinegar) decoding** using the key **`KeepGoing`**, we successfully recovered the original plaintext.
 
@@ -136,7 +136,7 @@ This confirms that:
 
 * **`KeepGoing` is the correct decryption key**
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all7.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all7.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -152,13 +152,13 @@ WPScan Enumeration Goals
 * Detect vulnerable plugins
 * Identify the WordPress version for exploit research
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all9.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all9.png" style="max-width:100%; border-radius:8px;">
 
 ```ruby
 wpscan --url http://<IP>/wordpress --enumerate u,p
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all10.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all10.png" style="max-width:100%; border-radius:8px;">
 
 We identified a **plugin vulnerable to LFI (Local File Inclusion)** and also discovered a valid **WordPress username: `elyana`**. This provides a strong foothold for exploitation.
 
@@ -168,7 +168,7 @@ We identified a **plugin vulnerable to LFI (Local File Inclusion)** and also dis
 
 With a valid **username (`elyana`)** and **password**, we proceed to log in to the **WordPress admin panel**:
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all11.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all11.png" style="max-width:100%; border-radius:8px;">
 
 Once inside:
 
@@ -190,7 +190,7 @@ On the attacker machine:
 nc -lvnp <port>
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all12.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all12.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -223,7 +223,7 @@ After gaining initial access, we begin the **post-exploitation phase**, focusing
 
 Inside `/home/elyana/`, we find a message indicating that **the user’s password is hidden somewhere on the system**.
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all13.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all13.png" style="max-width:100%; border-radius:8px;">
 
 We search for files owned by `elyana`:
 
@@ -231,7 +231,7 @@ We search for files owned by `elyana`:
 find / -user elyana -type f 2>/dev/null
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all14.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all14.png" style="max-width:100%; border-radius:8px;">
 
 We switch to the user:
 
@@ -242,7 +242,7 @@ password --> E@syR18ght
 
 After logging in, we retrieve the first flag and check sudo permissions:
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all15.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all15.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -256,7 +256,7 @@ Using **GTFOBins**, we identify a reliable privilege escalation technique:
 sudo socat stdin exec:/bin/sh
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/all/all16.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/all/all16.png" style="max-width:100%; border-radius:8px;">
 
 ---
 

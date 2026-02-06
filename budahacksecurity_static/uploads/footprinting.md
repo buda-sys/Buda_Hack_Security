@@ -16,7 +16,7 @@ We begin with a **port scan** to identify which services are exposed on the syst
 nmap -p- --open -n -Pn --min-rate 5000 -sS --disable-arp -vvv 10.129.103.207
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f1.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f1.png" style="max-width:100%; border-radius:8px;">
 
 
 ---
@@ -26,7 +26,7 @@ Once the port scan completed successfully, three open ports were identified:
 
 In this case, the focus was placed on the **FTP service**, since the client provided valid credentials. We analyzed ports **21 and 2121**, both associated with FTP services.
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f2.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f2.png" style="max-width:100%; border-radius:8px;">
 
 
 ---
@@ -47,7 +47,7 @@ ssh -i id_rsa ceil@<ip_address>
 
 This allowed us to establish an SSH session and securely access the server.
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f3.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f3.png" style="max-width:100%; border-radius:8px;">
 
 
 ---
@@ -99,7 +99,7 @@ We listed the exported NFS shares using:
 showmount -e 10.129.12.142
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f4.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f4.png" style="max-width:100%; border-radius:8px;">
 
 
 ---
@@ -119,7 +119,7 @@ mkdir -p /tmp/NFS
 sudo mount -t nfs 10.129.12.142:/TechSupport ./NFS -o nolock
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f5.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f5.png" style="max-width:100%; border-radius:8px;">
 
 
 ---
@@ -132,7 +132,7 @@ find . -name "*.txt" -exec cat {} \;
 
 This revealed a conversation containing the password for user **alex**.
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f6.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f6.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -142,7 +142,7 @@ Next, we analyzed the exposed **SMB service** using the credentials provided by 
 smbclient -U alex -L //10.129.12.142
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f7.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f7.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -154,7 +154,7 @@ smbclient //10.129.12.142/devshare -U <user>
 
 Inside the share, we discovered a file named **important.txt**, which likely contained sensitive information.
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f8.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f8.png" style="max-width:100%; border-radius:8px;">
 
 
 ---
@@ -181,7 +181,7 @@ xfreerdp /u:alex /p:lol123!mD /v:10.129.12.142
 
 We opened the database as administrator.
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f9.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f9.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -189,7 +189,7 @@ After successfully accessing the system via RDP, we reviewed the SQL database.
 
 Using **SQL Server Management Studio** or a similar interface, we edited the **first 200 records** of the `dbo.devsacc` table.
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f10.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f10.png" style="max-width:100%; border-radius:8px;">
 
 Based on the objectives, various enumeration, service analysis, and controlled exploitation techniques were applied. From identifying exposed services to accessing systems via FTP, SMB, and RDP, multiple ethical pentesting methodologies were used.
 
@@ -209,7 +209,7 @@ The third server is an **MX and administrative server** for the internal network
 
 We began with a standard **TCP port scan**, but individual enumeration of each port yielded no useful results. When switching to a **UDP scan**, we identified an open port.
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f11.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f11.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -221,7 +221,7 @@ snmpwalk -v2c -c backup 10.129.122.14
 
 We discovered credentials for the user **tom**.
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f12.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f12.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -240,7 +240,7 @@ By interacting with the IMAP server, we found an **SSH private key**:
 1 FETCH 1 BODY[]
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f13.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f13.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -259,12 +259,12 @@ Once inside the system, we noticed that we could read **tom’s `.bash_history`*
 mysql -u tom -p
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f14.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f14.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
 We enumerated the MySQL server and located the **users table**, which contained the user **htb** and its corresponding password.
 
-<img src="/budahacksecurity_static/uploads/md_images/footprinting/f15.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/footprinting/f15.png" style="max-width:100%; border-radius:8px;">
 
 

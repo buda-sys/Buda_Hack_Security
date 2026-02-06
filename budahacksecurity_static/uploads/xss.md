@@ -2,7 +2,7 @@ We are performing a **web application penetration testing task** for a company t
 
 Start the server below, make sure you are connected to the VPN, and access the `/assessment` directory on the server using your browser:
 
-<img src="/budahacksecurity_static/uploads/md_images/xss/x.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/xss/x.png" style="max-width:100%; border-radius:8px;">
 
 Apply the skills learned in this module to achieve the following:
 

