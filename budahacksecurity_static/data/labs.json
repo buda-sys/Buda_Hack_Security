@@ -1,18 +1,5 @@
 [
-  {
-  "slug": "discord-rat",
-  "title": "Discord RAT",
-  "type": "analysis",
-  "difficulty": "medium",
-  "level": "junior",
-  "description": "Laboratorio educativo de análisis de un RAT controlado vía Discord, enfocado en rastros de keylogging en Windows.",
-  "duration": "15–25 min",
-  "platform": "Windows (Sandbox)",
-  "thumb": "assets/img/labs/rat.png",
-  "file": "uploads/rat.md",
-  "tags": "malware rat keylogger windows analysis",
-  "disclaimer": "Contenido educativo. No se distribuye código malicioso."
-}
+ 
 
 ]
 
