@@ -1,85 +1,88 @@
-#  BudaHackSecurity
+# BudaHackSecurity
 
-**BudaHackSecurity** es una plataforma personal de aprendizaje y documentación enfocada en **ciberseguridad**, creada con fines **educativos** por un estudiante apasionado por el **Red Team**, **Active Directory**, **análisis de malware** y **seguridad ofensiva**.
+**BudaHackSecurity** is a personal learning and documentation platform focused on **cybersecurity**, created for **educational purposes** by a student passionate about **Red Team**, **Active Directory**, **malware analysis**, and **offensive security**.
 
-Este proyecto reúne **laboratorios prácticos**, **write-ups**, **documentación técnica** y **recursos educativos**, inspirados en plataformas como TryHackMe y Hack The Box, pero desarrollados desde mi propio proceso de aprendizaje.
-
----
-
-##  Objetivo del proyecto
-
-- Documentar lo que aprendo de forma clara y honesta
-- Practicar técnicas reales en entornos controlados (laboratorios)
-- Compartir conocimiento con la comunidad
-- Construir un portafolio técnico real como estudiante de ciberseguridad
+This project brings together **hands-on laboratories**, **write-ups**, **technical documentation**, and **educational resources**, inspired by platforms such as TryHackMe and Hack The Box, but developed through my own learning process.
 
 ---
 
-##  Contenido
+##  Project Objective
 
-En esta web encontrarás:
-
-- 🔍 **Enumeración y ataque a Active Directory**
-- 🖥️ **Laboratorios Windows & Linux**
-- 🧬 **Análisis de malware (educativo)**
-- 🧠 **Conceptos de Red Team / Blue Team**
-- 📄 **Write-ups paso a paso**
-- 🛠️ **Uso de herramientas reales** (netexec, impacket, rpcclient, PowerShell, etc.)
-
-> ⚠️ Todos los laboratorios se ejecutan en **entornos controlados** (máquinas virtuales) creados con fines educativos.
+- Document what I learn in a clear and honest way  
+- Practice real techniques in controlled environments (labs)  
+- Share knowledge with the community  
+- Build a real technical portfolio as a cybersecurity student  
 
 ---
 
-## Sobre mí
+##  Content
 
-Soy **buda-sys**, estudiante de ciberseguridad.  
-Este proyecto refleja mi proceso real de aprendizaje: errores, aciertos y evolución técnica.
+On this website you will find:
 
-No es una empresa, no es un servicio comercial, y no pretende reemplazar plataformas profesionales:  
-es **aprendizaje real documentado**.
+- 🔍 **Active Directory enumeration and attacks**
+- 🖥️ **Windows & Linux laboratories**
+- 🧬 **Educational malware analysis**
+- 🧠 **Red Team / Blue Team concepts**
+- 📄 **Step-by-step write-ups**
+- 🛠️ **Use of real tools** (netexec, impacket, rpcclient, PowerShell, etc.)
 
----
-
-## 🚨 Aviso legal / Disclaimer
-
-Este proyecto tiene **exclusivamente fines educativos**.
-
-- No promueve actividades ilegales
-- No se incluyen exploits para uso en entornos reales
-- No se fomenta el uso indebido de técnicas ofensivas
-- Todo el contenido está pensado para **laboratorios y estudio**
-
-El autor **no se hace responsable** del uso indebido de la información aquí presentada.
+> ⚠️ All laboratories are executed in **controlled environments** (virtual machines) created for educational purposes.
 
 ---
 
-## 📜 Licencia
+##  About Me
+
+I am **buda-sys**, a cybersecurity student.  
+This project reflects my real learning process: mistakes, successes, and technical growth.
+
+It is not a company, it is not a commercial service, and it does not aim to replace professional platforms —  
+it is **real learning, documented**.
+
+---
+
+##  Legal Disclaimer
+
+This project is intended **exclusively for educational purposes**.
+
+- It does not promote illegal activities  
+- No exploits are provided for use in real environments  
+- Misuse of offensive techniques is not encouraged  
+- All content is designed for **laboratory and study purposes only**
+
+The author is **not responsible** for any misuse of the information presented here.
+
+---
+
+##  License
 
 © 2026 **buda-sys – BudaHackSecurity**
 
-Este proyecto se publica bajo la licencia **MIT**.  
-Puedes usar, modificar y compartir el código, siempre que se mantenga el aviso de copyright y la licencia original.
+This project is released under the **MIT License**.  
+You are free to use, modify, and share the code, provided that the original copyright
+notice and license are preserved.
 
-Ver archivo [`LICENSE`](LICENSE) para más detalles.
-
----
-
-##  Contribuciones
-
-Si eres estudiante o entusiasta de la ciberseguridad:
-- Ideas
-- Correcciones
-- Sugerencias
-- Feedback
-
-Son **bienvenidos** 
+See the [`LICENSE`](LICENSE) file for more details.
 
 ---
 
-##  Sitio web
+##  Contributions
 
-🔗 https://budahacksecurity.vercel.app
+If you are a cybersecurity student or enthusiast:
+
+- Ideas  
+- Corrections  
+- Suggestions  
+- Feedback  
+
+are **welcome**.
 
 ---
 
-> *“Aprender seguridad no es memorizar herramientas, es entender cómo y por qué fallan los sistemas.”*
+## 🌐 Website
+
+🔗 https://budahacksecurity.fun
+
+---
+
+> *“Learning security is not about memorizing tools, it’s about understanding how and why systems fail.”*
+
