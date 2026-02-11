@@ -55,7 +55,7 @@ El autor **no se hace responsable** del uso indebido de la información aquí pr
 
 ## 📜 Licencia
 
-© 2026 **Emanuel – BudaHackSecurity**
+© 2026 **buda-sys – BudaHackSecurity**
 
 Este proyecto se publica bajo la licencia **MIT**.  
 Puedes usar, modificar y compartir el código, siempre que se mantenga el aviso de copyright y la licencia original.
