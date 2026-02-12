@@ -128,8 +128,8 @@
 
           <div class="sidebar-top">
             <!-- BACK -->
-            <div class="back-btn" onclick="location.href='writeups.html'">
-              <i class="bi bi-arrow-left"></i> Back to Write-ups
+            <div class="back-btn" id="backBtn">
+              <i class="bi bi-arrow-left"></i> Back
             </div>
 
             <h4 class="sidebar-title"><i class="bi bi-info-circle"></i> Information</h4>
@@ -208,14 +208,30 @@
     </div>
   </footer>
 
-  <!-- 1) LOAD META (JSON) + SET MD_FILE -->
+  <!-- 1) LOAD META (JSON) + SET MD_FILE  OR DIRECT FILE MODE -->
   <script>
     const params = new URLSearchParams(location.search);
-    const slug = params.get("doc");
+
+    const slug = params.get("doc");       // modo viejo
+    const fileParam = params.get("file"); // modo nuevo (redteam)
+    const backParam = params.get("back");
+
+    const titleParam = params.get("title");
+    const categoryParam = params.get("category");
+    const difficultyParam = params.get("difficulty");
+    const dateParam = params.get("date");
+
+    (function initBack(){
+      const backBtn = document.getElementById("backBtn");
+      const target = (backParam && backParam.trim()) ? backParam.trim() : "writeups.html";
+      backBtn.addEventListener("click", () => location.href = target);
+      backBtn.innerHTML = `<i class="bi bi-arrow-left"></i> Back`;
+    })();
 
     function normalizePath(p){
       if(!p) return p;
       let file = String(p).trim().replaceAll("\\","/");
+      try { file = decodeURIComponent(file); } catch(e){}
       file = file.replaceAll("/budahacksecurity/uploads/", "uploads/");
       if (file.startsWith("/uploads/")) file = file.replace("/uploads/","uploads/");
       if (file.startsWith("./")) file = file.slice(2);
@@ -230,7 +246,16 @@
       box.textContent = msg;
     }
 
-    async function loadDocMeta() {
+    function niceTitleFromFile(path){
+      const name = (path || "Write-up").split("/").pop() || "Write-up";
+      return name
+        .replace(/\.(md|markdown)$/i,"")
+        .replaceAll("_"," ")
+        .replaceAll("-"," ")
+        .trim() || "Write-up";
+    }
+
+    async function loadDocMetaFromJSON() {
       let docs = [];
       try {
         const res = await fetch("data/writeups.json", { cache: "no-store" });
@@ -253,13 +278,11 @@
         return;
       }
 
-      // Sidebar
       document.getElementById("doc-title").textContent = doc.title || "—";
       document.getElementById("doc-category").textContent = doc.category || "—";
       document.getElementById("doc-diff").textContent = doc.difficulty || "—";
       document.getElementById("doc-date").textContent = doc.date || "—";
 
-      // Header big title
       const title = doc.title || "Write-up";
       const holo = document.getElementById("holo-title");
       holo.textContent = title;
@@ -269,18 +292,41 @@
       document.getElementById("meta-diff").textContent = doc.difficulty || "—";
       document.getElementById("meta-date").textContent = doc.date || "—";
 
-      // Title tag
       document.getElementById("page-title").textContent = `${title} | Buda Hack Security`;
 
-      // IMPORTANT: Set MD file path (normalized)
       window.MD_FILE = normalizePath(doc.file);
-
-      // Debug (si quieres verlo)
-      // showDebug("MD_FILE:\n" + window.MD_FILE);
       console.log("MD_FILE:", window.MD_FILE);
     }
 
-    loadDocMeta();
+    function loadDirectFile(){
+      const md = normalizePath(fileParam);
+
+      const title = (titleParam && titleParam.trim()) ? titleParam.trim() : niceTitleFromFile(md);
+      const category = (categoryParam && categoryParam.trim()) ? categoryParam.trim() : "Red Team";
+      const difficulty = (difficultyParam && difficultyParam.trim()) ? difficultyParam.trim() : "—";
+      const date = (dateParam && dateParam.trim()) ? dateParam.trim() : "—";
+
+      document.getElementById("doc-title").textContent = title;
+      document.getElementById("doc-category").textContent = category;
+      document.getElementById("doc-diff").textContent = difficulty;
+      document.getElementById("doc-date").textContent = date;
+
+      const holo = document.getElementById("holo-title");
+      holo.textContent = title;
+      holo.setAttribute("data-glitch", title);
+
+      document.getElementById("meta-category").textContent = category;
+      document.getElementById("meta-diff").textContent = difficulty;
+      document.getElementById("meta-date").textContent = date;
+
+      document.getElementById("page-title").textContent = `${title} | Buda Hack Security`;
+
+      window.MD_FILE = md;
+      console.log("MD_FILE (direct):", window.MD_FILE);
+    }
+
+    if (fileParam) loadDirectFile();
+    else loadDocMetaFromJSON();
   </script>
 
   <!-- 2) TOGGLE INDEX (solo colapsa el UL) -->
@@ -300,10 +346,10 @@
   </script>
 
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".scroll-fade").forEach(el => el.classList.add("visible"));
-  });
-</script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".scroll-fade").forEach(el => el.classList.add("visible"));
+    });
+  </script>
 
   <!-- 3) Render MD + Index + Mermaid + MP4 support -->
   <script src="assets/js/writeup_superpro_static.js"></script>
