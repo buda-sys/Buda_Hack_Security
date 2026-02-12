@@ -1,7 +1,7 @@
 [
       
-{
-    "slug": "password-spraying",
+ {
+   "slug": "password-spraying",
     "title": "Active Directory Enumeration | Password Spraying",
     "type": "pentester",
     "description": "Password spraying technique against an Active Directory environment.",
@@ -9,6 +9,8 @@
     "tools": "Kali Linux",
     "thumb": "assets/img/labs/pspraying.png",
     "link": "uploads/password-spraying.md",
-    "tags": "active directory enumeration password spraying authentication"
+    "tags": "active directory enumeration password spraying authentication",
+    "date": "2026-02-11",
+    "difficulty": "Easy"
   }
 ]

@@ -304,7 +304,7 @@ The command used is:
 net accounts /domain`
 ```
 
-![[password.png]]
+<img src="/budahacksecurity/uploads/md_images/pspraying/password.png" style="max-width:100%; border-radius:8px;">
 
 This command allows retrieving relevant information about the domain security configuration, including:
 

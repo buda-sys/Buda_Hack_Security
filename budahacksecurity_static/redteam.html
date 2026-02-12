@@ -358,12 +358,13 @@ body.blue-theme .search i{ color:#9ddcff; }
       <img src="assets/img/la.png" alt="ByteZero Logo" class="navbar-logo me-2">
       <span>Buda Hack Security</span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
         <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
       </ul>
@@ -467,7 +468,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       .replaceAll("&","&amp;")
       .replaceAll("<","&lt;")
       .replaceAll(">","&gt;")
-      .replaceAll('"',"quot;")
+      .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
   }
 
@@ -494,6 +495,33 @@ document.addEventListener("DOMContentLoaded", async () => {
       case "mitigations": return "Mitigations";
       default: return "Red Team";
     }
+  }
+
+  /* ✅ build ver.html link with difficulty/date/category/title */
+  function resolveLink(item){
+    const p = (item?.link || "#").toString().trim();
+    if (!p || p === "#") return "#";
+
+    const lower = p.toLowerCase();
+    const isWriteup = lower.endsWith(".md") || lower.startsWith("uploads/");
+
+    if (!isWriteup) return p;
+
+    const title = (item?.title || "").toString().trim();
+    const category = (item?.type || "Red Team").toString().trim();
+    const difficulty = (item?.difficulty || "—").toString().trim();
+    const date = (item?.date || "—").toString().trim();
+    const back = "redteam.html";
+
+    const qs =
+      `file=${encodeURIComponent(p)}` +
+      `&title=${encodeURIComponent(title)}` +
+      `&category=${encodeURIComponent(category)}` +
+      `&difficulty=${encodeURIComponent(difficulty)}` +
+      `&date=${encodeURIComponent(date)}` +
+      `&back=${encodeURIComponent(back)}`;
+
+    return `ver.html?${qs}`;
   }
 
   /* LOAD JSON + RENDER */
@@ -527,7 +555,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const duration = escapeHtml(it.duration || "");
     const tools = escapeHtml(it.tools || "");
     const thumb = escapeHtml(it.thumb || "assets/img/labs/spyware.png");
-    const link = escapeHtml(it.link || "#");
+    const link = resolveLink(it);
     const tags = (it.tags || "").toLowerCase();
 
     const col = document.createElement("div");
@@ -553,7 +581,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             <span><i class="bi bi-tools"></i> ${tools}</span>
           </div>
 
-          <a href="${link}" class="btn btn-neon mt-3">
+          <a href="${escapeHtml(link)}" class="btn btn-neon mt-3">
             <i class="bi bi-box-arrow-up-right"></i> Open
           </a>
         </div>
