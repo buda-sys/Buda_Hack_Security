@@ -762,13 +762,7 @@ Even though the domain policy enforces:
 
 Reusing a common password allowed authenticated access to the domain without exploiting additional vulnerabilities.
 
-This shows that the risk of Password Spraying does not depend exclusively on a weak policy, but on user behavior and the absence of additional controls such as:
 
-- Multi-factor authentication (MFA)
-    
-- Monitoring of distributed attempts
-    
-- Detection of anomalous patterns
     
 
 ---
@@ -794,7 +788,7 @@ If multiple hosts accept the same hash, password reuse is confirmed.
 
 ---
 
-# Internal Password Spraying – From Windows
+## Internal Password Spraying – From Windows
 
 From a Windows host joined to the KRAV0.LOCAL domain, it is possible to perform Password Spraying using native tools or specialized scripts.
 
@@ -904,10 +898,7 @@ Password spraying is also common against Internet-exposed services such as:
 
 Combining MFA, active monitoring, and network segmentation significantly reduces the impact of this type of attack.
 
----
 
-Perfect.  
-Here is a **professional conclusion** to close the KRAV0 Password Spraying lab and then a **well-written academic note** mentioning HTB Academy properly and elegantly.
 
 ---
 
@@ -969,6 +960,9 @@ The environment includes:
     
 - A scenario prepared for enumeration and password spraying.
     
+
+   > user: Administrador 
+   > pass: Bud@3lm3jor
 
 Download link:
 
