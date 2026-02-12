@@ -1,5 +1,5 @@
 [
-      
+
 {
     "slug": "password-spraying",
     "title": "Active Directory Enumeration | Password Spraying",
@@ -8,7 +8,7 @@
     "duration": "20–35 min",
     "tools": "Kali Linux",
     "thumb": "assets/img/labs/pspraying.png",
-    "link": "uploads/password-spraying.md",
+    "file": "uploads/password-spraying.md",
     "tags": "active directory enumeration password spraying authentication"
   }
 ]
