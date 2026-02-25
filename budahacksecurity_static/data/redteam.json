@@ -12,5 +12,21 @@
     "tags": "active directory enumeration password spraying authentication",
     "date": "2026-02-11",
     "difficulty": "Easy"
-  }
+  },
+
+    {
+
+   
+    "slug": "Command_Injection",
+    "title": "Command Injection",
+    "type": "pentester",
+    "description": "Hacking Web | Command Injection",
+    "duration": "30 min",
+    "tools": "Kali Linux",
+    "thumb": "assets/img/labs/injection.png",
+    "link": "uploads/command-injection.md",
+    "tags": "web exploitation command injection rce filter bypass linux",
+    "date": "2026-02-25",
+    "difficulty": "Medium"
+}
 ]
