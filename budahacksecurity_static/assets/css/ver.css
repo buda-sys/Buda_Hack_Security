@@ -349,3 +349,43 @@ body{
     overflow:visible;
   }
 }
+
+/* TABLAS */
+#markdown-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background: #1a0018; /* fondo oscuro tipo hacker */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255,0,51,0.25);
+}
+
+#markdown-container th,
+#markdown-container td {
+  padding: 12px 15px;
+  border-bottom: 1px solid rgba(255,0,51,0.25);
+  text-align: left;
+  color: #ffb3c6;
+}
+
+#markdown-container th {
+  background: rgba(255,0,51,0.15);
+  font-weight: 700;
+}
+
+#markdown-container tr:hover td {
+  background: rgba(255,0,51,0.1);
+}
+
+/* BLOQUE DE NOTA / CITA */
+#markdown-container blockquote {
+  background: rgba(255,0,51,0.15);
+  border-left: 4px solid #0a0042;
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 12px;
+  font-style: italic;
+  color: #ff99aa;
+  box-shadow: 0 0 15px rgba(255,0,51,0.2);
+}
