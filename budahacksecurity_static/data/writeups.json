@@ -186,6 +186,18 @@
     "thumb": "assets/img/autothumbs/htb.png",
     "description": "Write-up Hack The Box machine"
 
+  },
+
+   {
+    "slug": "Internal",
+    "file": "uploads/internal.md",
+    "title": "Internal",
+    "category": "Dockerlabs",
+    "difficulty": "Easy",
+    "date": "2026-02-25",
+    "thumb": "assets/img/autothumbs/dockerlabs.png",
+    "description": "Write-up the Dockerlabs Machine"
+
   }
 
 ]
