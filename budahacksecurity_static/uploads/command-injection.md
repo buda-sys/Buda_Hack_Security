@@ -1023,4 +1023,4 @@ This approach removes characters that could be used for injection, such as `;`, 
 Effective prevention combines **secure coding best practices**, strict validation, proper sanitization, and constant penetration testing. Even a single error in a large application can introduce a critical vulnerability, so security must be addressed in a comprehensive and ongoing manner.
 
 
-> Para poner en práctica los conceptos de Command Injection explicados en este documento, puede utilizarse la máquina Internal, disponible en la plataforma DockerLabs.
+>  To apply the Command Injection concepts explained in this document, you can practice on the Internal machine available on the DockerLabs platform.
