@@ -1021,3 +1021,6 @@ var ip = ip.replace(/[^A-Za-z0-9.]/g, '');
 This approach removes characters that could be used for injection, such as `;`, `|`, `&`, `$`, `(`, `)`, or other shell operators. Simple blacklists are not sufficient, as they can be bypassed through obfuscation techniques. Escaping special characters is also not completely secure, as there are multiple methods to bypass it.
 
 Effective prevention combines **secure coding best practices**, strict validation, proper sanitization, and constant penetration testing. Even a single error in a large application can introduce a critical vulnerability, so security must be addressed in a comprehensive and ongoing manner.
+
+
+> Para poner en práctica los conceptos de Command Injection explicados en este documento, puede utilizarse la máquina Internal, disponible en la plataforma DockerLabs.
