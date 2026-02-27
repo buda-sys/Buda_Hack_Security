@@ -9,9 +9,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-  <!-- Tu CSS -->
+  <!-- CSS del sitio -->
   <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/terminal.css">
   <link rel="stylesheet" href="assets/css/ver.css">
 
   <!-- Markdown + Highlight + Mermaid -->
@@ -21,211 +20,171 @@
   <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 
   <link rel="icon" href="assets/img/favicon_ico/favicon.ico">
-
-  <style>
-    /* ===== UX fixes (solo sidebar/index) ===== */
-    .back-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      margin-bottom:12px;
-      font-weight:800;
-      color:#ff99cc;
-      cursor:pointer;
-      user-select:none;
-    }
-    .back-btn:hover{ color:#ff3b8f; }
-
-    /* panel sticky, pero el scroll solo del indice */
-    .sidebar-panel{
-      max-height: calc(100vh - 105px);
-      overflow: hidden; /* importante: evita que el panel entero scrollee */
-    }
-
-    .sidebar-top{
-      /* info siempre visible */
-      padding-bottom: 10px;
-    }
-
-    /* INDICE scrolleable */
-    #sidebar-index{
-      margin-top: 10px;
-      padding-right: 8px;
-      max-height: calc(100vh - 360px); /* ajusta si quieres más/menos */
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
-    #sidebar-index::-webkit-scrollbar{ width: 8px; }
-    #sidebar-index::-webkit-scrollbar-thumb{
-      background: rgba(255,0,85,.35);
-      border-radius: 999px;
-    }
-    #sidebar-index::-webkit-scrollbar-track{
-      background: rgba(0,0,0,.35);
-    }
-
-    .toggle-index{
-      cursor:pointer;
-      font-size:.85rem;
-      color:#9ca3af;
-      user-select:none;
-    }
-    .toggle-index:hover{ color:#ff99cc; }
-
-    /* colapsar SOLO el indice */
-    .sidebar-index-collapsed{
-      max-height: 0 !important;
-      overflow: hidden !important;
-      margin-top: 0 !important;
-      padding-top: 0 !important;
-    }
-
-    /* Debug box para que no quedes a ciegas si falla JSON */
-    .debug-box{
-      margin: 14px 0 0;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(255,0,51,.08);
-      border: 1px solid rgba(255,0,51,.25);
-      color: #ffd1dc;
-      font-size: .85rem;
-      display: none;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-  </style>
 </head>
 
 <body>
 
-  <!-- NAV -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center" href="index.html">
-        <img src="assets/img/la.png" alt="ByteZero Logo" class="navbar-logo me-2">
-        <span>Buda Hack Security</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-        </ul>
+  <!-- ░░ BACKGROUND LAYERS ░░ -->
+  <canvas id="matrix-canvas"></canvas>
+  <div id="hex-grid-layer">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="hexPat" x="0" y="0" width="56" height="48" patternUnits="userSpaceOnUse">
+          <polygon points="28,2 52,14 52,38 28,50 4,38 4,14"
+            fill="none" stroke="#cc0000" stroke-width="0.7"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#hexPat)" />
+    </svg>
+  </div>
+  <div id="classified-watermark"></div>
+  <div id="scanline-bar"></div>
+  <div id="noise-layer"></div>
+  <div id="vignette-layer"></div>
+
+  <!-- ░░ STATUS BARS ░░ -->
+  <div id="top-status-bar">
+    <span class="tsci">⚠ TOP SECRET // SCI // NOFORN</span>
+    <span class="enc-blink" id="enc-label">▌ ENCRYPTED CHANNEL ACTIVE ▌</span>
+    <span id="status-clock">00:00:00 UTC | NODE: TOR-0000</span>
+  </div>
+  <div id="bottom-status-bar">
+    <span>◉ SECURE_CONN: <b class="g">ESTABLISHED</b></span>
+    <span>PACKETS_RX: <b class="g" id="pkt">0</b></span>
+    <span>ENCRYPT: <b class="g">AES-256-GCM</b></span>
+    <span>TOR_HOP: <b class="g">3/3</b></span>
+    <span style="margin-left:auto">CLASSIFICATION: <b class="r">TOP SECRET</b></span>
+  </div>
+
+  <!-- ░░ CONTENIDO ░░ -->
+  <div class="content-wrapper">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="assets/img/la.png" alt="ByteZero Logo" class="navbar-logo me-2">
+          <span>Buda Hack Security</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarNav" aria-controls="navbarNav"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <div class="container-fluid py-4">
-    <div class="row">
+    <div class="container-fluid py-4">
+      <div class="row g-4">
 
-      <!-- SIDEBAR -->
-      <aside class="col-md-3">
-        <div class="sidebar-panel position-sticky" style="top:85px;">
+        <!-- SIDEBAR -->
+        <aside class="col-md-3">
+          <div class="sidebar-panel position-sticky" style="top:85px;">
 
-          <div class="sidebar-top">
             <!-- BACK -->
             <div class="back-btn" id="backBtn">
               <i class="bi bi-arrow-left"></i> Back
             </div>
 
             <h4 class="sidebar-title"><i class="bi bi-info-circle"></i> Information</h4>
-            <p><strong>Title:</strong> <span id="doc-title">—</span></p>
-            <p><strong>Category:</strong> <span id="doc-category">—</span></p>
-            <p><strong>Difficulty:</strong> <span id="doc-diff">—</span></p>
-            <p><strong>Date:</strong> <span id="doc-date">—</span></p>
+
+            <div class="sidebar-meta">
+              <div class="meta-row"><span class="meta-label">Title</span><span id="doc-title">—</span></div>
+              <div class="meta-row"><span class="meta-label">Category</span><span id="doc-category">—</span></div>
+              <div class="meta-row"><span class="meta-label">Difficulty</span><span id="doc-diff">—</span></div>
+              <div class="meta-row"><span class="meta-label">Date</span><span id="doc-date">—</span></div>
+            </div>
 
             <div id="debugBox" class="debug-box"></div>
 
-            <hr>
+            <hr class="sidebar-hr">
 
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center mb-1">
               <h4 class="sidebar-title mb-0">
                 <i class="bi bi-list-stars"></i> Index
               </h4>
-              <span class="toggle-index" id="toggleIndex" title="Collapse/Expand index">
+              <span class="toggle-index" id="toggleIndex" title="Collapse/Expand">
                 <i class="bi bi-chevron-up"></i>
               </span>
             </div>
+
+            <ul id="sidebar-index" class="sidebar-index"></ul>
           </div>
+        </aside>
 
-          <ul id="sidebar-index" class="sidebar-index"></ul>
-        </div>
-      </aside>
+        <!-- CONTENT -->
+        <section class="col-md-9">
 
-      <!-- CONTENT -->
-      <section class="col-md-9">
-
-        <div class="header-3d-hacker">
-          <canvas id="matrix-bg"></canvas>
-          <div id="particles"></div>
-          <div class="hud-grid"></div>
-          <div class="hud-scan"></div>
-
-          <div class="hud-content scroll-fade">
-            <h1 id="holo-title" class="holo-title">Write-up</h1>
-            <p class="hud-sub typewriter" data-text="Buda Hack Security — Red Team Write-Up"></p>
-
-            <div class="hud-meta">
-              <span><i class="bi bi-folder2"></i> <span id="meta-category">—</span></span>
-              <span><i class="bi bi-lightning-charge-fill"></i> <span id="meta-diff">—</span></span>
-              <span><i class="bi bi-calendar-event"></i> <span id="meta-date">—</span></span>
+          <!-- HEADER HUD -->
+          <div class="writeup-header">
+            <canvas id="matrix-bg"></canvas>
+            <div class="writeup-header-scan"></div>
+            <div class="writeup-header-content scroll-fade">
+              <div class="writeup-classified-tag">[ CLASSIFIED REPORT ]</div>
+              <h1 id="holo-title" class="holo-title">Write-up</h1>
+              <div class="hud-meta">
+                <span><i class="bi bi-folder2"></i> <span id="meta-category">—</span></span>
+                <span><i class="bi bi-lightning-charge-fill"></i> <span id="meta-diff">—</span></span>
+                <span><i class="bi bi-calendar-event"></i> <span id="meta-date">—</span></span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="writeup-content">
-          <div id="markdown-container"></div>
-        </div>
+          <!-- MARKDOWN -->
+          <div class="writeup-content">
+            <div id="markdown-container"></div>
+          </div>
 
-      </section>
+        </section>
+      </div>
     </div>
-  </div>
+
+    <!-- FOOTER -->
+    <footer class="footer text-center text-light py-4">
+      <div class="container">
+        <h5 class="footer-title">Buda Hack Security</h5>
+        <p class="footer-subtitle">Pentest explorations, labs &amp; write-ups</p>
+        <div class="footer-social my-3">
+          <a href="https://github.com/buda-sys/buda-sys" class="social-link"><i class="bi bi-github"></i></a>
+          <a href="https://discord.gg/mqXsQYN3" class="social-link"><i class="bi bi-discord"></i></a>
+          <a href="contact.html" class="social-link"><i class="bi bi-envelope"></i></a>
+          <a href="disclaimer.html" class="social-link" title="Legal Disclaimer & Responsible Use">
+            <i class="bi bi-shield-check"></i>
+          </a>
+        </div>
+        <p class="footer-copy mt-3 mb-0">
+          © 2025 <span class="text-danger">Buda Hack Security</span> — All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+  </div><!-- /content-wrapper -->
 
   <div id="lightbox"><img alt="preview"></div>
   <div id="volver-arriba">↑</div>
 
-  <footer class="footer text-center text-light py-4">
-    <div class="container">
-      <h5 class="footer-title">Buda Hack Security</h5>
-      <p class="footer-subtitle">Pentest explorations, labs & write-ups</p>
-
-      <div class="footer-social my-3">
-        <a href="https://github.com/buda-sys/buda-sys" class="social-link"><i class="bi bi-github"></i></a>
-        <a href="https://discord.gg/mqXsQYN3" class="social-link"><i class="bi bi-discord"></i></a>
-        <a href="contact.html" class="social-link"><i class="bi bi-envelope"></i></a>
-        <a href="disclaimer.html" class="social-link" title="Legal Disclaimer & Responsible Use">
-          <i class="bi bi-shield-check"></i>
-        </a>
-      </div>
-
-      <p class="footer-copy mt-3 mb-0">
-        © 2025 <span class="text-success">Buda Hack Security</span> — All rights reserved.
-      </p>
-    </div>
-  </footer>
-
-  <!-- 1) LOAD META (JSON) + SET MD_FILE  OR DIRECT FILE MODE -->
+  <!-- SCRIPTS META -->
   <script>
     const params = new URLSearchParams(location.search);
-
-    const slug = params.get("doc");       // modo viejo
-    const fileParam = params.get("file"); // modo nuevo (redteam)
-    const backParam = params.get("back");
-
-    const titleParam = params.get("title");
-    const categoryParam = params.get("category");
+    const slug        = params.get("doc");
+    const fileParam   = params.get("file");
+    const backParam   = params.get("back");
+    const titleParam  = params.get("title");
+    const categoryParam   = params.get("category");
     const difficultyParam = params.get("difficulty");
-    const dateParam = params.get("date");
+    const dateParam   = params.get("date");
 
     (function initBack(){
       const backBtn = document.getElementById("backBtn");
       const target = (backParam && backParam.trim()) ? backParam.trim() : "writeups.html";
       backBtn.addEventListener("click", () => location.href = target);
-      backBtn.innerHTML = `<i class="bi bi-arrow-left"></i> Back`;
     })();
 
     function normalizePath(p){
@@ -248,11 +207,7 @@
 
     function niceTitleFromFile(path){
       const name = (path || "Write-up").split("/").pop() || "Write-up";
-      return name
-        .replace(/\.(md|markdown)$/i,"")
-        .replaceAll("_"," ")
-        .replaceAll("-"," ")
-        .trim() || "Write-up";
+      return name.replace(/\.(md|markdown)$/i,"").replaceAll("_"," ").replaceAll("-"," ").trim() || "Write-up";
     }
 
     async function loadDocMetaFromJSON() {
@@ -265,97 +220,151 @@
         console.error(e);
         showDebug("JSON ERROR:\n" + (e.message || e));
         document.getElementById("markdown-container").innerHTML =
-          "<p class='text-danger'>Error loading <b>data/writeups.json</b>. Check XAMPP path + JSON format.</p>";
+          "<p style='color:var(--red)'>Error loading <b>data/writeups.json</b>.</p>";
         return;
       }
-
       const doc = (docs || []).find(d => d.slug === slug) || (docs || [])[0];
-
       if (!doc) {
         document.getElementById("markdown-container").innerHTML =
-          "<p class='text-danger'>No documents found in writeups.json.</p>";
-        showDebug("No documents found in data/writeups.json");
+          "<p style='color:var(--red)'>No documents found in writeups.json.</p>";
         return;
       }
-
-      document.getElementById("doc-title").textContent = doc.title || "—";
-      document.getElementById("doc-category").textContent = doc.category || "—";
-      document.getElementById("doc-diff").textContent = doc.difficulty || "—";
-      document.getElementById("doc-date").textContent = doc.date || "—";
-
-      const title = doc.title || "Write-up";
-      const holo = document.getElementById("holo-title");
-      holo.textContent = title;
-      holo.setAttribute("data-glitch", title);
-
-      document.getElementById("meta-category").textContent = doc.category || "—";
-      document.getElementById("meta-diff").textContent = doc.difficulty || "—";
-      document.getElementById("meta-date").textContent = doc.date || "—";
-
-      document.getElementById("page-title").textContent = `${title} | Buda Hack Security`;
-
+      setMeta(doc.title, doc.category, doc.difficulty, doc.date);
       window.MD_FILE = normalizePath(doc.file);
-      console.log("MD_FILE:", window.MD_FILE);
     }
 
     function loadDirectFile(){
       const md = normalizePath(fileParam);
-
-      const title = (titleParam && titleParam.trim()) ? titleParam.trim() : niceTitleFromFile(md);
-      const category = (categoryParam && categoryParam.trim()) ? categoryParam.trim() : "Red Team";
+      const title      = (titleParam      && titleParam.trim())      ? titleParam.trim()      : niceTitleFromFile(md);
+      const category   = (categoryParam   && categoryParam.trim())   ? categoryParam.trim()   : "Red Team";
       const difficulty = (difficultyParam && difficultyParam.trim()) ? difficultyParam.trim() : "—";
-      const date = (dateParam && dateParam.trim()) ? dateParam.trim() : "—";
-
-      document.getElementById("doc-title").textContent = title;
-      document.getElementById("doc-category").textContent = category;
-      document.getElementById("doc-diff").textContent = difficulty;
-      document.getElementById("doc-date").textContent = date;
-
-      const holo = document.getElementById("holo-title");
-      holo.textContent = title;
-      holo.setAttribute("data-glitch", title);
-
-      document.getElementById("meta-category").textContent = category;
-      document.getElementById("meta-diff").textContent = difficulty;
-      document.getElementById("meta-date").textContent = date;
-
-      document.getElementById("page-title").textContent = `${title} | Buda Hack Security`;
-
+      const date       = (dateParam       && dateParam.trim())       ? dateParam.trim()       : "—";
+      setMeta(title, category, difficulty, date);
       window.MD_FILE = md;
-      console.log("MD_FILE (direct):", window.MD_FILE);
+    }
+
+    function setMeta(title, category, difficulty, date){
+      document.getElementById("doc-title").textContent    = title      || "—";
+      document.getElementById("doc-category").textContent = category   || "—";
+      document.getElementById("doc-diff").textContent     = difficulty || "—";
+      document.getElementById("doc-date").textContent     = date       || "—";
+      document.getElementById("meta-category").textContent = category  || "—";
+      document.getElementById("meta-diff").textContent     = difficulty || "—";
+      document.getElementById("meta-date").textContent     = date       || "—";
+      const holo = document.getElementById("holo-title");
+      holo.textContent = title || "Write-up";
+      holo.setAttribute("data-glitch", title || "Write-up");
+      document.getElementById("page-title").textContent = `${title || "Write-up"} | Buda Hack Security`;
     }
 
     if (fileParam) loadDirectFile();
     else loadDocMetaFromJSON();
   </script>
 
-  <!-- 2) TOGGLE INDEX (solo colapsa el UL) -->
+  <!-- TOGGLE INDEX -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const btn = document.getElementById("toggleIndex");
       const idx = document.getElementById("sidebar-index");
       if (!btn || !idx) return;
-
       btn.addEventListener("click", () => {
         idx.classList.toggle("sidebar-index-collapsed");
         btn.innerHTML = idx.classList.contains("sidebar-index-collapsed")
           ? '<i class="bi bi-chevron-down"></i>'
           : '<i class="bi bi-chevron-up"></i>';
       });
-    });
-  </script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
       document.querySelectorAll(".scroll-fade").forEach(el => el.classList.add("visible"));
     });
   </script>
 
-  <!-- 3) Render MD + Index + Mermaid + MP4 support -->
+  <!-- MATRIX RAIN (header + global) -->
+  <script>
+    // Global matrix
+    (function() {
+      var canvas = document.getElementById('matrix-canvas');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var chars = '0123456789ABCDEF<>[]{}|\\/?!@#ROOTEXPLOITHACK';
+      var fontSize = 14, drops = [];
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        drops = Array(Math.floor(canvas.width / fontSize)).fill(1);
+      }
+      resize(); window.addEventListener('resize', resize);
+      setInterval(function() {
+        ctx.fillStyle = 'rgba(0,0,0,0.04)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.font = fontSize+'px monospace';
+        drops.forEach(function(y,i){
+          var ch = chars[Math.floor(Math.random()*chars.length)];
+          if(y===1) ctx.fillStyle='#ff2200';
+          else if(y<4) ctx.fillStyle='#cc0000';
+          else ctx.fillStyle='rgba(140,0,0,0.4)';
+          ctx.fillText(ch, i*fontSize, y*fontSize);
+          if(y*fontSize>canvas.height && Math.random()>0.975) drops[i]=0;
+          drops[i]++;
+        });
+      }, 50);
+    })();
+
+    // Header matrix (canvas pequeño)
+    document.addEventListener('DOMContentLoaded', function() {
+      var canvas = document.getElementById('matrix-bg');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var chars = '01ROOTPWNDHACK><[]{}';
+      var fontSize = 13, drops = [];
+      function resize() {
+        canvas.width  = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        drops = Array(Math.floor(canvas.width / fontSize)).fill(1);
+      }
+      resize(); window.addEventListener('resize', resize);
+      setInterval(function() {
+        ctx.fillStyle = 'rgba(0,0,0,0.05)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.font = fontSize+'px monospace';
+        drops.forEach(function(y,i){
+          var ch = chars[Math.floor(Math.random()*chars.length)];
+          ctx.fillStyle = y<3 ? '#ff2200' : 'rgba(180,0,0,0.35)';
+          ctx.fillText(ch, i*fontSize, y*fontSize);
+          if(y*fontSize>canvas.height && Math.random()>0.975) drops[i]=0;
+          drops[i]++;
+        });
+      }, 60);
+    });
+
+    // Watermark
+    (function(){
+      var el = document.getElementById('classified-watermark');
+      if(!el) return;
+      var words=['CLASSIFIED','TOP SECRET','CONFIDENTIAL','RESTRICTED','NOFORN','EYES ONLY'];
+      var html='';
+      for(var r=0;r<14;r++) for(var c=0;c<7;c++){var w=words[(r+c)%words.length];html+='<span style="top:'+(r*8-2)+'%;left:'+(c*16-2)+'%">'+w+'</span>';}
+      el.innerHTML=html;
+    })();
+
+    // Status bars
+    (function(){
+      var clockEl=document.getElementById('status-clock');
+      var encEl=document.getElementById('enc-label');
+      var pktEl=document.getElementById('pkt');
+      if(clockEl) setInterval(function(){
+        var now=new Date(),pad=function(n){return String(n).padStart(2,'0');};
+        clockEl.textContent=pad(now.getUTCHours())+':'+pad(now.getUTCMinutes())+':'+pad(now.getUTCSeconds())+' UTC | NODE: TOR-'+String(Math.floor(Math.random()*9000+1000));
+      },1000);
+      if(encEl) setInterval(function(){encEl.style.opacity=encEl.style.opacity==='0.25'?'1':'0.25';},800);
+      if(pktEl){var p=0;setInterval(function(){p+=Math.floor(Math.random()*120+40);pktEl.textContent=p.toLocaleString();},300);}
+    })();
+  </script>
+
+  <!-- RENDER MD -->
   <script src="assets/js/writeup_superpro_static.js"></script>
 
-  <!-- Bootstrap -->
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Vercel Analytics -->
+  <script defer src="/_vercel/insights/script.js"></script>
 
 </body>
 </html>
