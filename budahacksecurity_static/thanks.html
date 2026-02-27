@@ -1,70 +1,183 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Mensaje enviado | Buda Hack Security</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Message Sent | Buda Hack Security</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/contact.css">
-</head>
+  <link rel="icon" href="assets/img/favicon_ico/favicon.ico">
+  <style>
+  /* ══ THANKS — estilos locales ══ */
 
+  /* PAGE HERO */
+  .page-hero{position:relative;padding:52px 0 36px;text-align:center;background:radial-gradient(ellipse at top,rgba(140,0,0,0.4) 0%,rgba(8,0,0,0.98) 70%),#000;border-bottom:1px solid rgba(204,0,0,0.3);overflow:hidden;}
+  #hero-matrix{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:0.35;}
+  .page-hero>.container{position:relative;z-index:2;}
+  .page-hero::after{content:"";position:absolute;bottom:0;left:5%;width:90%;height:1px;background:linear-gradient(90deg,transparent,var(--red),rgba(204,0,0,0.4),var(--red),transparent);box-shadow:0 0 18px rgba(204,0,0,0.5);}
+  .hero-tag{font-family:var(--mono);font-size:0.55rem;color:rgba(204,0,0,0.5);letter-spacing:4px;margin-bottom:.75rem;}
+  .page-hero h1{font-family:var(--display);font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:3px;color:var(--red);text-shadow:0 0 8px var(--red),0 0 22px rgba(180,0,0,0.65),0 0 50px rgba(140,0,0,0.35);animation:flicker 4s infinite;}
+  .page-hero p{font-family:var(--mono);font-size:0.78rem;color:#555;letter-spacing:1px;margin:6px auto 0;max-width:600px;}
+
+  /* THANKS CARD */
+  .contact-wrap{padding:40px 16px 60px;}
+  .terminal-card{max-width:560px;background:rgba(6,0,0,0.92);border:1px solid rgba(204,0,0,0.2);border-radius:4px;box-shadow:0 0 40px rgba(0,0,0,0.8),inset 0 0 30px rgba(0,0,0,0.5);overflow:hidden;backdrop-filter:blur(8px);}
+  .terminal-top{background:rgba(204,0,0,0.08);border-bottom:1px solid rgba(204,0,0,0.15);padding:10px 14px;display:flex;align-items:center;gap:8px;}
+  .dot{width:11px;height:11px;border-radius:50%;}
+  .dot.red{background:#cc0000;box-shadow:0 0 6px rgba(204,0,0,0.6);}
+  .dot.yellow{background:#886600;box-shadow:0 0 6px rgba(136,102,0,0.4);}
+  .dot.green{background:#006600;box-shadow:0 0 6px rgba(0,102,0,0.4);}
+  .terminal-title{font-family:var(--mono);font-size:0.7rem;color:#444;letter-spacing:1.5px;margin-left:6px;}
+
+  .terminal-body{padding:32px 30px 36px;text-align:center;}
+  .terminal-h{font-family:var(--display);font-size:1.1rem;letter-spacing:2.5px;color:var(--red-dim);margin-bottom:8px;text-shadow:0 0 10px rgba(204,0,0,0.3);}
+  .terminal-p{font-family:var(--mono);font-size:0.78rem;color:#555;letter-spacing:0.5px;margin-bottom:28px;}
+
+  /* Success indicator */
+  .success-icon{margin-bottom:20px;}
+  .success-icon img{width:72px;height:72px;filter:sepia(1) saturate(3) hue-rotate(310deg) brightness(0.8);}
+  .success-badge{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:0.7rem;letter-spacing:2px;color:var(--red-dim);background:rgba(204,0,0,0.06);border:1px solid rgba(204,0,0,0.2);padding:6px 16px;border-radius:3px;margin-bottom:20px;}
+  .success-badge i{color:var(--red);}
+
+  /* Status line */
+  .status-line{font-family:var(--mono);font-size:0.72rem;color:#2a2a2a;letter-spacing:1px;margin:10px 0 24px;}
+  .status-line .prompt{color:var(--red-dim);margin-right:6px;}
+  .status-line .ok{color:#006600;}
+
+  /* Buttons */
+  .thanks-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .tbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;border-radius:3px;font-family:var(--mono);font-size:0.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--red);background:transparent;border:1px solid var(--red-dim);box-shadow:0 0 8px rgba(204,0,0,0.1);transition:all .2s ease;text-decoration:none;cursor:pointer;}
+  .tbtn:hover{background:rgba(204,0,0,0.1);border-color:var(--red);box-shadow:0 0 18px rgba(204,0,0,0.4);color:#fff;}
+  .tbtn-ghost{border-color:rgba(204,0,0,0.12);color:#444;}
+  .tbtn-ghost:hover{border-color:rgba(204,0,0,0.3);color:var(--red-dim);background:transparent;box-shadow:0 0 10px rgba(204,0,0,0.1);}
+
+  .hint{font-family:var(--mono);font-size:0.72rem;color:#333;letter-spacing:0.5px;margin-top:18px;}
+  .hint .prompt{color:var(--red-dim);margin-right:6px;}
+  .hint b{color:#555;}
+  </style>
+</head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center" href="index.html">
-      <img src="assets/img/la.png" alt="ByteZero Logo" class="navbar-logo me-2">
-      <span>Buda Hack Security</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-      </ul>
-    </div>
+  <!-- BACKGROUND LAYERS -->
+  <canvas id="matrix-canvas"></canvas>
+  <div id="hex-grid-layer">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs><pattern id="hexPat" x="0" y="0" width="56" height="48" patternUnits="userSpaceOnUse">
+        <polygon points="28,2 52,14 52,38 28,50 4,38 4,14" fill="none" stroke="#cc0000" stroke-width="0.7"/>
+      </pattern></defs>
+      <rect width="100%" height="100%" fill="url(#hexPat)"/>
+    </svg>
   </div>
-</nav>
+  <div id="classified-watermark"></div>
+  <div id="scanline-bar"></div>
+  <div id="noise-layer"></div>
+  <div id="vignette-layer"></div>
 
-  <div class="contact-wrap py-5">
-    <div class="terminal-card mx-auto thanks-card">
-      <div class="terminal-top">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
-        <span class="terminal-title">status@buda-hack-security</span>
-      </div>
-
-      <div class="terminal-body">
-        
-        <div class="thanks-badge">
-            <img src="assets/img/success.gif" alt="Mensaje enviado">
-         </div>
-
-
-        <h2 class="terminal-h">Mensaje enviado</h2>
-        <p class="terminal-p">
-          Gracias por escribirme. Revisaré tu mensaje lo antes posible.
-        </p>
-
-        <div class="thanks-actions">
-          <a class="tbtn tbtn-ghost" href="contact.html">Enviar otro</a>
-          <a class="tbtn" href="index.html">Volver al inicio</a>
-        </div>
-
-        <div class="hint mt-3">
-          <span class="prompt">$</span> Tip: revisa <b>SPAM/Promociones</b> si esperas respuesta.
-        </div>
-      </div>
-    </div>
+  <!-- STATUS BARS -->
+  <div id="top-status-bar">
+    <span class="tsci">&#x26A0; TOP SECRET // SCI // NOFORN</span>
+    <span class="enc-blink" id="enc-label">&#x258C; ENCRYPTED CHANNEL ACTIVE &#x258C;</span>
+    <span id="status-clock">00:00:00 UTC | NODE: TOR-0000</span>
+  </div>
+  <div id="bottom-status-bar">
+    <span>&#x25C9; SECURE_CONN: <b class="g">ESTABLISHED</b></span>
+    <span>PACKETS_RX: <b class="g" id="pkt">0</b></span>
+    <span>ENCRYPT: <b class="g">AES-256-GCM</b></span>
+    <span>TOR_HOP: <b class="g">3/3</b></span>
+    <span style="margin-left:auto">CLASSIFICATION: <b class="r">TOP SECRET</b></span>
   </div>
 
+  <div class="content-wrapper">
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="assets/img/la.png" alt="ByteZero Logo" class="navbar-logo me-2">
+          <span>Buda Hack Security</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="page-hero">
+      <canvas id="hero-matrix"></canvas>
+      <div class="container">
+        <p class="hero-tag">[ TRANSMISSION STATUS ]</p>
+        <h1><i class="bi bi-check-circle-fill me-3"></i>Message Sent</h1>
+        <p>Secure transmission completed successfully.</p>
+      </div>
+    </div>
+
+    <div class="contact-wrap">
+      <div class="terminal-card mx-auto">
+        <div class="terminal-top">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="terminal-title">status@buda-hack-security ~ tx-confirm</span>
+        </div>
+        <div class="terminal-body">
+
+          <div class="success-icon">
+            <img src="assets/img/success.gif" alt="Message sent">
+          </div>
+
+          <div class="success-badge">
+            <i class="bi bi-check2-circle"></i> TX_STATUS: DELIVERED
+          </div>
+
+          <h2 class="terminal-h">Message Received</h2>
+          <p class="terminal-p">Thanks for reaching out. I'll review your message as soon as possible.</p>
+
+          <div class="status-line">
+            <span class="prompt">$</span> msg_status <span class="ok">[OK]</span> &mdash; encrypted &amp; delivered
+          </div>
+
+          <div class="thanks-actions">
+            <a class="tbtn tbtn-ghost" href="contact.html"><i class="bi bi-arrow-left"></i> Send Another</a>
+            <a class="tbtn" href="index.html"><i class="bi bi-house-door"></i> Back to Home</a>
+          </div>
+
+          <div class="hint mt-3">
+            <span class="prompt">$</span> tip: check <b>SPAM/Promotions</b> if expecting a reply.
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer text-center text-light py-4">
+      <div class="container">
+        <h5 class="footer-title">Buda Hack Security</h5>
+        <p class="footer-subtitle">Pentest explorations, labs &amp; write-ups</p>
+        <div class="footer-social my-3">
+          <a href="https://github.com/buda-sys/buda-sys" class="social-link"><i class="bi bi-github"></i></a>
+          <a href="https://discord.gg/mqXsQYN3" class="social-link"><i class="bi bi-discord"></i></a>
+          <a href="contact.html" class="social-link"><i class="bi bi-envelope"></i></a>
+          <a href="disclaimer.html" class="social-link"><i class="bi bi-shield-check"></i></a>
+        </div>
+        <p class="footer-copy mt-3 mb-0">&copy; 2025 <span class="text-danger">Buda Hack Security</span> &mdash; All rights reserved.</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    (function(){var c=document.getElementById('matrix-canvas');if(!c)return;var x=c.getContext('2d');var ch='0123456789ABCDEF<>[]{}ROOTEXPLOITHACK';var fs=14,d=[];function r(){c.width=window.innerWidth;c.height=window.innerHeight;d=Array(Math.floor(c.width/fs)).fill(1);}r();window.addEventListener('resize',r);setInterval(function(){x.fillStyle='rgba(0,0,0,0.04)';x.fillRect(0,0,c.width,c.height);x.font=fs+'px monospace';d.forEach(function(y,i){var s=ch[Math.floor(Math.random()*ch.length)];if(y===1)x.fillStyle='#ff2200';else if(y<4)x.fillStyle='#cc0000';else x.fillStyle='rgba(140,0,0,0.4)';x.fillText(s,i*fs,y*fs);if(y*fs>c.height&&Math.random()>0.975)d[i]=0;d[i]++;});},50);})();
+    (function(){var c=document.getElementById('hero-matrix');if(!c)return;var hero=c.closest('.page-hero');var x=c.getContext('2d');var ch='01ROOTPWNDHACK><[]{}';var fs=16,d=[];function r(){c.width=hero.offsetWidth;c.height=hero.offsetHeight;d=Array(Math.floor(c.width/fs)).fill(1);}r();window.addEventListener('resize',r);function draw(){x.fillStyle='rgba(0,0,0,0.12)';x.fillRect(0,0,c.width,c.height);x.font=fs+'px monospace';d.forEach(function(y,i){x.fillStyle=y<3?'#ff2200':'rgba(180,0,0,0.3)';x.fillText(Math.random()>0.5?'1':'0',i*fs,y*fs);if(y*fs>c.height&&Math.random()>0.96)d[i]=0;d[i]++;});requestAnimationFrame(draw);}draw();})();
+    (function(){var el=document.getElementById('classified-watermark');if(!el)return;var words=['CLASSIFIED','TOP SECRET','CONFIDENTIAL','RESTRICTED','NOFORN','EYES ONLY'];var html='';for(var r=0;r<14;r++)for(var c=0;c<7;c++){var w=words[(r+c)%words.length];html+='<span style="top:'+(r*8-2)+'%;left:'+(c*16-2)+'%">'+w+'</span>';}el.innerHTML=html;})();
+    (function(){var cl=document.getElementById('status-clock');var en=document.getElementById('enc-label');var pk=document.getElementById('pkt');if(cl)setInterval(function(){var n=new Date(),p=function(x){return String(x).padStart(2,'0');};cl.textContent=p(n.getUTCHours())+':'+p(n.getUTCMinutes())+':'+p(n.getUTCSeconds())+' UTC | NODE: TOR-'+String(Math.floor(Math.random()*9000+1000));},1000);if(en)setInterval(function(){en.style.opacity=en.style.opacity==='0.25'?'1':'0.25';},800);if(pk){var p=0;setInterval(function(){p+=Math.floor(Math.random()*120+40);pk.textContent=p.toLocaleString();},300);}})();
+  </script>
 </body>
 </html>
-

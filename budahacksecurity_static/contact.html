@@ -1,113 +1,176 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Contacto | Buda Hack Security</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Contact | Buda Hack Security</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
   <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/contact.css">
-</head>
+  <link rel="icon" href="assets/img/favicon_ico/favicon.ico">
+  <style>
+  /* ══ CONTACT — estilos locales ══ */
+  #scroll-bar{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,#cc0000,#ff2200,#cc0000);z-index:99999;transition:width .08s linear;box-shadow:0 0 10px rgba(204,0,0,0.8);pointer-events:none;}
 
+  /* PAGE HERO */
+  .page-hero{position:relative;padding:52px 0 36px;text-align:center;background:radial-gradient(ellipse at top,rgba(140,0,0,0.4) 0%,rgba(8,0,0,0.98) 70%),#000;border-bottom:1px solid rgba(204,0,0,0.3);overflow:hidden;}
+  #hero-matrix{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:0.35;}
+  .page-hero>.container{position:relative;z-index:2;}
+  .page-hero::after{content:"";position:absolute;bottom:0;left:5%;width:90%;height:1px;background:linear-gradient(90deg,transparent,var(--red),rgba(204,0,0,0.4),var(--red),transparent);box-shadow:0 0 18px rgba(204,0,0,0.5);}
+  .hero-tag{font-family:var(--mono);font-size:0.55rem;color:rgba(204,0,0,0.5);letter-spacing:4px;margin-bottom:.75rem;}
+  .page-hero h1{font-family:var(--display);font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:3px;color:var(--red);text-shadow:0 0 8px var(--red),0 0 22px rgba(180,0,0,0.65),0 0 50px rgba(140,0,0,0.35);animation:flicker 4s infinite;}
+  .page-hero p{font-family:var(--mono);font-size:0.78rem;color:#555;letter-spacing:1px;margin:6px auto 0;max-width:600px;}
+
+  /* TERMINAL CARD */
+  .contact-wrap{padding:40px 16px 60px;}
+  .terminal-card{max-width:620px;background:rgba(6,0,0,0.92);border:1px solid rgba(204,0,0,0.2);border-radius:4px;box-shadow:0 0 40px rgba(0,0,0,0.8),inset 0 0 30px rgba(0,0,0,0.5);overflow:hidden;backdrop-filter:blur(8px);}
+
+  /* Terminal title bar */
+  .terminal-top{background:rgba(204,0,0,0.08);border-bottom:1px solid rgba(204,0,0,0.15);padding:10px 14px;display:flex;align-items:center;gap:8px;}
+  .dot{width:11px;height:11px;border-radius:50%;}
+  .dot.red{background:#cc0000;box-shadow:0 0 6px rgba(204,0,0,0.6);}
+  .dot.yellow{background:#886600;box-shadow:0 0 6px rgba(136,102,0,0.4);}
+  .dot.green{background:#006600;box-shadow:0 0 6px rgba(0,102,0,0.4);}
+  .terminal-title{font-family:var(--mono);font-size:0.7rem;color:#444;letter-spacing:1.5px;margin-left:6px;}
+
+  .terminal-body{padding:28px 30px 32px;}
+  .terminal-h{font-family:var(--display);font-size:1.1rem;letter-spacing:2.5px;color:var(--red-dim);margin-bottom:8px;text-shadow:0 0 10px rgba(204,0,0,0.3);}
+  .terminal-p{font-family:var(--mono);font-size:0.78rem;color:#555;letter-spacing:0.5px;margin-bottom:24px;}
+
+  /* Form */
+  .tlabel{display:block;font-family:var(--mono);font-size:0.68rem;color:#555;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+  .tlabel.mt{margin-top:18px;}
+  .tinput{display:block;width:100%;background:rgba(0,0,0,0.6);border:1px solid rgba(204,0,0,0.18);border-radius:3px;padding:9px 13px;font-family:var(--mono);font-size:0.82rem;color:#ccc;outline:none;transition:border-color .2s,box-shadow .2s;letter-spacing:0.3px;}
+  .tinput:focus{border-color:rgba(204,0,0,0.5);box-shadow:0 0 14px rgba(204,0,0,0.15);}
+  .tinput::placeholder{color:#2a2a2a;}
+  textarea.tinput{resize:vertical;min-height:110px;}
+  .tbtn{display:block;width:100%;margin-top:22px;padding:11px 16px;border-radius:3px;font-family:var(--mono);font-size:0.8rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);background:transparent;border:1px solid var(--red-dim);box-shadow:0 0 8px rgba(204,0,0,0.1),inset 0 0 8px rgba(204,0,0,0.04);cursor:pointer;transition:all .2s ease;text-decoration:none;text-align:center;}
+  .tbtn:hover{background:rgba(204,0,0,0.1);border-color:var(--red);box-shadow:0 0 18px rgba(204,0,0,0.4);color:#fff;}
+  .tback{margin-top:16px;text-align:center;}
+  .tback a{font-family:var(--mono);font-size:0.72rem;color:#333;letter-spacing:1.5px;text-decoration:none;transition:color .2s;}
+  .tback a:hover{color:var(--red-dim);}
+  </style>
+</head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center" href="index.html">
-      <img src="assets/img/la.png" alt="ByteZero Logo" class="navbar-logo me-2">
-      <span>Buda Hack Security</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-      </ul>
-    </div>
+  <div id="scroll-bar"></div>
+
+  <!-- BACKGROUND LAYERS -->
+  <canvas id="matrix-canvas"></canvas>
+  <div id="hex-grid-layer">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs><pattern id="hexPat" x="0" y="0" width="56" height="48" patternUnits="userSpaceOnUse">
+        <polygon points="28,2 52,14 52,38 28,50 4,38 4,14" fill="none" stroke="#cc0000" stroke-width="0.7"/>
+      </pattern></defs>
+      <rect width="100%" height="100%" fill="url(#hexPat)"/>
+    </svg>
   </div>
-</nav>
+  <div id="classified-watermark"></div>
+  <div id="scanline-bar"></div>
+  <div id="noise-layer"></div>
+  <div id="vignette-layer"></div>
 
-<div class="contact-wrap py-5">
-  <div class="terminal-card mx-auto">
-    <div class="terminal-top">
-      <span class="dot red"></span>
-      <span class="dot yellow"></span>
-      <span class="dot green"></span>
-      <span class="terminal-title">contact@buda-hack-security</span>
-    </div>
+  <!-- STATUS BARS -->
+  <div id="top-status-bar">
+    <span class="tsci">&#x26A0; TOP SECRET // SCI // NOFORN</span>
+    <span class="enc-blink" id="enc-label">&#x258C; ENCRYPTED CHANNEL ACTIVE &#x258C;</span>
+    <span id="status-clock">00:00:00 UTC | NODE: TOR-0000</span>
+  </div>
+  <div id="bottom-status-bar">
+    <span>&#x25C9; SECURE_CONN: <b class="g">ESTABLISHED</b></span>
+    <span>PACKETS_RX: <b class="g" id="pkt">0</b></span>
+    <span>ENCRYPT: <b class="g">AES-256-GCM</b></span>
+    <span>TOR_HOP: <b class="g">3/3</b></span>
+    <span style="margin-left:auto">CLASSIFICATION: <b class="r">TOP SECRET</b></span>
+  </div>
 
-    <div class="terminal-body">
-      <h2 class="terminal-h">📩 Contáctame</h2>
-      <p class="terminal-p">
-        ¿Tienes un comentario, sugerencia o reporte? Escríbeme.
-      </p>
+  <div class="content-wrapper">
 
-      <!-- FORMULARIO -->
-      <form action="https://formsubmit.co/hackbuda5@gmail.com" method="POST" class="terminal-form">
-
-        <input type="hidden" name="_subject" value="Nuevo mensaje desde Buda Hack Security">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="https://budahacksecurity.fun/thanks.html">
-
-        <label class="tlabel">Nombre</label>
-        <input type="text" name="name" class="tinput" placeholder="Name" required>
-
-        <label class="tlabel mt">Correo</label>
-        <input type="email" name="email" class="tinput" placeholder="usuario@mail.com" required>
-
-        <label class="tlabel mt">Mensaje</label>
-        <textarea name="message" rows="6" class="tinput" placeholder="Escribe tu mensaje..." required></textarea>
-
-        <button type="submit" class="tbtn">
-          Enviar mensaje
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="assets/img/la.png" alt="ByteZero Logo" class="navbar-logo me-2">
+          <span>Buda Hack Security</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="tback">
-          <a href="index.html">← Volver al inicio</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+          </ul>
         </div>
-      </form>
+      </div>
+    </nav>
 
-    </div>
-  </div>
-</div>
-
-
-<footer class="footer text-center text-light py-4">
-  <div class="container">
-    <h5 class="footer-title">Buda Hack Security</h5>
-    <p class="footer-subtitle">Pentest explorations, labs & write-ups</p>
-
-    <div class="footer-social my-3">
-      <a href="https://github.com/buda-sys/buda-sys" class="social-link">
-        <i class="bi bi-github"></i>
-      </a>
-     
-      <a href="https://discord.gg/mqXsQYN3" class="social-link">
-        <i class="bi bi-discord"></i>
-      </a>
-      <a href="contact.html" class="social-link">
-        <i class="bi bi-envelope"></i>
-      </a>
-
-      <!-- DISCLAIMER -->
-      <a href="disclaimer.html" class="social-link" title="Legal Disclaimer & Responsible Use">
-        <i class="bi bi-shield-check"></i>
-      </a>
+    <div class="page-hero">
+      <canvas id="hero-matrix"></canvas>
+      <div class="container">
+        <p class="hero-tag">[ SECURE TRANSMISSION — ENCRYPTED ]</p>
+        <h1><i class="bi bi-envelope-fill me-3"></i>Contact</h1>
+        <p>Send a message through the secure channel.</p>
+      </div>
     </div>
 
-    <p class="footer-copy mt-3 mb-0">
-      © 2025 <span class="text-success">Buda Hack Security</span> — All rights reserved.
-    </p>
-  </div>
-</footer>
+    <div class="contact-wrap">
+      <div class="terminal-card mx-auto">
+        <div class="terminal-top">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="terminal-title">contact@buda-hack-security ~ secure-msg</span>
+        </div>
+        <div class="terminal-body">
+          <h2 class="terminal-h"><i class="bi bi-terminal me-2"></i>Send Message</h2>
+          <p class="terminal-p">Comment, suggestion, or report? Write to me.</p>
 
+          <form action="https://formsubmit.co/hackbuda5@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="New message from Buda Hack Security">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://budahacksecurity.fun/thanks.html">
+
+            <label class="tlabel">Name</label>
+            <input type="text" name="name" class="tinput" placeholder="Your name" required>
+
+            <label class="tlabel mt">Email</label>
+            <input type="email" name="email" class="tinput" placeholder="user@mail.com" required>
+
+            <label class="tlabel mt">Message</label>
+            <textarea name="message" rows="6" class="tinput" placeholder="Write your message..." required></textarea>
+
+            <button type="submit" class="tbtn"><i class="bi bi-send-fill me-2"></i>Send Message</button>
+            <div class="tback"><a href="index.html">&larr; Back to home</a></div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer text-center text-light py-4">
+      <div class="container">
+        <h5 class="footer-title">Buda Hack Security</h5>
+        <p class="footer-subtitle">Pentest explorations, labs &amp; write-ups</p>
+        <div class="footer-social my-3">
+          <a href="https://github.com/buda-sys/buda-sys" class="social-link"><i class="bi bi-github"></i></a>
+          <a href="https://discord.gg/mqXsQYN3" class="social-link"><i class="bi bi-discord"></i></a>
+          <a href="contact.html" class="social-link"><i class="bi bi-envelope"></i></a>
+          <a href="disclaimer.html" class="social-link"><i class="bi bi-shield-check"></i></a>
+        </div>
+        <p class="footer-copy mt-3 mb-0">&copy; 2025 <span class="text-danger">Buda Hack Security</span> &mdash; All rights reserved.</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    (function(){var b=document.getElementById('scroll-bar');window.addEventListener('scroll',function(){var t=document.documentElement.scrollHeight-window.innerHeight;b.style.width=(t>0?(window.scrollY/t)*100:0)+'%';},{passive:true});})();
+    (function(){var c=document.getElementById('matrix-canvas');if(!c)return;var x=c.getContext('2d');var ch='0123456789ABCDEF<>[]{}ROOTEXPLOITHACK';var fs=14,d=[];function r(){c.width=window.innerWidth;c.height=window.innerHeight;d=Array(Math.floor(c.width/fs)).fill(1);}r();window.addEventListener('resize',r);setInterval(function(){x.fillStyle='rgba(0,0,0,0.04)';x.fillRect(0,0,c.width,c.height);x.font=fs+'px monospace';d.forEach(function(y,i){var s=ch[Math.floor(Math.random()*ch.length)];if(y===1)x.fillStyle='#ff2200';else if(y<4)x.fillStyle='#cc0000';else x.fillStyle='rgba(140,0,0,0.4)';x.fillText(s,i*fs,y*fs);if(y*fs>c.height&&Math.random()>0.975)d[i]=0;d[i]++;});},50);})();
+    (function(){var c=document.getElementById('hero-matrix');if(!c)return;var hero=c.closest('.page-hero');var x=c.getContext('2d');var ch='01ROOTPWNDHACK><[]{}';var fs=16,d=[];function r(){c.width=hero.offsetWidth;c.height=hero.offsetHeight;d=Array(Math.floor(c.width/fs)).fill(1);}r();window.addEventListener('resize',r);function draw(){x.fillStyle='rgba(0,0,0,0.12)';x.fillRect(0,0,c.width,c.height);x.font=fs+'px monospace';d.forEach(function(y,i){x.fillStyle=y<3?'#ff2200':'rgba(180,0,0,0.3)';x.fillText(Math.random()>0.5?'1':'0',i*fs,y*fs);if(y*fs>c.height&&Math.random()>0.96)d[i]=0;d[i]++;});requestAnimationFrame(draw);}draw();})();
+    (function(){var el=document.getElementById('classified-watermark');if(!el)return;var words=['CLASSIFIED','TOP SECRET','CONFIDENTIAL','RESTRICTED','NOFORN','EYES ONLY'];var html='';for(var r=0;r<14;r++)for(var c=0;c<7;c++){var w=words[(r+c)%words.length];html+='<span style="top:'+(r*8-2)+'%;left:'+(c*16-2)+'%">'+w+'</span>';}el.innerHTML=html;})();
+    (function(){var cl=document.getElementById('status-clock');var en=document.getElementById('enc-label');var pk=document.getElementById('pkt');if(cl)setInterval(function(){var n=new Date(),p=function(x){return String(x).padStart(2,'0');};cl.textContent=p(n.getUTCHours())+':'+p(n.getUTCMinutes())+':'+p(n.getUTCSeconds())+' UTC | NODE: TOR-'+String(Math.floor(Math.random()*9000+1000));},1000);if(en)setInterval(function(){en.style.opacity=en.style.opacity==='0.25'?'1':'0.25';},800);if(pk){var p=0;setInterval(function(){p+=Math.floor(Math.random()*120+40);pk.textContent=p.toLocaleString();},300);}})();
+  </script>
 </body>
 </html>
