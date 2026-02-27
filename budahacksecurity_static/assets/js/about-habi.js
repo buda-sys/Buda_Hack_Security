@@ -1,31 +1,62 @@
+/* =========================
+   TYPEWRITER
+========================= */
+const text = "I am Buda-sys";
+const speed = 120;
+let i = 0;
 
-  // Inicializar tooltips de bootstrap
-  document.addEventListener('DOMContentLoaded', function() {
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.forEach(function (el) {
-      new bootstrap.Tooltip(el);
+function typeEffect() {
+  if (i < text.length) {
+    document.getElementById("typewriter").textContent += text.charAt(i);
+    i++;
+    setTimeout(typeEffect, speed);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", typeEffect);
+
+/* =========================
+   MATRIX — ABOUT HERO (ROJO)
+========================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const canvas = document.getElementById("matrix-about");
+  if (!canvas) return;
+
+  const hero = canvas.closest(".about-hero");
+  const ctx = canvas.getContext("2d");
+
+  let w, h, columns, drops;
+  const fontSize = 16;
+
+  function resize() {
+    w = canvas.width = hero.offsetWidth;
+    h = canvas.height = hero.offsetHeight;
+    columns = Math.floor(w / fontSize);
+    drops = new Array(columns).fill(1);
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+
+  function draw() {
+    ctx.fillStyle = "rgba(2,6,23,0.25)";
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.fillStyle = "#ff0033";
+    ctx.font = fontSize + "px monospace";
+
+    drops.forEach((y, i) => {
+      const char = Math.random() > 0.5 ? "1" : "0";
+      ctx.fillText(char, i * fontSize, y * fontSize);
+
+      if (y * fontSize > h && Math.random() > 0.97) {
+        drops[i] = 0;
+      }
+      drops[i]++;
     });
 
-    // Copiar nombre al portapapeles al hacer clic en la herramienta
-    document.querySelectorAll('.tool, .tool-item').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const name = btn.getAttribute('data-name') || btn.textContent.trim();
-        navigator.clipboard?.writeText(name).then(() => {
-          // feedback visual rápido: cambiar texto del tooltip
-          const bsTooltip = bootstrap.Tooltip.getInstance(btn);
-          if (bsTooltip) {
-            bsTooltip.setContent({ '.tooltip-inner': 'Copiado: ' + name });
-            bsTooltip.show();
-            setTimeout(() => {
-              bsTooltip.setContent({ '.tooltip-inner': btn.getAttribute('title') });
-            }, 1200);
-          }
-        }).catch(()=> {
-          // si no se puede copiar, mostramos el tooltip normal
-          const bsTooltip = bootstrap.Tooltip.getInstance(btn);
-          bsTooltip?.show();
-        });
-      });
-    });
-  });
+    requestAnimationFrame(draw);
+  }
 
+  draw();
+});
