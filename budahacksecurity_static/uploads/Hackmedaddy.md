@@ -133,7 +133,6 @@ With this result we can say that the command being executed internally is `ping 
 ```bash
 127.0.0.1${IFS}|${IFS}cat${IFS}/etc/passwd
 ```
-<img src="/budahacksecurity/uploads/md_images/hc/hc5.png" style="max-width:100%; border-radius:8px;">
 
 We observe that we obtain RCE, remote code execution on the system. We are going to obtain a reverse shell:
 
@@ -172,7 +171,7 @@ By e1i0t
 We find a wordlist with possible passwords for `e1i0t`:
 
 ```
-/home/e1i0t/documents/agenda_passwords.txt
+/home/e1i0t/documents/agenda.txt
 ```
 
 I will use my script to perform local brute force:
@@ -250,7 +249,7 @@ Crunch will now generate the following amount of data: 8788 bytes
 Crunch will now generate the following number of lines: 676
 ```
 
-We use `hydra` to obtain the user's password:
+ use `hydra` to obtain the user's password:
 
 <img src="/budahacksecurity/uploads/md_images/hc/hc8.png" style="max-width:100%; border-radius:8px;">
 
