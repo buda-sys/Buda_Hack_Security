@@ -198,6 +198,18 @@
     "thumb": "assets/img/autothumbs/dockerlabs.png",
     "description": "Write-up the Dockerlabs Machine"
 
+  }.
+
+   {
+    "slug": "HackMedaddy",
+    "file": "uploads/Hackmeddady.md",
+    "title": "HackMedaddy",
+    "category": "Dockerlabs",
+    "difficulty": "Hard",
+    "date": "2026-02-27",
+    "thumb": "assets/img/autothumbs/dockerlabs.png",
+    "description": "Write-up the Dockerlabs Machine"
+
   }
 
 ]

