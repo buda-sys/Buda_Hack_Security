@@ -1,11 +1,6 @@
-### Hackmedaddy
 
 <img src="/budahacksecurity/uploads/md_images/hc/hc9.png" style="max-width:100%; border-radius:8px;">
 
-
-### Hackmedaddy
-
-<img src="/budahacksecurity/uploads/md_images/hc/hc9.png" style="max-width:100%; border-radius:8px;">
 
 
 ## Description
