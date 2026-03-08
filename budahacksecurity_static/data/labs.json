@@ -1,5 +1,17 @@
 [
- 
+ {
+  "slug": "forense-digital",
+  "title": "Forense Digital | Adquisición y Análisis de Evidencia",
+  "type": "analyst",
+  "description": "Análisis forense digital completo: adquisición de RAM, imagen de disco, triaje rápido y análisis de memoria con Volatility3 y FTK Imager.",
+  "duration": "60–90 min",
+  "tools": "Kali Linux, FTK Imager, Volatility3, Guymager, Velociraptor, LiME",
+  "thumb": "assets/img/labs/forense.png",
+  "link": "uploads/forense.md",
+  "tags": "forense digital memoria ram disco ftk imager volatility3 guymager velociraptor lime evidencia",
+  "date": "2026-03-07",
+  "difficulty": "Easy"
+}
 
 ]
 
