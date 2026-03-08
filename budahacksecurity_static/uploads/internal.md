@@ -315,9 +315,7 @@ We execute the binary:
 
 By executing the binary, elevates the privileges and we obtain a **root shell**.
 
-<img src="/budahacksecurity/uploads/md_images/int/vault15.png" style="max-width:100%; border-radius:8px;">
 
-The SUID binary loads our malicious library, `setuid(0)` elevates the privileges and we obtain a **root shell**.
 
 ---
 

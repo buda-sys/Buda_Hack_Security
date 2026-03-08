@@ -237,7 +237,7 @@
   "file": "uploads/boku.md",
   "title": "TryHackMe - Boku Machine Writeup",
   "category": "TryHackMe",
-  "difficulty": "Medium",
+  "difficulty": "Easy",
   "date": "2025-10-01",
   "thumb": "assets/img/autothumbs/tryhackme.png",
   "description": "Complete write-up of the Boku machine including enumeration, command injection exploitation, and privilege escalation."
@@ -247,7 +247,7 @@
   "file": "uploads/Maquina-Creativo.md",
   "title": "TryHackMe - Creative Studio Writeup",
   "category": "TryHackMe",
-  "difficulty": "Medium",
+  "difficulty": "Easy",
   "date": "2025-09-10",
   "thumb": "assets/img/autothumbs/tryhackme.png",
   "description": "Walkthrough of the Creative Studio machine exploiting SSRF, LFI, and privilege escalation using LD_PRELOAD."
@@ -257,7 +257,7 @@
   "file": "uploads/Maquina-White-Rose.md",
   "title": "TryHackMe - White Rose Writeup",
   "category": "TryHackMe",
-  "difficulty": "Medium",
+  "difficulty": "Easy",
   "date": "2025-08-20",
   "thumb": "assets/img/autothumbs/tryhackme.png",
   "description": "Step-by-step write-up of the White Rose machine exploiting IDOR, SSTI, and escalating privileges using sudoedit."
