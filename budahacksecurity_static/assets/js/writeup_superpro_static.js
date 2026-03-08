@@ -1,246 +1,370 @@
 (function () {
   "use strict";
 
-  // ---------- Helpers ----------
   const $ = (sel) => document.querySelector(sel);
-  const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
   function escapeHtml(s) {
-    return (s ?? "")
-      .toString()
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+    return (s ?? "").toString()
+      .replaceAll("&","&amp;").replaceAll("<","&lt;")
+      .replaceAll(">","&gt;").replaceAll('"',"&quot;");
   }
 
   function normalizePath(p) {
     if (!p) return p;
-    let file = p.toString().trim();
-    file = file.replaceAll("\\", "/");
-    file = file.replaceAll("/budahacksecurity/uploads/", "uploads/");
-    if (file.startsWith("/uploads/")) file = file.replace("/uploads/", "uploads/");
-    if (file.startsWith("./")) file = file.slice(2);
-    file = file.replace(/\/{2,}/g, "/");
-    return file;
+    let f = p.toString().trim().replaceAll("\\","/");
+    f = f.replaceAll("/budahacksecurity/uploads/","uploads/");
+    if (f.startsWith("/uploads/")) f = f.replace("/uploads/","uploads/");
+    if (f.startsWith("./")) f = f.slice(2);
+    return f.replace(/\/{2,}/g,"/");
   }
 
-  function fixStaticPaths(text) {
-    if (!text) return text;
-    text = text.replaceAll("/budahacksecurity/uploads/", "uploads/");
-    text = text.replaceAll('src="/uploads/', 'src="uploads/');
-    text = text.replaceAll("src='/uploads/", "src='uploads/");
-    text = text.replaceAll('href="/uploads/', 'href="uploads/');
-    text = text.replaceAll("href='/uploads/", "href='uploads/");
-    return text;
+  function fixStaticPaths(t) {
+    if (!t) return t;
+    return t
+      .replaceAll("/budahacksecurity/uploads/","uploads/")
+      .replaceAll('src="/uploads/','src="uploads/')
+      .replaceAll("src='/uploads/","src='uploads/")
+      .replaceAll('href="/uploads/','href="uploads/')
+      .replaceAll("href='/uploads/","href='uploads/");
   }
 
-  function slugifyHeading(str) {
-    return (str ?? "")
-      .toString()
-      .trim()
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-")
-      .replace(/(^-|-$)/g, "");
+  function slugify(str) {
+    return (str ?? "").toString().trim().toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+      .replace(/[^a-z0-9\s-]/g,"").replace(/\s+/g,"-")
+      .replace(/-+/g,"-").replace(/(^-|-$)/g,"");
   }
 
-  async function waitForMdFile(timeoutMs = 15000) {
-    const start = Date.now();
-    if (window.MD_FILE) return window.MD_FILE;
+  async function waitForMdFile(ms = 15000) {
+    const t = Date.now();
     while (!window.MD_FILE) {
-      if (Date.now() - start > timeoutMs) return null;
-      await new Promise((r) => setTimeout(r, 60));
+      if (Date.now() - t > ms) return null;
+      await new Promise(r => setTimeout(r, 60));
     }
     return window.MD_FILE;
   }
 
-  // ---------- Marked ----------
+  /* ── Marked ── */
   function setupMarked() {
     if (!window.marked) return;
-    if (window.hljs) {
-      marked.setOptions({
-        gfm: true,
-        breaks: false,
-        headerIds: false,
-        mangle: false,
-        highlight: function (code, lang) {
+    marked.setOptions({
+      gfm: true, breaks: false, headerIds: false, mangle: false,
+      ...(window.hljs ? {
+        highlight: (code, lang) => {
           try {
-            if (lang && hljs.getLanguage(lang)) {
-              return hljs.highlight(code, { language: lang }).value;
-            }
-            return hljs.highlightAuto(code).value;
-          } catch {
-            return escapeHtml(code);
-          }
-        },
-      });
-    } else {
-      marked.setOptions({ gfm: true, breaks: false, headerIds: false, mangle: false });
-    }
+            return lang && hljs.getLanguage(lang)
+              ? hljs.highlight(code, { language: lang }).value
+              : hljs.highlightAuto(code).value;
+          } catch { return escapeHtml(code); }
+        }
+      } : {})
+    });
   }
 
-  // ---------- Mermaid ----------
+  /* ── Mermaid ── */
   function setupMermaid() {
     if (!window.mermaid) return;
-    try {
-      mermaid.initialize({ startOnLoad: false, theme: "dark", securityLevel: "strict" });
-    } catch (e) {
-      console.warn("Mermaid init error:", e);
-    }
+    try { mermaid.initialize({ startOnLoad: false, theme: "dark", securityLevel: "strict" }); }
+    catch(e) { console.warn(e); }
   }
 
-  // ---------- Lightbox ----------
-  function openLightbox(src) {
-    const lb = $("#lightbox");
-    if (!lb) return;
-    const img = lb.querySelector("img");
-    if (!img) return;
-    img.src = src;
-    lb.style.display = "flex";
-    lb.classList.add("show");
-  }
-
-  function closeLightbox() {
-    const lb = $("#lightbox");
-    if (!lb) return;
-    lb.classList.remove("show");
-    lb.style.display = "none";
-    const img = lb.querySelector("img");
-    if (img) img.src = "";
-  }
-
-  function initLightbox() {
-    const lb = $("#lightbox");
-    if (!lb) return;
-    lb.style.display = "none";
-    lb.addEventListener("click", () => closeLightbox());
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
-  }
-
-  // ---------- Volver arriba ----------
-  function initBackToTop() {
-    const btn = $("#volver-arriba");
-    if (!btn) return;
-    const toggle = () => { btn.style.display = window.scrollY > 500 ? "flex" : "none"; };
-    btn.style.display = "none";
-    btn.style.alignItems = "center";
-    btn.style.justifyContent = "center";
-    btn.style.cursor = "pointer";
-    window.addEventListener("scroll", toggle);
-    toggle();
-    btn.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: "smooth" }); });
-  }
-
-  // ---------- Mermaid Render ----------
-  function renderMermaidInside(container) {
+  function renderMermaid(container) {
     if (!window.mermaid) return;
-    const codeBlocks = Array.from(container.querySelectorAll("pre code.language-mermaid, pre code.lang-mermaid"));
-    codeBlocks.forEach((codeEl) => {
-      const parentPre = codeEl.closest("pre");
-      if (!parentPre) return;
-      const wrapper = document.createElement("div");
-      wrapper.className = "mermaid";
-      wrapper.textContent = codeEl.textContent || "";
-      parentPre.replaceWith(wrapper);
+    container.querySelectorAll("pre code.language-mermaid, pre code.lang-mermaid").forEach(el => {
+      const pre = el.closest("pre"); if (!pre) return;
+      const d = document.createElement("div");
+      d.className = "mermaid"; d.textContent = el.textContent;
+      pre.replaceWith(d);
     });
-    try { mermaid.run({ querySelector: `#${container.id} .mermaid` }); } catch (e) { console.warn("Mermaid render error:", e); }
+    try { mermaid.run({ querySelector: `#${container.id} .mermaid` }); } catch(e) {}
   }
 
-  // ---------- MP4 Support ----------
-  function enhanceVideos(container) {
+  /* ══════════════════════════════════════════
+     OVERLAY — imagen a pantalla completa
+     Click imagen → se abre encima de todo
+     Click en overlay o ESC → se cierra
+  ══════════════════════════════════════════ */
+  function buildOverlay() {
+    if (document.getElementById("img-overlay")) return;
+
+    const style = document.createElement("style");
+    style.textContent = `
+      #img-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: rgba(0,0,0,.95);
+        backdrop-filter: blur(10px);
+        align-items: center;
+        justify-content: center;
+        cursor: zoom-out;
+      }
+      #img-overlay.show {
+        display: flex;
+        animation: ov-in .2s ease;
+      }
+      @keyframes ov-in {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+      #img-overlay img {
+        max-width: 94vw;
+        max-height: 92vh;
+        object-fit: contain;
+        display: block;
+        border: 2px solid #00ffff;
+        box-shadow:
+          0 0 0 1px rgba(0,255,255,.15),
+          0 0 80px rgba(0,255,255,.2);
+        animation: ov-border 3s linear infinite;
+        pointer-events: none;
+        user-select: none;
+        border-radius: 2px;
+      }
+      @keyframes ov-border {
+        0%,100% { border-color:#00ffff; box-shadow: 0 0 80px rgba(0,255,255,.2); }
+        33%      { border-color:#ff2d78; box-shadow: 0 0 80px rgba(255,45,120,.2); }
+        66%      { border-color:#ffe600; box-shadow: 0 0 80px rgba(255,230,0,.2); }
+      }
+      #img-overlay-close {
+        position: fixed;
+        top: 18px; right: 22px;
+        font-family: 'Press Start 2P', monospace;
+        font-size: 7px; letter-spacing: 1px;
+        color: #ff2d78;
+        background: rgba(0,0,0,.8);
+        border: 2px solid #ff2d78;
+        padding: 7px 14px;
+        cursor: pointer;
+        box-shadow: 2px 2px 0 rgba(255,45,120,.4);
+        text-shadow: 0 0 8px #ff2d78;
+        z-index: 100000;
+        transition: background .12s;
+      }
+      #img-overlay-close:hover { background: rgba(255,45,120,.25); }
+      #img-overlay-hint {
+        position: fixed;
+        bottom: 20px; left: 50%; transform: translateX(-50%);
+        font-family: 'Press Start 2P', monospace;
+        font-size: 6px; letter-spacing: 2px;
+        color: rgba(255,255,255,.2);
+        pointer-events: none;
+        white-space: nowrap;
+      }
+    `;
+    document.head.appendChild(style);
+
+    const ov = document.createElement("div");
+    ov.id = "img-overlay";
+    ov.innerHTML = `
+      <button id="img-overlay-close">✕ CLOSE</button>
+      <img id="img-overlay-img" alt="">
+      <div id="img-overlay-hint">CLICK ANYWHERE OR ESC TO CLOSE</div>
+    `;
+    document.body.appendChild(ov);
+
+    // click overlay background → close
+    ov.addEventListener("click", closeOverlay);
+    // close button
+    document.getElementById("img-overlay-close").addEventListener("click", e => {
+      e.stopPropagation(); closeOverlay();
+    });
+    // ESC key
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") closeOverlay();
+    });
+
+    window._openImgOverlay = (src, alt) => {
+      const img = document.getElementById("img-overlay-img");
+      img.src = src;
+      img.alt = alt || "";
+      ov.classList.add("show");
+      document.body.style.overflow = "hidden";
+    };
+  }
+
+  function closeOverlay() {
+    const ov = document.getElementById("img-overlay");
+    if (!ov || !ov.classList.contains("show")) return;
+    ov.classList.remove("show");
+    document.body.style.overflow = "";
+    setTimeout(() => {
+      const img = document.getElementById("img-overlay-img");
+      if (img) img.src = "";
+    }, 200);
+  }
+
+  /* ── Make all images clickable → open overlay ── */
+  function enhanceImages(container) {
     if (!container) return;
-    const links = Array.from(container.querySelectorAll('a[href$=".mp4"]'));
-    links.forEach((a) => {
-      const video = document.createElement("video");
-      video.controls = true;
-      video.preload = "metadata";
-      video.style.width = "100%";
-      video.style.borderRadius = "12px";
-      video.style.margin = "18px 0";
-      video.style.boxShadow = "0 0 25px rgba(255,0,51,.25)";
-      video.src = a.href;
-      const p = a.closest("p");
-      if (p && p.textContent.trim() === a.textContent.trim()) p.replaceWith(video);
-      else a.replaceWith(video);
-    });
-  }
-
-  // ---------- Sidebar Index ----------
-  function buildSidebarIndex(mdContainer) {
-    const sidebar = $("#sidebar-index");
-    if (!sidebar || !mdContainer) return;
-    sidebar.innerHTML = "";
-    const headings = Array.from(mdContainer.querySelectorAll("h1, h2, h3, h4"));
-    if (!headings.length) { sidebar.innerHTML = `<li class="text-secondary">Sin índice</li>`; return; }
-    const usedIds = new Set();
-    headings.forEach((h) => {
-      const level = parseInt(h.tagName.replace("H", ""), 10);
-      const text = (h.textContent || "").trim();
-      if (!text) return;
-      let id = h.getAttribute("id") || slugifyHeading(text) || `sec-${Math.random().toString(16).slice(2)}`;
-      if (usedIds.has(id)) { let i = 2; while (usedIds.has(`${id}-${i}`)) i++; id = `${id}-${i}`; }
-      usedIds.add(id);
-      h.setAttribute("id", id);
-      const li = document.createElement("li");
-      li.classList.add(`level-${Math.min(level, 3)}`);
-      li.style.marginLeft = level >= 2 ? `${(level - 1) * 10}px` : "0px";
-      const a = document.createElement("a");
-      a.href = `#${id}`;
-      a.textContent = text;
-      a.addEventListener("click", (e) => { e.preventDefault(); const target = document.getElementById(id); if (target) target.scrollIntoView({ behavior: "smooth", block: "start" }); history.replaceState(null, "", `#${id}`); });
-      li.appendChild(a);
-      sidebar.appendChild(li);
-    });
-  }
-
-  // ---------- Postprocess ----------
-  function postProcessRendered(container) {
-    if (!container) return;
-    // Images: solo lightbox en class "zoom"
-    Array.from(container.querySelectorAll("img.zoom")).forEach((img) => {
+    buildOverlay();
+    container.querySelectorAll("img").forEach(img => {
+      if (img.dataset.ovReady) return;
+      img.dataset.ovReady = "1";
       img.loading = "lazy";
       img.style.cursor = "zoom-in";
-      img.addEventListener("click", () => openLightbox(img.src));
+      img.title = "Click para ampliar";
+      img.addEventListener("click", () => {
+        if (window._openImgOverlay) window._openImgOverlay(img.src, img.alt);
+      });
+      // optional caption from alt
+      const alt = (img.alt || "").trim();
+      if (alt && !alt.match(/^https?:\/\//) && !img.nextElementSibling?.classList.contains("img-cap")) {
+        const cap = document.createElement("div");
+        cap.className = "img-cap";
+        cap.style.cssText = "text-align:center;margin:-16px 0 28px;font-family:'Press Start 2P',monospace;font-size:6px;letter-spacing:1.5px;color:rgba(0,255,255,.38);text-transform:uppercase;";
+        cap.textContent = "▶ " + alt;
+        img.insertAdjacentElement("afterend", cap);
+      }
     });
-    if (window.hljs) Array.from(container.querySelectorAll("pre code")).forEach((block) => { try { hljs.highlightElement(block); } catch {} });
-    renderMermaidInside(container);
-    enhanceVideos(container);
   }
 
-  // ---------- Load + Render Markdown ----------
-  async function loadAndRenderMarkdown() {
-    const mdContainer = $("#markdown-container");
-    if (!mdContainer) return;
-    setupMarked();
-    setupMermaid();
-    initLightbox();
-    initBackToTop();
+  /* ── Videos ── */
+  function enhanceVideos(container) {
+    if (!container) return;
+    container.querySelectorAll('a[href$=".mp4"]').forEach(a => {
+      const v = document.createElement("video");
+      v.controls = true; v.preload = "metadata";
+      v.style.cssText = "width:100%;margin:18px 0;border:2px solid var(--cyan,#00ffff);";
+      v.src = a.href;
+      const p = a.closest("p");
+      (p && p.textContent.trim() === a.textContent.trim() ? p : a).replaceWith(v);
+    });
+  }
+
+  /* ── Code blocks + copy button ── */
+  function enhanceCode(container) {
+    if (!container) return;
+    container.querySelectorAll("pre").forEach(pre => {
+      if (pre.closest(".code-block-wrap")) return;
+      const code = pre.querySelector("code");
+      const lang = (code?.className.match(/language-(\w+)/) || [])[1] || "CODE";
+      const wrap   = document.createElement("div"); wrap.className = "code-block-wrap";
+      const bar    = document.createElement("div"); bar.className  = "code-window-bar";
+      const copy   = document.createElement("button");
+      copy.style.cssText = "font-family:var(--pixel,'Press Start 2P',monospace);font-size:6px;letter-spacing:1px;color:#000;background:var(--green,#00ff41);border:none;padding:3px 10px;cursor:pointer;box-shadow:2px 2px 0 rgba(0,0,0,.5);margin-left:auto;";
+      copy.textContent = "COPY";
+      copy.addEventListener("click", e => {
+        e.stopPropagation();
+        const txt = code ? code.textContent : pre.textContent;
+        navigator.clipboard.writeText(txt).then(() => {
+          copy.textContent = "✓ OK";
+          setTimeout(() => { copy.textContent = "COPY"; }, 1600);
+        }).catch(() => {
+          const ta = document.createElement("textarea"); ta.value = txt;
+          ta.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(ta);
+          ta.select(); try { document.execCommand("copy"); } catch {}
+          document.body.removeChild(ta); copy.textContent = "✓ OK";
+          setTimeout(() => { copy.textContent = "COPY"; }, 1600);
+        });
+      });
+      bar.innerHTML = `<div class="cwb-title">TERMINAL</div><span class="cwb-lang">${lang.toUpperCase()}</span>`;
+      bar.style.cssText += "display:flex;align-items:center;gap:8px;";
+      bar.appendChild(copy);
+      const scroll = document.createElement("div"); scroll.className = "code-scroll";
+      pre.parentNode.insertBefore(wrap, pre);
+      wrap.appendChild(bar); scroll.appendChild(pre); wrap.appendChild(scroll);
+    });
+  }
+
+  /* ── Sidebar index + scroll spy ── */
+  function buildIndex(container) {
+    const sidebar = $("#sidebar-index");
+    if (!sidebar || !container) return;
+    sidebar.innerHTML = "";
+    const headings = Array.from(container.querySelectorAll("h1,h2,h3"));
+    if (!headings.length) return;
+    const used = new Set();
+    headings.forEach(h => {
+      const lvl = parseInt(h.tagName[1]);
+      const text = h.textContent.trim(); if (!text) return;
+      let id = h.getAttribute("id") || slugify(text) || `s${Math.random().toString(16).slice(2,8)}`;
+      if (used.has(id)) { let n=2; while(used.has(`${id}-${n}`))n++; id=`${id}-${n}`; }
+      used.add(id); h.setAttribute("id", id);
+      const li = document.createElement("li"); li.classList.add(`h${Math.min(lvl,3)}`);
+      const a  = document.createElement("a"); a.href = `#${id}`; a.textContent = text;
+      a.addEventListener("click", e => {
+        e.preventDefault();
+        document.getElementById(id)?.scrollIntoView({ behavior:"smooth", block:"start" });
+        history.replaceState(null,"",`#${id}`);
+      });
+      li.appendChild(a); sidebar.appendChild(li);
+    });
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting)
+          sidebar.querySelectorAll("li").forEach(li =>
+            li.classList.toggle("active", !!li.querySelector(`a[href="#${e.target.id}"]`))
+          );
+      });
+    }, { rootMargin: "-10% 0px -70% 0px" });
+    headings.forEach(h => obs.observe(h));
+  }
+
+  /* ── Reading progress ── */
+  function initProgress() {
+    if (document.getElementById("sps-prog")) return;
+    const bar = document.createElement("div"); bar.id = "sps-prog";
+    bar.style.cssText = "position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#00ffff,#ff2d78,#ffe600);z-index:99998;pointer-events:none;box-shadow:0 0 8px #00ffff;transition:width .08s linear;";
+    document.body.appendChild(bar);
+    window.addEventListener("scroll", () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (total > 0 ? (scrollY / total) * 100 : 0).toFixed(1) + "%";
+    }, { passive: true });
+  }
+
+  /* ── Back to top ── */
+  function initBackToTop() {
+    const btn = $("#volver-arriba"); if (!btn) return;
+    window.addEventListener("scroll", () => btn.classList.toggle("show", scrollY > 500), { passive: true });
+    btn.addEventListener("click", () => scrollTo({ top:0, behavior:"smooth" }));
+  }
+
+  /* ── Post-process ── */
+  function postProcess(container) {
+    if (!container) return;
+    if (window.hljs) container.querySelectorAll("pre code").forEach(b => { try { hljs.highlightElement(b); } catch {} });
+    enhanceCode(container);
+    enhanceImages(container);
+    enhanceVideos(container);
+    renderMermaid(container);
+    const rt = $("#read-time");
+    if (rt) rt.textContent = `${Math.max(1, Math.round(container.textContent.trim().split(/\s+/).length / 200))} MIN READ`;
+  }
+
+  /* ── Init ── */
+  async function init() {
+    const mc = $("#markdown-container"); if (!mc) return;
+    setupMarked(); setupMermaid(); initProgress(); initBackToTop();
+
     const raw = await waitForMdFile();
-    if (!raw) { mdContainer.innerHTML = `<p class="text-danger">No se pudo detectar el archivo Markdown (MD_FILE).</p>`; return; }
+    if (!raw) { mc.innerHTML = `<p style="color:#ff2d78">No se detectó MD_FILE.</p>`; return; }
+
     const file = normalizePath(raw);
     let mdText = "";
     try {
       const res = await fetch(file, { cache: "no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status} — ${file}`);
       mdText = await res.text();
-    } catch (e) {
-      mdContainer.innerHTML = `<div class="alert alert-danger"><b>Error cargando Markdown</b><br>${escapeHtml(e.message || e)}<br><small>Verifica que el archivo exista: <code>${escapeHtml(file)}</code></small></div>`;
+    } catch(e) {
+      mc.innerHTML = `<div style="border:2px solid #ff2d78;padding:20px;font-family:monospace;color:#ff2d78"><b>Error cargando Markdown</b><br>${escapeHtml(e.message)}<br><small>Archivo: <code>${escapeHtml(file)}</code></small></div>`;
       return;
     }
-    mdText = fixStaticPaths(mdText);
+
     let html = "";
-    try { html = marked.parse(mdText); } catch (e) { mdContainer.innerHTML = `<p class="text-danger">Error renderizando Markdown: ${escapeHtml(e.message || e)}</p>`; return; }
-    mdContainer.innerHTML = html;
-    postProcessRendered(mdContainer);
-    buildSidebarIndex(mdContainer);
-    if (location.hash) { const id = location.hash.slice(1); const t = document.getElementById(id); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    try { html = marked.parse(fixStaticPaths(mdText)); }
+    catch(e) { mc.innerHTML = `<p style="color:#ff2d78">Error renderizando Markdown: ${escapeHtml(e.message)}</p>`; return; }
+
+    mc.innerHTML = html;
+    postProcess(mc);
+    buildIndex(mc);
+
+    if (location.hash) {
+      const t = document.getElementById(location.hash.slice(1));
+      if (t) setTimeout(() => t.scrollIntoView({ behavior:"smooth", block:"start" }), 300);
+    }
   }
 
-  // ---------- Init ----------
-  document.addEventListener("DOMContentLoaded", () => { loadAndRenderMarkdown(); });
+  document.addEventListener("DOMContentLoaded", init);
 })();

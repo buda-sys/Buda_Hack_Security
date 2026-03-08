@@ -4,7 +4,7 @@
     "file": "uploads/Mision_Secundaria_1_-_Advent_Cyber_2025.md",
     "title": "Secondary Mission 1  Advent Cyber 2025",
     "category": "TryHackMe",
-    "difficulty": "Media",
+    "difficulty": "Medium",
     "date": "2025-12-12",
     "thumb": "assets/img/autothumbs/tryhackme.png",
     "description": "Write-up the Advent Cyber 2025."
@@ -159,7 +159,7 @@
     "file": "uploads/attactive.md",
     "title": "Attacktive Directory",
     "category": "TryHackMe",
-    "difficulty": "Media",
+    "difficulty": "Medium",
     "date": "2025-10-10",
     "thumb": "assets/img/autothumbs/tryhackme.png",
     "description": "Write-up tryhackme machine"
