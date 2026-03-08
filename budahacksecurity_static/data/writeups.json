@@ -210,6 +210,68 @@
     "thumb": "assets/img/autothumbs/dockerlabs.png",
     "description": "Write-up the Dockerlabs Machine"
 
-  }
+  },
+
+  {
+  "slug": "picoctf-steganography-steghide",
+  "file": "uploads/picoCTF-Writeup.md",
+  "title": "picoCTF - Steganography with Steghide",
+  "category": "picoCTF",
+  "difficulty": "Easy",
+  "date": "2025-11-01",
+  "thumb": "assets/img/autothumbs/picoctf.png",
+  "description": "Write-up explaining how to extract a hidden flag from an image using ExifTool, Base64 decoding, and Steghide."
+},
+{
+  "slug": "picoctf-hidden-pdf-metadata",
+  "file": "uploads/picoCTF-Writeup.md",
+  "title": "picoCTF - Hidden Metadata in PDF",
+  "category": "picoCTF",
+  "difficulty": "Easy",
+  "date": "2025-11-02",
+  "thumb": "assets/img/autothumbs/picoctf.png",
+  "description": "Analysis of a PDF file where the flag is hidden in metadata encoded in Base64."
+},
+{
+  "slug": "tryhackme-boku-machine-writeup",
+  "file": "uploads/boku.md",
+  "title": "TryHackMe - Boku Machine Writeup",
+  "category": "TryHackMe",
+  "difficulty": "Medium",
+  "date": "2025-10-01",
+  "thumb": "assets/img/autothumbs/tryhackme.png",
+  "description": "Complete write-up of the Boku machine including enumeration, command injection exploitation, and privilege escalation."
+},
+{
+  "slug": "tryhackme-creative-studio-writeup",
+  "file": "uploads/Maquina-Creativo.md",
+  "title": "TryHackMe - Creative Studio Writeup",
+  "category": "TryHackMe",
+  "difficulty": "Medium",
+  "date": "2025-09-10",
+  "thumb": "assets/img/autothumbs/tryhackme.png",
+  "description": "Walkthrough of the Creative Studio machine exploiting SSRF, LFI, and privilege escalation using LD_PRELOAD."
+},
+{
+  "slug": "tryhackme-white-rose-writeup",
+  "file": "uploads/Maquina-White-Rose.md",
+  "title": "TryHackMe - White Rose Writeup",
+  "category": "TryHackMe",
+  "difficulty": "Medium",
+  "date": "2025-08-20",
+  "thumb": "assets/img/autothumbs/tryhackme.png",
+  "description": "Step-by-step write-up of the White Rose machine exploiting IDOR, SSTI, and escalating privileges using sudoedit."
+},
+
+{
+  "slug": "tryhackme-mr-robot-writeup",
+  "file": "uploads/Maquina-Mr-Robot.md",
+  "title": "TryHackMe - Mr. Robot Writeup",
+  "category": "TryHackMe",
+  "difficulty": "Medium",
+  "date": "2025-07-15",
+  "thumb": "assets/img/autothumbs/tryhackme.png",
+  "description": "Detailed walkthrough of the Mr. Robot machine covering enumeration, WordPress exploitation, credential discovery, and privilege escalation."
+}
 
 ]
