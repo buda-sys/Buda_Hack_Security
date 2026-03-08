@@ -3,174 +3,486 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contact | Buda Hack Security</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="assets/css/main.css">
+  <title>CONTACT | BUDA HACK SECURITY</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/img/favicon_ico/favicon.ico">
   <style>
-  /* ══ CONTACT — estilos locales ══ */
-  #scroll-bar{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,#cc0000,#ff2200,#cc0000);z-index:99999;transition:width .08s linear;box-shadow:0 0 10px rgba(204,0,0,0.8);pointer-events:none;}
+    :root{
+      --black:#000;--screen:#050810;--panel:#0a0f1a;
+      --cyan:#00ffff;--pink:#ff2d78;--yellow:#ffe600;
+      --green:#00ff41;--purple:#bf5fff;--white:#e8f4ff;
+      --dim:rgba(232,244,255,.35);--dimmer:rgba(232,244,255,.18);
+      --pixel:'Press Start 2P',monospace;--vt:'VT323',monospace;--mono:'Share Tech Mono',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;background:#000;}
+    body{background:var(--screen);color:var(--white);font-family:var(--mono);overflow-x:hidden;
+      cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='7' y='0' width='2' height='16' fill='%2300ffff'/%3E%3Crect x='0' y='7' width='16' height='2' fill='%2300ffff'/%3E%3C/svg%3E") 8 8,crosshair;}
+    body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
+      background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.18) 2px,rgba(0,0,0,.18) 4px);
+      animation:scanroll 12s linear infinite;}
+    @keyframes scanroll{to{background-position:0 100vh;}}
+    body::after{content:'';position:fixed;inset:0;z-index:8999;pointer-events:none;
+      background:radial-gradient(ellipse 100% 100% at 50% 50%,transparent 60%,rgba(0,0,0,.55) 100%);}
+    ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:#000;}::-webkit-scrollbar-thumb{background:var(--cyan);}
 
-  /* PAGE HERO */
-  .page-hero{position:relative;padding:52px 0 36px;text-align:center;background:radial-gradient(ellipse at top,rgba(140,0,0,0.4) 0%,rgba(8,0,0,0.98) 70%),#000;border-bottom:1px solid rgba(204,0,0,0.3);overflow:hidden;}
-  #hero-matrix{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:0.35;}
-  .page-hero>.container{position:relative;z-index:2;}
-  .page-hero::after{content:"";position:absolute;bottom:0;left:5%;width:90%;height:1px;background:linear-gradient(90deg,transparent,var(--red),rgba(204,0,0,0.4),var(--red),transparent);box-shadow:0 0 18px rgba(204,0,0,0.5);}
-  .hero-tag{font-family:var(--mono);font-size:0.55rem;color:rgba(204,0,0,0.5);letter-spacing:4px;margin-bottom:.75rem;}
-  .page-hero h1{font-family:var(--display);font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:3px;color:var(--red);text-shadow:0 0 8px var(--red),0 0 22px rgba(180,0,0,0.65),0 0 50px rgba(140,0,0,0.35);animation:flicker 4s infinite;}
-  .page-hero p{font-family:var(--mono);font-size:0.78rem;color:#555;letter-spacing:1px;margin:6px auto 0;max-width:600px;}
+    @keyframes blink-slow{50%{opacity:0;}}
+    @keyframes rainbow-shift{to{background-position:200% 0;}}
+    @keyframes crt-flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1;}20%,24%,55%{opacity:.97;}}
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    @keyframes glitch-title{
+      0%,89%,100%{text-shadow:0 0 10px rgba(255,255,255,.5),3px 0 0 var(--cyan),-3px 0 0 var(--pink);}
+      90%{text-shadow:5px 0 0 var(--pink),-5px 0 0 var(--cyan);transform:translateX(-2px);}
+      91%{text-shadow:-5px 0 0 var(--pink),5px 0 0 var(--cyan);transform:translateX(2px);}
+      92%{text-shadow:0 0 10px rgba(255,255,255,.5),3px 0 0 var(--cyan),-3px 0 0 var(--pink);transform:none;}
+    }
+    @keyframes player-flash{90%,92%{opacity:.4}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+    @keyframes transmit{
+      0%{width:0%;}100%{width:100%;}
+    }
+    @keyframes pulse-green{0%,100%{box-shadow:0 0 6px var(--green);}50%{box-shadow:0 0 18px var(--green);}}
 
-  /* TERMINAL CARD */
-  .contact-wrap{padding:40px 16px 60px;}
-  .terminal-card{max-width:620px;background:rgba(6,0,0,0.92);border:1px solid rgba(204,0,0,0.2);border-radius:4px;box-shadow:0 0 40px rgba(0,0,0,0.8),inset 0 0 30px rgba(0,0,0,0.5);overflow:hidden;backdrop-filter:blur(8px);}
+    /* SCROLL BAR */
+    #scroll-bar{position:fixed;top:0;left:0;height:3px;width:0%;
+      background:linear-gradient(90deg,var(--cyan),var(--pink),var(--yellow));
+      z-index:99999;box-shadow:0 0 10px var(--cyan);pointer-events:none;transition:width .08s linear;}
 
-  /* Terminal title bar */
-  .terminal-top{background:rgba(204,0,0,0.08);border-bottom:1px solid rgba(204,0,0,0.15);padding:10px 14px;display:flex;align-items:center;gap:8px;}
-  .dot{width:11px;height:11px;border-radius:50%;}
-  .dot.red{background:#cc0000;box-shadow:0 0 6px rgba(204,0,0,0.6);}
-  .dot.yellow{background:#886600;box-shadow:0 0 6px rgba(136,102,0,0.4);}
-  .dot.green{background:#006600;box-shadow:0 0 6px rgba(0,102,0,0.4);}
-  .terminal-title{font-family:var(--mono);font-size:0.7rem;color:#444;letter-spacing:1.5px;margin-left:6px;}
+    /* MARQUEE */
+    #marquee-bar{position:sticky;top:0;z-index:1000;height:28px;background:var(--black);border-bottom:2px solid var(--cyan);box-shadow:0 0 12px var(--cyan);display:flex;align-items:center;overflow:hidden;}
+    .marquee-label{background:var(--cyan);color:var(--black);font-family:var(--pixel);font-size:7px;padding:0 12px;height:100%;display:flex;align-items:center;flex-shrink:0;letter-spacing:1px;box-shadow:4px 0 0 var(--black);}
+    .marquee-track{display:flex;overflow:hidden;flex:1;}
+    .marquee-text{font-family:var(--pixel);font-size:7px;color:var(--cyan);white-space:nowrap;animation:marquee 30s linear infinite;letter-spacing:1px;text-shadow:0 0 8px var(--cyan);padding:0 20px;}
 
-  .terminal-body{padding:28px 30px 32px;}
-  .terminal-h{font-family:var(--display);font-size:1.1rem;letter-spacing:2.5px;color:var(--red-dim);margin-bottom:8px;text-shadow:0 0 10px rgba(204,0,0,0.3);}
-  .terminal-p{font-family:var(--mono);font-size:0.78rem;color:#555;letter-spacing:0.5px;margin-bottom:24px;}
+    /* COIN BAR */
+    #coin-bar{position:sticky;top:28px;z-index:999;height:36px;background:var(--black);border-bottom:2px solid var(--pink);box-shadow:0 0 12px var(--pink);display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-family:var(--pixel);font-size:7px;animation:crt-flicker 8s infinite;}
+    .cs-label{color:var(--dimmer);font-size:5.5px;letter-spacing:1px;}
+    .cs-val{color:var(--yellow);text-shadow:0 0 8px var(--yellow);font-size:8px;}
+    .life-icon{color:var(--pink);text-shadow:0 0 6px var(--pink);font-size:10px;}
 
-  /* Form */
-  .tlabel{display:block;font-family:var(--mono);font-size:0.68rem;color:#555;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
-  .tlabel.mt{margin-top:18px;}
-  .tinput{display:block;width:100%;background:rgba(0,0,0,0.6);border:1px solid rgba(204,0,0,0.18);border-radius:3px;padding:9px 13px;font-family:var(--mono);font-size:0.82rem;color:#ccc;outline:none;transition:border-color .2s,box-shadow .2s;letter-spacing:0.3px;}
-  .tinput:focus{border-color:rgba(204,0,0,0.5);box-shadow:0 0 14px rgba(204,0,0,0.15);}
-  .tinput::placeholder{color:#2a2a2a;}
-  textarea.tinput{resize:vertical;min-height:110px;}
-  .tbtn{display:block;width:100%;margin-top:22px;padding:11px 16px;border-radius:3px;font-family:var(--mono);font-size:0.8rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);background:transparent;border:1px solid var(--red-dim);box-shadow:0 0 8px rgba(204,0,0,0.1),inset 0 0 8px rgba(204,0,0,0.04);cursor:pointer;transition:all .2s ease;text-decoration:none;text-align:center;}
-  .tbtn:hover{background:rgba(204,0,0,0.1);border-color:var(--red);box-shadow:0 0 18px rgba(204,0,0,0.4);color:#fff;}
-  .tback{margin-top:16px;text-align:center;}
-  .tback a{font-family:var(--mono);font-size:0.72rem;color:#333;letter-spacing:1.5px;text-decoration:none;transition:color .2s;}
-  .tback a:hover{color:var(--red-dim);}
+    /* NAVBAR */
+    .navbar-arc{position:sticky;top:64px;z-index:900;height:52px;background:rgba(0,0,0,.92);border-bottom:1px solid rgba(0,255,255,.2);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:space-between;padding:0 16px;}
+    .nav-brand{font-family:var(--pixel);font-size:9px;color:var(--cyan);text-shadow:0 0 10px var(--cyan);text-decoration:none;display:flex;align-items:center;gap:10px;}
+    .nav-brand img{width:32px;height:32px;border-radius:2px;border:1px solid var(--cyan);box-shadow:0 0 8px rgba(0,255,255,.4);}
+    .nav-links{display:flex;height:52px;}
+    .nav-link-arc{font-family:var(--pixel);font-size:7px;color:var(--dimmer);text-decoration:none;display:flex;align-items:center;padding:0 14px;border-bottom:2px solid transparent;transition:color .15s;}
+    .nav-link-arc:hover{color:var(--yellow);text-shadow:0 0 8px var(--yellow);}
+    .nav-link-arc.active{color:var(--cyan);border-bottom-color:var(--cyan);text-shadow:0 0 8px var(--cyan);}
+
+    .content{position:relative;z-index:10;padding-bottom:60px;}
+
+    /* HERO */
+    .page-hero{position:relative;overflow:hidden;margin:16px;background:var(--black);
+      box-shadow:0 0 0 2px var(--cyan),0 0 0 4px var(--black),0 0 0 6px var(--pink),0 0 40px rgba(0,255,255,.2);}
+    .page-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
+      background:linear-gradient(90deg,var(--cyan),var(--pink),var(--yellow),var(--green),var(--purple),var(--cyan));
+      background-size:200% 100%;animation:rainbow-shift 3s linear infinite;z-index:6;}
+    .hero-crt{position:absolute;inset:0;pointer-events:none;z-index:5;
+      background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.1) 2px,rgba(0,0,0,.1) 4px);}
+    #star-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+    .px-corner{position:absolute;width:20px;height:20px;pointer-events:none;z-index:7;}
+    .px-corner::before,.px-corner::after{content:'';position:absolute;background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
+    .px-corner::before{width:100%;height:2px;top:0;left:0;}.px-corner::after{width:2px;height:100%;top:0;left:0;}
+    .pc-tl{top:8px;left:8px;}.pc-tr{top:8px;right:8px;transform:rotate(90deg);}
+    .pc-bl{bottom:8px;left:8px;transform:rotate(270deg);}.pc-br{bottom:8px;right:8px;transform:rotate(180deg);}
+    .hero-inner{position:relative;z-index:8;padding:48px 32px 52px;text-align:center;}
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--pixel);font-size:7px;letter-spacing:2px;color:var(--black);background:var(--cyan);padding:5px 16px;margin-bottom:24px;box-shadow:3px 3px 0 rgba(0,0,0,.8);animation:player-flash 4s step-end infinite;}
+    .hero-title{font-family:var(--pixel);font-size:clamp(.9rem,2.5vw,1.8rem);line-height:1.5;letter-spacing:3px;color:var(--white);animation:glitch-title 6s step-end infinite;margin-bottom:12px;}
+    .hero-sub{font-family:var(--vt);font-size:22px;letter-spacing:4px;color:var(--dim);}
+
+    /* SECTION DIVIDER */
+    .sec-div{display:flex;align-items:center;gap:12px;font-family:var(--pixel);font-size:7px;letter-spacing:2px;color:var(--cyan);text-shadow:0 0 8px var(--cyan);margin:28px 0 20px;}
+    .sec-div::before,.sec-div::after{content:'';flex:1;height:2px;}
+    .sec-div::before{background:linear-gradient(90deg,transparent,var(--cyan));}
+    .sec-div::after{background:linear-gradient(90deg,var(--cyan),transparent);}
+
+    /* LAYOUT */
+    .contact-layout{max-width:1000px;margin:0 auto;padding:0 16px 48px;display:grid;grid-template-columns:1fr 320px;gap:20px;}
+
+    /* FORM PANEL */
+    .form-panel{background:var(--panel);border:2px solid rgba(0,255,255,.2);box-shadow:3px 3px 0 rgba(0,255,255,.1);position:relative;overflow:hidden;animation:fadeUp .4s ease both;}
+    .form-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+      background:linear-gradient(90deg,var(--cyan),var(--pink),var(--yellow),var(--green),var(--purple),var(--cyan));
+      background-size:200% 100%;animation:rainbow-shift 4s linear infinite;}
+    .panel-chrome{background:var(--black);border-bottom:1px solid rgba(0,255,255,.15);padding:8px 14px;margin-top:3px;display:flex;align-items:center;gap:8px;}
+    .chrome-dot{width:10px;height:10px;border-radius:50%;}
+    .panel-chrome-title{font-family:var(--pixel);font-size:6px;color:var(--dimmer);letter-spacing:1px;margin-left:4px;}
+    .panel-body{padding:24px;}
+
+    /* FORM FIELDS */
+    .field-group{margin-bottom:18px;}
+    .field-label{display:flex;justify-content:space-between;align-items:center;font-family:var(--pixel);font-size:5.5px;color:var(--dimmer);letter-spacing:2px;margin-bottom:7px;}
+    .field-status{font-size:5px;letter-spacing:1px;}
+    .field-status.ok{color:var(--green);}
+    .field-status.err{color:var(--pink);}
+
+    .field-input{display:block;width:100%;background:rgba(0,0,0,.6);border:1px solid rgba(0,255,255,.15);padding:10px 13px;font-family:var(--mono);font-size:13px;color:var(--white);outline:none;transition:border-color .2s,box-shadow .2s;letter-spacing:.3px;}
+    .field-input::placeholder{color:rgba(232,244,255,.15);}
+    .field-input:focus{border-color:var(--cyan);box-shadow:0 0 12px rgba(0,255,255,.15);}
+    .field-input.valid{border-color:var(--green);box-shadow:0 0 8px rgba(0,255,65,.12);}
+    .field-input.invalid{border-color:var(--pink);box-shadow:0 0 8px rgba(255,45,120,.12);}
+    textarea.field-input{resize:vertical;min-height:120px;}
+
+    /* CHAR COUNTER */
+    .char-counter{display:flex;justify-content:flex-end;font-family:var(--mono);font-size:11px;margin-top:4px;transition:color .2s;}
+    .char-counter.warn{color:var(--yellow);}
+    .char-counter.over{color:var(--pink);}
+    .char-counter.ok{color:rgba(232,244,255,.25);}
+
+    /* TRANSMIT BUTTON */
+    .transmit-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:20px;font-family:var(--pixel);font-size:7px;letter-spacing:1px;color:var(--black);background:var(--cyan);padding:12px 20px;border:none;cursor:pointer;box-shadow:3px 3px 0 rgba(0,0,0,.8);transition:all .15s;position:relative;overflow:hidden;}
+    .transmit-btn:hover{background:var(--yellow);transform:translate(-1px,-1px);box-shadow:4px 4px 0 rgba(0,0,0,.8);}
+    .transmit-btn:disabled{background:var(--panel);color:var(--dimmer);cursor:not-allowed;box-shadow:none;transform:none;}
+    .transmit-progress{position:absolute;bottom:0;left:0;height:3px;width:0%;background:var(--green);box-shadow:0 0 8px var(--green);transition:width .05s linear;}
+
+    /* TRANSMIT OVERLAY */
+    #transmit-overlay{display:none;position:absolute;inset:0;background:rgba(0,10,15,.97);z-index:20;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+    #transmit-overlay.active{display:flex;}
+    .tx-label{font-family:var(--pixel);font-size:8px;color:var(--cyan);text-shadow:0 0 12px var(--cyan);letter-spacing:2px;animation:blink-slow .7s step-end infinite;}
+    .tx-bar-wrap{width:80%;height:8px;background:#000;border:1px solid rgba(0,255,255,.3);overflow:hidden;}
+    .tx-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--green));box-shadow:0 0 8px var(--cyan);animation:transmit 2.5s ease forwards;}
+    .tx-log{font-family:var(--mono);font-size:11px;color:rgba(0,255,255,.4);letter-spacing:1px;text-align:center;}
+
+    /* BACK LINK */
+    .back-link{display:inline-flex;align-items:center;gap:8px;font-family:var(--pixel);font-size:6px;color:var(--dimmer);text-decoration:none;margin-top:14px;letter-spacing:1px;transition:color .15s;}
+    .back-link:hover{color:var(--cyan);}
+    .back-link::before{content:'◀';}
+
+    /* SIDEBAR */
+    .info-sidebar{display:flex;flex-direction:column;gap:16px;animation:fadeUp .4s ease .1s both;}
+
+    .info-card{background:var(--panel);border:1px solid rgba(0,255,255,.15);box-shadow:2px 2px 0 rgba(0,255,255,.08);position:relative;overflow:hidden;}
+    .info-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,var(--cyan),var(--pink),var(--yellow),var(--green),var(--purple),var(--cyan));
+      background-size:200% 100%;animation:rainbow-shift 4s linear infinite;}
+    .info-card-chrome{background:var(--black);border-bottom:1px solid rgba(0,255,255,.1);padding:7px 12px;margin-top:2px;}
+    .info-card-title{font-family:var(--pixel);font-size:5.5px;color:var(--cyan);letter-spacing:1px;}
+    .info-card-body{padding:14px 14px;}
+
+    .contact-method{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,255,255,.06);text-decoration:none;transition:all .2s;}
+    .contact-method:last-child{border-bottom:none;}
+    .contact-method:hover .cm-label{color:var(--cyan);}
+    .contact-method:hover{background:rgba(0,255,255,.03);padding-left:4px;}
+    .cm-icon{width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;border:1px solid;}
+    .cm-info{display:flex;flex-direction:column;gap:2px;}
+    .cm-platform{font-family:var(--pixel);font-size:5px;color:var(--dimmer);letter-spacing:1px;}
+    .cm-label{font-family:var(--mono);font-size:12px;transition:color .2s;}
+
+    /* ONLINE STATUS */
+    .online-row{display:flex;align-items:center;gap:8px;padding:6px 0;}
+    .online-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+    .online-dot.active{background:var(--green);animation:pulse-green 1.8s ease-in-out infinite;}
+    .online-dot.away{background:var(--yellow);}
+    .online-text{font-family:var(--mono);font-size:12px;color:rgba(232,244,255,.45);}
+    .online-val{font-family:var(--pixel);font-size:5.5px;letter-spacing:1px;}
+
+    /* FOOTER */
+    .footer{background:var(--black);border-top:3px solid var(--cyan);box-shadow:0 -8px 24px rgba(0,255,255,.15);padding:40px 24px 64px;text-align:center;}
+    .footer::before{content:'● INSERT COIN TO CONTINUE ●';display:block;font-family:var(--pixel);font-size:7px;letter-spacing:3px;color:var(--yellow);text-shadow:0 0 10px var(--yellow);margin-bottom:24px;animation:blink-slow 1.5s step-end infinite;}
+    .footer-title{font-family:var(--pixel);font-size:10px;letter-spacing:2px;color:var(--cyan);text-shadow:0 0 10px var(--cyan);}
+    .footer-subtitle{font-family:var(--vt);font-size:18px;letter-spacing:2px;color:var(--dimmer);}
+    .footer-social{display:flex;justify-content:center;gap:10px;margin:16px 0;}
+    .social-link{width:40px;height:40px;border:2px solid rgba(0,255,255,.3);background:var(--panel);display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:15px;text-decoration:none;box-shadow:2px 2px 0 rgba(0,0,0,.8);transition:all .15s;}
+    .social-link:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,255,255,.1);transform:translate(-1px,-1px);}
+    .footer-copy{font-family:var(--pixel);font-size:6px;letter-spacing:1px;color:var(--dimmer);}
+
+    @media(max-width:768px){.contact-layout{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
 
-  <div id="scroll-bar"></div>
+<div id="scroll-bar"></div>
 
-  <!-- BACKGROUND LAYERS -->
-  <canvas id="matrix-canvas"></canvas>
-  <div id="hex-grid-layer">
-    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-      <defs><pattern id="hexPat" x="0" y="0" width="56" height="48" patternUnits="userSpaceOnUse">
-        <polygon points="28,2 52,14 52,38 28,50 4,38 4,14" fill="none" stroke="#cc0000" stroke-width="0.7"/>
-      </pattern></defs>
-      <rect width="100%" height="100%" fill="url(#hexPat)"/>
-    </svg>
+<!-- MARQUEE -->
+<div id="marquee-bar">
+  <div class="marquee-label">CONTACT</div>
+  <div class="marquee-track">
+    <div class="marquee-text">★ SECURE TRANSMISSION CHANNEL ★ ENCRYPTED CONNECTION ACTIVE ★ AES-256 ★ SEND MESSAGE ★ BUDA HACK SECURITY ★ AUTHORIZED CONTACT ONLY ★ ★ SECURE TRANSMISSION CHANNEL ★ ENCRYPTED CONNECTION ACTIVE ★ AES-256 ★ SEND MESSAGE ★ BUDA HACK SECURITY ★ AUTHORIZED CONTACT ONLY ★</div>
   </div>
-  <div id="classified-watermark"></div>
-  <div id="scanline-bar"></div>
-  <div id="noise-layer"></div>
-  <div id="vignette-layer"></div>
+</div>
 
-  <!-- STATUS BARS -->
-  <div id="top-status-bar">
-    <span class="tsci">&#x26A0; TOP SECRET // SCI // NOFORN</span>
-    <span class="enc-blink" id="enc-label">&#x258C; ENCRYPTED CHANNEL ACTIVE &#x258C;</span>
-    <span id="status-clock">00:00:00 UTC | NODE: TOR-0000</span>
+<!-- COIN BAR -->
+<div id="coin-bar">
+  <div style="display:flex;gap:20px">
+    <div style="display:flex;flex-direction:column;gap:1px"><span class="cs-label">SCORE</span><span class="cs-val" id="score-val">000000</span></div>
+    <div style="display:flex;flex-direction:column;gap:1px"><span class="cs-label">HI-SCORE</span><span class="cs-val">999999</span></div>
   </div>
-  <div id="bottom-status-bar">
-    <span>&#x25C9; SECURE_CONN: <b class="g">ESTABLISHED</b></span>
-    <span>PACKETS_RX: <b class="g" id="pkt">0</b></span>
-    <span>ENCRYPT: <b class="g">AES-256-GCM</b></span>
-    <span>TOR_HOP: <b class="g">3/3</b></span>
-    <span style="margin-left:auto">CLASSIFICATION: <b class="r">TOP SECRET</b></span>
+  <div style="color:var(--pink);text-shadow:0 0 10px var(--pink);letter-spacing:2px;animation:blink-slow 1.5s step-end infinite">— BUDA HACK SECURITY —</div>
+  <div style="display:flex;gap:12px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:1px;align-items:flex-end"><span class="cs-label">STAGE</span><span class="cs-val">??</span></div>
+    <span class="life-icon">♥</span><span class="life-icon">♥</span><span class="life-icon">♥</span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar-arc">
+  <a href="index.html" class="nav-brand"><img src="assets/img/la.png" alt="Logo">BUDAHACK</a>
+  <div class="nav-links">
+    <a href="index.html"   class="nav-link-arc">HOME</a>
+    <a href="about.html"   class="nav-link-arc">ABOUT</a>
+    <a href="gallery.html" class="nav-link-arc">GALLERY</a>
+  </div>
+</nav>
+
+<div class="content">
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <canvas id="star-canvas"></canvas>
+    <div class="hero-crt"></div>
+    <div class="px-corner pc-tl"></div><div class="px-corner pc-tr"></div>
+    <div class="px-corner pc-bl"></div><div class="px-corner pc-br"></div>
+    <div class="hero-inner">
+      <div class="hero-tag">▶ SECURE TRANSMISSION — ENCRYPTED</div>
+      <h1 class="hero-title"><i class="bi bi-envelope-fill" style="margin-right:12px"></i>CONTACT</h1>
+      <p class="hero-sub">SEND MESSAGE THROUGH SECURE CHANNEL</p>
+    </div>
   </div>
 
-  <div class="content-wrapper">
+  <div style="max-width:1000px;margin:0 auto;padding:0 16px;">
+    <div class="sec-div">[ OPEN COMMS — INITIALIZE TRANSMISSION ]</div>
+  </div>
 
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="index.html">
-          <img src="assets/img/la.png" alt="ByteZero Logo" class="navbar-logo me-2">
-          <span>Buda Hack Security</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-          </ul>
-        </div>
+  <!-- LAYOUT -->
+  <div class="contact-layout">
+
+    <!-- FORM PANEL -->
+    <div class="form-panel" style="position:relative;">
+      <div id="transmit-overlay">
+        <div class="tx-label" id="tx-label">INITIALIZING TRANSMISSION...</div>
+        <div class="tx-bar-wrap"><div class="tx-bar" id="tx-bar"></div></div>
+        <div class="tx-log" id="tx-log">Encrypting payload...</div>
       </div>
-    </nav>
+      <div class="panel-chrome">
+        <span class="chrome-dot" style="background:#ff2d78;box-shadow:0 0 6px rgba(255,45,120,.6)"></span>
+        <span class="chrome-dot" style="background:#ffe600;box-shadow:0 0 6px rgba(255,230,0,.4)"></span>
+        <span class="chrome-dot" style="background:#00ff41;box-shadow:0 0 6px rgba(0,255,65,.4)"></span>
+        <span class="panel-chrome-title">contact@buda-hack-security ~ secure-msg</span>
+      </div>
+      <div class="panel-body">
+        <div style="font-family:var(--pixel);font-size:7px;color:var(--cyan);letter-spacing:1px;margin-bottom:6px;">▶ SEND MESSAGE</div>
+        <div style="font-family:var(--vt);font-size:20px;color:var(--dim);letter-spacing:3px;margin-bottom:20px;">Comment, suggestion, or report? Write to me.</div>
 
-    <div class="page-hero">
-      <canvas id="hero-matrix"></canvas>
-      <div class="container">
-        <p class="hero-tag">[ SECURE TRANSMISSION — ENCRYPTED ]</p>
-        <h1><i class="bi bi-envelope-fill me-3"></i>Contact</h1>
-        <p>Send a message through the secure channel.</p>
+        <form id="contact-form" action="https://formsubmit.co/hackbuda5@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New message from Buda Hack Security">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://budahacksecurity.fun/thanks.html">
+
+          <!-- NAME -->
+          <div class="field-group">
+            <div class="field-label">
+              <span>// NAME</span>
+              <span class="field-status" id="name-status"></span>
+            </div>
+            <input type="text" name="name" id="field-name" class="field-input" placeholder="Your name" required>
+          </div>
+
+          <!-- EMAIL -->
+          <div class="field-group">
+            <div class="field-label">
+              <span>// EMAIL</span>
+              <span class="field-status" id="email-status"></span>
+            </div>
+            <input type="email" name="email" id="field-email" class="field-input" placeholder="user@mail.com" required>
+          </div>
+
+          <!-- MESSAGE -->
+          <div class="field-group">
+            <div class="field-label">
+              <span>// MESSAGE</span>
+              <span class="field-status" id="msg-status"></span>
+            </div>
+            <textarea name="message" id="field-msg" class="field-input" placeholder="Write your message..." required maxlength="1000"></textarea>
+            <div class="char-counter ok" id="char-counter"><span id="char-count">0</span> / 1000</div>
+          </div>
+
+          <button type="submit" class="transmit-btn" id="submit-btn">
+            <i class="bi bi-send-fill"></i> TRANSMIT MESSAGE
+            <div class="transmit-progress" id="transmit-progress"></div>
+          </button>
+        </form>
+        <a href="index.html" class="back-link">BACK TO HOME</a>
       </div>
     </div>
 
-    <div class="contact-wrap">
-      <div class="terminal-card mx-auto">
-        <div class="terminal-top">
-          <span class="dot red"></span>
-          <span class="dot yellow"></span>
-          <span class="dot green"></span>
-          <span class="terminal-title">contact@buda-hack-security ~ secure-msg</span>
-        </div>
-        <div class="terminal-body">
-          <h2 class="terminal-h"><i class="bi bi-terminal me-2"></i>Send Message</h2>
-          <p class="terminal-p">Comment, suggestion, or report? Write to me.</p>
+    <!-- SIDEBAR -->
+    <div class="info-sidebar">
 
-          <form action="https://formsubmit.co/hackbuda5@gmail.com" method="POST">
-            <input type="hidden" name="_subject" value="New message from Buda Hack Security">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_next" value="https://budahacksecurity.fun/thanks.html">
-
-            <label class="tlabel">Name</label>
-            <input type="text" name="name" class="tinput" placeholder="Your name" required>
-
-            <label class="tlabel mt">Email</label>
-            <input type="email" name="email" class="tinput" placeholder="user@mail.com" required>
-
-            <label class="tlabel mt">Message</label>
-            <textarea name="message" rows="6" class="tinput" placeholder="Write your message..." required></textarea>
-
-            <button type="submit" class="tbtn"><i class="bi bi-send-fill me-2"></i>Send Message</button>
-            <div class="tback"><a href="index.html">&larr; Back to home</a></div>
-          </form>
+      <!-- STATUS -->
+      <div class="info-card">
+        <div class="info-card-chrome"><span class="info-card-title">▶ OPERATOR STATUS</span></div>
+        <div class="info-card-body">
+          <div class="online-row">
+            <div class="online-dot active"></div>
+            <span class="online-text">Status:</span>
+            <span class="online-val" style="color:var(--green)">ONLINE</span>
+          </div>
+          <div class="online-row">
+            <div class="online-dot away"></div>
+            <span class="online-text">Response time:</span>
+            <span class="online-val" style="color:var(--yellow)">24-48h</span>
+          </div>
+          <div style="height:1px;background:rgba(0,255,255,.08);margin:8px 0;"></div>
+          <div style="font-family:var(--mono);font-size:11px;color:rgba(232,244,255,.3);line-height:1.7;">
+            <div>$ conn <span style="color:var(--green)">ESTABLISHED</span></div>
+            <div>$ encrypt <span style="color:var(--cyan)">AES-256-GCM</span></div>
+            <div>$ channel <span style="color:var(--cyan)">SECURE</span></div>
+          </div>
         </div>
       </div>
+
+      <!-- CONTACT METHODS -->
+      <div class="info-card">
+        <div class="info-card-chrome"><span class="info-card-title">▶ CONTACT CHANNELS</span></div>
+        <div class="info-card-body">
+          <a href="https://github.com/buda-sys/buda-sys" target="_blank" class="contact-method">
+            <div class="cm-icon" style="color:#e8f4ff;border-color:rgba(232,244,255,.2)"><i class="bi bi-github"></i></div>
+            <div class="cm-info">
+              <span class="cm-platform">GITHUB</span>
+              <span class="cm-label" style="color:rgba(232,244,255,.6)">buda-sys</span>
+            </div>
+          </a>
+          <a href="https://discord.gg/mqXsQYN3" target="_blank" class="contact-method">
+            <div class="cm-icon" style="color:#7289da;border-color:rgba(114,137,218,.3)"><i class="bi bi-discord"></i></div>
+            <div class="cm-info">
+              <span class="cm-platform">DISCORD</span>
+              <span class="cm-label" style="color:#7289da">Join Server</span>
+            </div>
+          </a>
+          <a href="https://tryhackme.com/p/Kravn0" target="_blank" class="contact-method">
+            <div class="cm-icon" style="color:var(--pink);border-color:rgba(255,45,120,.2)"><i class="bi bi-lightning-charge-fill"></i></div>
+            <div class="cm-info">
+              <span class="cm-platform">TRYHACKME</span>
+              <span class="cm-label" style="color:var(--pink)">Krav0</span>
+            </div>
+          </a>
+          <a href="https://app.hackthebox.com/users/2192414" target="_blank" class="contact-method">
+            <div class="cm-icon" style="color:var(--green);border-color:rgba(0,255,65,.2)"><i class="bi bi-box-fill"></i></div>
+            <div class="cm-info">
+              <span class="cm-platform">HACK THE BOX</span>
+              <span class="cm-label" style="color:var(--green)">Krav0</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- NOTE -->
+      <div class="info-card">
+        <div class="info-card-chrome"><span class="info-card-title">▶ SYSTEM NOTE</span></div>
+        <div class="info-card-body">
+          <div style="font-family:var(--mono);font-size:12px;color:rgba(232,244,255,.35);line-height:1.8;">
+            <span style="color:var(--green)">$</span> Messages are processed through a secure channel.<br>
+            <span style="color:var(--green)">$</span> Check <span style="color:var(--yellow)">SPAM</span> folder if expecting a reply.<br>
+            <span style="color:var(--green)">$</span> For urgent matters use <span style="color:#7289da">Discord</span>.
+          </div>
+        </div>
+      </div>
+
     </div>
-
-    <footer class="footer text-center text-light py-4">
-      <div class="container">
-        <h5 class="footer-title">Buda Hack Security</h5>
-        <p class="footer-subtitle">Pentest explorations, labs &amp; write-ups</p>
-        <div class="footer-social my-3">
-          <a href="https://github.com/buda-sys/buda-sys" class="social-link"><i class="bi bi-github"></i></a>
-          <a href="https://discord.gg/mqXsQYN3" class="social-link"><i class="bi bi-discord"></i></a>
-          <a href="contact.html" class="social-link"><i class="bi bi-envelope"></i></a>
-          <a href="disclaimer.html" class="social-link"><i class="bi bi-shield-check"></i></a>
-        </div>
-        <p class="footer-copy mt-3 mb-0">&copy; 2025 <span class="text-danger">Buda Hack Security</span> &mdash; All rights reserved.</p>
-      </div>
-    </footer>
-
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    (function(){var b=document.getElementById('scroll-bar');window.addEventListener('scroll',function(){var t=document.documentElement.scrollHeight-window.innerHeight;b.style.width=(t>0?(window.scrollY/t)*100:0)+'%';},{passive:true});})();
-    (function(){var c=document.getElementById('matrix-canvas');if(!c)return;var x=c.getContext('2d');var ch='0123456789ABCDEF<>[]{}ROOTEXPLOITHACK';var fs=14,d=[];function r(){c.width=window.innerWidth;c.height=window.innerHeight;d=Array(Math.floor(c.width/fs)).fill(1);}r();window.addEventListener('resize',r);setInterval(function(){x.fillStyle='rgba(0,0,0,0.04)';x.fillRect(0,0,c.width,c.height);x.font=fs+'px monospace';d.forEach(function(y,i){var s=ch[Math.floor(Math.random()*ch.length)];if(y===1)x.fillStyle='#ff2200';else if(y<4)x.fillStyle='#cc0000';else x.fillStyle='rgba(140,0,0,0.4)';x.fillText(s,i*fs,y*fs);if(y*fs>c.height&&Math.random()>0.975)d[i]=0;d[i]++;});},50);})();
-    (function(){var c=document.getElementById('hero-matrix');if(!c)return;var hero=c.closest('.page-hero');var x=c.getContext('2d');var ch='01ROOTPWNDHACK><[]{}';var fs=16,d=[];function r(){c.width=hero.offsetWidth;c.height=hero.offsetHeight;d=Array(Math.floor(c.width/fs)).fill(1);}r();window.addEventListener('resize',r);function draw(){x.fillStyle='rgba(0,0,0,0.12)';x.fillRect(0,0,c.width,c.height);x.font=fs+'px monospace';d.forEach(function(y,i){x.fillStyle=y<3?'#ff2200':'rgba(180,0,0,0.3)';x.fillText(Math.random()>0.5?'1':'0',i*fs,y*fs);if(y*fs>c.height&&Math.random()>0.96)d[i]=0;d[i]++;});requestAnimationFrame(draw);}draw();})();
-    (function(){var el=document.getElementById('classified-watermark');if(!el)return;var words=['CLASSIFIED','TOP SECRET','CONFIDENTIAL','RESTRICTED','NOFORN','EYES ONLY'];var html='';for(var r=0;r<14;r++)for(var c=0;c<7;c++){var w=words[(r+c)%words.length];html+='<span style="top:'+(r*8-2)+'%;left:'+(c*16-2)+'%">'+w+'</span>';}el.innerHTML=html;})();
-    (function(){var cl=document.getElementById('status-clock');var en=document.getElementById('enc-label');var pk=document.getElementById('pkt');if(cl)setInterval(function(){var n=new Date(),p=function(x){return String(x).padStart(2,'0');};cl.textContent=p(n.getUTCHours())+':'+p(n.getUTCMinutes())+':'+p(n.getUTCSeconds())+' UTC | NODE: TOR-'+String(Math.floor(Math.random()*9000+1000));},1000);if(en)setInterval(function(){en.style.opacity=en.style.opacity==='0.25'?'1':'0.25';},800);if(pk){var p=0;setInterval(function(){p+=Math.floor(Math.random()*120+40);pk.textContent=p.toLocaleString();},300);}})();
-  </script>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <h5 class="footer-title mb-1">BUDA HACK SECURITY</h5>
+    <p class="footer-subtitle my-2">PENTEST EXPLORATIONS · LABS · WRITE-UPS</p>
+    <div class="footer-social">
+      <a href="https://github.com/buda-sys/buda-sys" class="social-link"><i class="bi bi-github"></i></a>
+      <a href="https://discord.gg/mqXsQYN3" class="social-link"><i class="bi bi-discord"></i></a>
+      <a href="contact.html" class="social-link"><i class="bi bi-envelope"></i></a>
+      <a href="disclaimer.html" class="social-link"><i class="bi bi-shield-check"></i></a>
+    </div>
+    <p class="footer-copy">© 2025 <span style="color:var(--pink);text-shadow:0 0 6px var(--pink)">BUDA HACK SECURITY</span> · ALL RIGHTS RESERVED</p>
+  </footer>
+</div>
+
+<script>
+// SCROLL BAR
+window.addEventListener('scroll',function(){var t=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('scroll-bar').style.width=(t>0?(window.scrollY/t)*100:0)+'%';},{passive:true});
+
+// STARFIELD
+(function(){
+  var sc=document.getElementById('star-canvas');if(!sc)return;
+  var ctx=sc.getContext('2d');
+  function resize(){sc.width=sc.offsetWidth;sc.height=sc.offsetHeight;}resize();window.addEventListener('resize',resize);
+  var cols=['rgba(0,255,255,','rgba(255,45,120,','rgba(255,230,0,','rgba(255,255,255,'];
+  var stars=Array.from({length:100},function(){return{x:Math.random()*sc.width,y:Math.random()*sc.height,s:Math.random()>.85?2:1,b:Math.random()*Math.PI*2,sp:Math.random()*.015+.005,c:cols[Math.random()*4|0]};});
+  function draw(){ctx.clearRect(0,0,sc.width,sc.height);stars.forEach(function(s){s.b+=s.sp;var a=.15+.6*Math.abs(Math.sin(s.b));ctx.fillStyle=s.c+a+')';ctx.fillRect(s.x,s.y,s.s,s.s);});requestAnimationFrame(draw);}draw();
+})();
+
+// SCORE
+(function(){var sc=0,sv=document.getElementById('score-val');setInterval(function(){sc=Math.min(sc+Math.floor(Math.random()*100+20),999999);if(sv)sv.textContent=String(sc).padStart(6,'0');},600);})();
+
+// REAL-TIME VALIDATION
+var nameField  = document.getElementById('field-name');
+var emailField = document.getElementById('field-email');
+var msgField   = document.getElementById('field-msg');
+var charCount  = document.getElementById('char-count');
+var charCtr    = document.getElementById('char-counter');
+
+function validateName(){
+  var v=nameField.value.trim();
+  var st=document.getElementById('name-status');
+  if(v.length===0){nameField.className='field-input';st.textContent='';st.className='field-status';}
+  else if(v.length<2){nameField.className='field-input invalid';st.textContent='TOO SHORT';st.className='field-status err';}
+  else{nameField.className='field-input valid';st.textContent='✓ OK';st.className='field-status ok';}
+}
+function validateEmail(){
+  var v=emailField.value.trim();
+  var st=document.getElementById('email-status');
+  var re=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(v.length===0){emailField.className='field-input';st.textContent='';st.className='field-status';}
+  else if(!re.test(v)){emailField.className='field-input invalid';st.textContent='INVALID FORMAT';st.className='field-status err';}
+  else{emailField.className='field-input valid';st.textContent='✓ OK';st.className='field-status ok';}
+}
+function validateMsg(){
+  var v=msgField.value;
+  var len=v.length;
+  var st=document.getElementById('msg-status');
+  charCount.textContent=len;
+  if(len===0){msgField.className='field-input';st.textContent='';st.className='field-status';charCtr.className='char-counter ok';}
+  else if(len<10){msgField.className='field-input invalid';st.textContent='TOO SHORT';st.className='field-status err';charCtr.className='char-counter warn';}
+  else if(len>900){msgField.className='field-input valid';st.textContent='✓ OK';st.className='field-status ok';charCtr.className='char-counter over';}
+  else{msgField.className='field-input valid';st.textContent='✓ OK';st.className='field-status ok';charCtr.className='char-counter ok';}
+}
+nameField.addEventListener('input',validateName);
+emailField.addEventListener('input',validateEmail);
+msgField.addEventListener('input',validateMsg);
+
+// TRANSMIT EFFECT
+var txLogs = [
+  'Encrypting payload...',
+  'Establishing secure channel...',
+  'Routing through TOR nodes...',
+  'Authenticating sender...',
+  'Compressing data...',
+  'Transmitting packet 1/3...',
+  'Transmitting packet 2/3...',
+  'Transmitting packet 3/3...',
+  'Verifying delivery...',
+  'TRANSMISSION COMPLETE ✓'
+];
+document.getElementById('contact-form').addEventListener('submit',function(e){
+  var overlay=document.getElementById('transmit-overlay');
+  var txLabel=document.getElementById('tx-label');
+  var txLog=document.getElementById('tx-log');
+  overlay.classList.add('active');
+  var i=0;
+  var iv=setInterval(function(){
+    if(i<txLogs.length){txLog.textContent=txLogs[i];i++;}
+    else{clearInterval(iv);}
+  },250);
+});
+</script>
+
+<!-- Buy Me a Coffee -->
+<script data-name="BMC-Widget" data-cfasync="false"
+  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+  data-id="krav0" data-description="Apoya a Buda Hack Security"
+  data-message="Gracias por el apoyo ☕" data-color="#FF0033"
+  data-position="Right" data-x_margin="18" data-y_margin="18">
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

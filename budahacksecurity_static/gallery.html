@@ -3,243 +3,456 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Galería | Buda Hack Security</title>
+  <title>GALLERY | BUDA HACK SECURITY</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/img/favicon_ico/favicon.ico">
+  <style>
+    :root{
+      --black:#000;--screen:#050810;--panel:#0a0f1a;
+      --cyan:#00ffff;--pink:#ff2d78;--yellow:#ffe600;
+      --green:#00ff41;--purple:#bf5fff;--white:#e8f4ff;
+      --dim:rgba(232,244,255,.35);--dimmer:rgba(232,244,255,.18);
+      --pixel:'Press Start 2P',monospace;
+      --vt:'VT323',monospace;
+      --mono:'Share Tech Mono',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;background:#000;}
+    body{background:var(--screen);color:var(--white);font-family:var(--mono);overflow-x:hidden;
+      cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='7' y='0' width='2' height='16' fill='%2300ffff'/%3E%3Crect x='0' y='7' width='16' height='2' fill='%2300ffff'/%3E%3C/svg%3E") 8 8,crosshair;}
+    body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
+      background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.18) 2px,rgba(0,0,0,.18) 4px);
+      animation:scanroll 12s linear infinite;}
+    @keyframes scanroll{to{background-position:0 100vh;}}
+    body::after{content:'';position:fixed;inset:0;z-index:8999;pointer-events:none;
+      background:radial-gradient(ellipse 100% 100% at 50% 50%,transparent 60%,rgba(0,0,0,.55) 100%);}
+    ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:#000;}::-webkit-scrollbar-thumb{background:var(--cyan);}
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    @keyframes blink-slow{50%{opacity:0;}}
+    @keyframes rainbow-shift{to{background-position:200% 0;}}
+    @keyframes crt-flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1;}20%,24%,55%{opacity:.97;}}
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    @keyframes glitch-scan{
+      0%{opacity:1;clip-path:inset(0 0 100% 0);}
+      5%{clip-path:inset(0 0 0 0);opacity:.85;}
+      10%{clip-path:inset(15% 0 70% 0);transform:translate(-3px,0);opacity:.6;}
+      15%{clip-path:inset(60% 0 10% 0);transform:translate(3px,0);}
+      20%{clip-path:inset(0 0 0 0);transform:translate(0);opacity:1;}
+      100%{opacity:1;clip-path:inset(0 0 0 0);}
+    }
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+    @keyframes scanWipe{0%{top:-100%;}100%{top:200%;}}
+    @keyframes pulse-border{0%,100%{box-shadow:0 0 0 2px var(--cyan),0 0 12px rgba(0,255,255,.2);}50%{box-shadow:0 0 0 2px var(--cyan),0 0 24px rgba(0,255,255,.5);}}
 
-  <!-- Estilos del sitio -->
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/gallery.css">
+    /* MARQUEE */
+    #marquee-bar{position:sticky;top:0;z-index:1000;height:28px;background:var(--black);border-bottom:2px solid var(--cyan);box-shadow:0 0 12px var(--cyan);display:flex;align-items:center;overflow:hidden;}
+    .marquee-label{background:var(--cyan);color:var(--black);font-family:var(--pixel);font-size:7px;padding:0 12px;height:100%;display:flex;align-items:center;flex-shrink:0;letter-spacing:1px;box-shadow:4px 0 0 var(--black);}
+    .marquee-track{display:flex;overflow:hidden;flex:1;}
+    .marquee-text{font-family:var(--pixel);font-size:7px;color:var(--cyan);white-space:nowrap;animation:marquee 28s linear infinite;letter-spacing:1px;text-shadow:0 0 8px var(--cyan);padding:0 20px;}
 
-  <!-- Favicon -->
-  <link rel="shortcut icon" href="assets/img/favicon_ico/favicon.ico" type="image/x-icon">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon_ico/favicon-32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon_ico/apple-touch-icon.png">
-  <link rel="manifest" href="assets/img/favicon_ico/site.webmanifest">
+    /* COIN BAR */
+    #coin-bar{position:sticky;top:28px;z-index:999;height:36px;background:var(--black);border-bottom:2px solid var(--pink);box-shadow:0 0 12px var(--pink);display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-family:var(--pixel);font-size:7px;animation:crt-flicker 8s infinite;}
+    .cs-label{color:var(--dimmer);font-size:5.5px;letter-spacing:1px;}
+    .cs-val{color:var(--yellow);text-shadow:0 0 8px var(--yellow);font-size:8px;}
+    .life-icon{color:var(--pink);text-shadow:0 0 6px var(--pink);font-size:10px;}
+
+    /* NAVBAR */
+    .navbar-arc{position:sticky;top:64px;z-index:900;height:52px;background:rgba(0,0,0,.92);border-bottom:1px solid rgba(0,255,255,.2);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:space-between;padding:0 16px;}
+    .nav-brand{font-family:var(--pixel);font-size:9px;color:var(--cyan);text-shadow:0 0 10px var(--cyan);text-decoration:none;display:flex;align-items:center;gap:10px;}
+    .nav-brand img{width:32px;height:32px;border-radius:2px;border:1px solid var(--cyan);box-shadow:0 0 8px rgba(0,255,255,.4);}
+    .nav-links{display:flex;height:52px;}
+    .nav-link-arc{font-family:var(--pixel);font-size:7px;color:var(--dimmer);text-decoration:none;display:flex;align-items:center;padding:0 14px;border-bottom:2px solid transparent;transition:color .15s;}
+    .nav-link-arc:hover{color:var(--yellow);text-shadow:0 0 8px var(--yellow);}
+    .nav-link-arc.active{color:var(--cyan);border-bottom-color:var(--cyan);text-shadow:0 0 8px var(--cyan);}
+
+    /* CONTENT WRAPPER */
+    .content{position:relative;z-index:10;padding-bottom:60px;}
+
+    /* SECTION DIVIDER */
+    .sec-div{display:flex;align-items:center;gap:12px;font-family:var(--pixel);font-size:7px;letter-spacing:2px;color:var(--cyan);text-shadow:0 0 8px var(--cyan);margin:28px 16px 20px;}
+    .sec-div::before,.sec-div::after{content:'';flex:1;height:2px;}
+    .sec-div::before{background:linear-gradient(90deg,transparent,var(--cyan));}
+    .sec-div::after{background:linear-gradient(90deg,var(--cyan),transparent);}
+
+    /* FILTER BUTTONS */
+    .filter-bar{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px;margin-bottom:20px;}
+    .filter-btn{font-family:var(--pixel);font-size:6px;letter-spacing:1px;color:var(--dimmer);background:var(--panel);border:1px solid rgba(0,255,255,.2);padding:6px 14px;cursor:pointer;transition:all .15s;}
+    .filter-btn:hover{color:var(--yellow);border-color:var(--yellow);text-shadow:0 0 6px var(--yellow);}
+    .filter-btn.active{color:var(--black);background:var(--cyan);border-color:var(--cyan);box-shadow:0 0 10px rgba(0,255,255,.4);}
+
+    /* CAROUSEL WRAPPER */
+    .carousel-wrapper{max-width:960px;margin:0 auto;padding:0 16px 20px;}
+    .carousel-box{position:relative;background:var(--black);border:2px solid var(--cyan);box-shadow:0 0 0 1px var(--black),0 0 0 3px var(--pink),0 0 40px rgba(0,255,255,.15);overflow:hidden;}
+    .carousel-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--pink),var(--yellow),var(--green),var(--purple),var(--cyan));background-size:200% 100%;animation:rainbow-shift 3s linear infinite;z-index:10;}
+
+    /* Glitch scan overlay */
+    .glitch-overlay{position:absolute;inset:0;z-index:8;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,255,.03) 2px,rgba(0,255,255,.03) 4px);opacity:0;transition:opacity .1s;}
+    .glitch-overlay.active{opacity:1;}
+    .glitch-scan-line{position:absolute;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,rgba(0,255,255,.4),transparent);top:-100%;animation:scanWipe .4s ease forwards;}
+
+    /* Chrome bar */
+    .carousel-chrome{background:var(--panel);border-bottom:1px solid rgba(0,255,255,.15);padding:8px 14px;margin-top:3px;display:flex;align-items:center;justify-content:space-between;}
+    .carousel-chrome-title{font-family:var(--pixel);font-size:6px;color:var(--cyan);letter-spacing:1px;text-shadow:0 0 8px var(--cyan);}
+    .stage-counter{font-family:var(--pixel);font-size:8px;color:var(--yellow);text-shadow:0 0 10px var(--yellow);letter-spacing:2px;}
+
+    /* Main image */
+    .carousel-img-wrap{position:relative;overflow:hidden;background:#000;}
+    .carousel-img-wrap img{width:100%;height:480px;object-fit:contain;display:block;background:#000;transition:opacity .08s;}
+    .carousel-img-wrap img.glitching{animation:glitch-scan .35s steps(1) forwards;}
+
+    /* Prev/Next */
+    .carousel-ctrl{position:absolute;top:50%;transform:translateY(-50%);z-index:9;background:rgba(0,0,0,.7);border:1px solid rgba(0,255,255,.3);color:var(--cyan);font-size:20px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;}
+    .carousel-ctrl:hover{background:rgba(0,255,255,.15);border-color:var(--cyan);box-shadow:0 0 12px rgba(0,255,255,.4);}
+    .carousel-ctrl.prev{left:12px;}
+    .carousel-ctrl.next{right:12px;}
+
+    /* Dots */
+    .carousel-dots{display:flex;justify-content:center;gap:8px;padding:12px 0;}
+    .carousel-dot{width:10px;height:10px;border-radius:50%;background:rgba(0,255,255,.2);border:1px solid rgba(0,255,255,.3);cursor:pointer;transition:all .2s;}
+    .carousel-dot.active{background:var(--cyan);box-shadow:0 0 8px rgba(0,255,255,.7);transform:scale(1.3);}
+
+    /* Caption */
+    .carousel-caption-bar{background:rgba(0,0,0,.8);border-top:1px solid rgba(0,255,255,.15);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;}
+    .caption-tag{font-family:var(--pixel);font-size:5.5px;padding:2px 8px;border:1px solid;letter-spacing:1px;}
+    .caption-name{font-family:var(--mono);font-size:12px;color:var(--dim);}
+
+    /* THUMBNAIL GRID */
+    .thumb-grid{max-width:960px;margin:0 auto;padding:0 16px 32px;display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;}
+    .thumb-item{position:relative;overflow:hidden;border:1px solid rgba(0,255,255,.2);cursor:pointer;transition:all .2s;aspect-ratio:4/3;}
+    .thumb-item img{width:100%;height:100%;object-fit:cover;display:block;transition:filter .3s,transform .3s;filter:brightness(.7) saturate(.8);}
+    .thumb-item:hover img,.thumb-item.active img{filter:brightness(1) saturate(1.2);transform:scale(1.06);}
+    .thumb-item.active{border-color:var(--cyan);box-shadow:0 0 10px rgba(0,255,255,.4);}
+    .thumb-item:hover{border-color:var(--yellow);box-shadow:0 0 8px rgba(255,230,0,.3);}
+    .thumb-item.hidden{display:none;}
+    .thumb-cat{position:absolute;bottom:0;left:0;right:0;font-family:var(--pixel);font-size:4.5px;text-align:center;padding:2px 4px;letter-spacing:1px;background:rgba(0,0,0,.7);}
+
+    /* LIGHTBOX */
+    #lightbox{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.96);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(8px);}
+    #lightbox.open{opacity:1;pointer-events:all;}
+    #lightbox::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,255,.015) 3px,rgba(0,255,255,.015) 6px);pointer-events:none;}
+    .lb-img-wrap{position:relative;max-width:92vw;max-height:90vh;}
+    .lb-img-wrap img{max-width:92vw;max-height:86vh;object-fit:contain;display:block;border:2px solid var(--cyan);box-shadow:0 0 0 1px var(--black),0 0 0 3px var(--pink),0 0 60px rgba(0,255,255,.3);}
+    .lb-close{position:fixed;top:20px;right:24px;font-family:var(--pixel);font-size:8px;color:var(--pink);border:1px solid var(--pink);padding:6px 14px;cursor:pointer;background:rgba(0,0,0,.8);letter-spacing:1px;z-index:100000;}
+    .lb-close:hover{background:var(--pink);color:#000;}
+    .lb-caption{font-family:var(--pixel);font-size:6px;color:var(--cyan);text-align:center;margin-top:10px;letter-spacing:2px;}
+    .lb-nav{position:fixed;top:50%;transform:translateY(-50%);z-index:100000;background:rgba(0,0,0,.7);border:1px solid rgba(0,255,255,.3);color:var(--cyan);font-size:22px;width:50px;height:50px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+    .lb-nav:hover{background:rgba(0,255,255,.15);border-color:var(--cyan);}
+    .lb-nav.prev{left:16px;}
+    .lb-nav.next{right:16px;}
+
+    /* FOOTER */
+    .footer{background:var(--black);border-top:3px solid var(--cyan);box-shadow:0 -8px 24px rgba(0,255,255,.15);padding:40px 24px 64px;text-align:center;}
+    .footer::before{content:'● INSERT COIN TO CONTINUE ●';display:block;font-family:var(--pixel);font-size:7px;letter-spacing:3px;color:var(--yellow);text-shadow:0 0 10px var(--yellow);margin-bottom:24px;animation:blink-slow 1.5s step-end infinite;}
+    .footer-title{font-family:var(--pixel);font-size:10px;letter-spacing:2px;color:var(--cyan);text-shadow:0 0 10px var(--cyan);}
+    .footer-subtitle{font-family:var(--vt);font-size:18px;letter-spacing:2px;color:var(--dimmer);}
+    .footer-social{display:flex;justify-content:center;gap:10px;margin:16px 0;}
+    .social-link{width:40px;height:40px;border:2px solid rgba(0,255,255,.3);background:var(--panel);display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:15px;text-decoration:none;box-shadow:2px 2px 0 rgba(0,0,0,.8);transition:all .15s;}
+    .social-link:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,255,255,.1);transform:translate(-1px,-1px);}
+    .footer-copy{font-family:var(--pixel);font-size:6px;letter-spacing:1px;color:var(--dimmer);}
+
+    @media(max-width:768px){
+      .carousel-img-wrap img{height:260px;}
+      .thumb-grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:5px;}
+    }
+  </style>
 </head>
-
 <body>
 
-  <!-- ░░ BACKGROUND LAYERS ░░ (consistente con index.html) -->
-  <canvas id="matrix-canvas"></canvas>
-  <div id="hex-grid-layer">
-    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="hexPat" x="0" y="0" width="56" height="48" patternUnits="userSpaceOnUse">
-          <polygon points="28,2 52,14 52,38 28,50 4,38 4,14"
-            fill="none" stroke="#cc0000" stroke-width="0.7"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#hexPat)" />
-    </svg>
+<!-- MARQUEE -->
+<div id="marquee-bar">
+  <div class="marquee-label">GALLERY</div>
+  <div class="marquee-track">
+    <div class="marquee-text">★ VISUAL ARCHIVE ONLINE ★ CTF EVIDENCE LOGGED ★ LAB SESSIONS RECORDED ★ SETUP CLASSIFIED ★ ACCESS GRANTED ★ STAGE UNLOCKED ★ ★ VISUAL ARCHIVE ONLINE ★ CTF EVIDENCE LOGGED ★ LAB SESSIONS RECORDED ★ SETUP CLASSIFIED ★ ACCESS GRANTED ★ STAGE UNLOCKED ★</div>
   </div>
-  <div id="classified-watermark"></div>
-  <div id="scanline-bar"></div>
-  <div id="noise-layer"></div>
-  <div id="vignette-layer"></div>
+</div>
 
-  <!-- ░░ STATUS BARS ░░ -->
-  <div id="top-status-bar">
-    <span class="tsci">⚠ TOP SECRET // SCI // NOFORN</span>
-    <span class="enc-blink" id="enc-label">▌ ENCRYPTED CHANNEL ACTIVE ▌</span>
-    <span id="status-clock">00:00:00 UTC | NODE: TOR-0000</span>
+<!-- COIN BAR -->
+<div id="coin-bar">
+  <div style="display:flex;gap:20px">
+    <div style="display:flex;flex-direction:column;gap:1px"><span class="cs-label">SCORE</span><span class="cs-val" id="score-val">000000</span></div>
+    <div style="display:flex;flex-direction:column;gap:1px"><span class="cs-label">HI-SCORE</span><span class="cs-val">999999</span></div>
   </div>
-  <div id="bottom-status-bar">
-    <span>◉ SECURE_CONN: <b class="g">ESTABLISHED</b></span>
-    <span>PACKETS_RX: <b class="g" id="pkt">0</b></span>
-    <span>ENCRYPT: <b class="g">AES-256-GCM</b></span>
-    <span>TOR_HOP: <b class="g">3/3</b></span>
-    <span style="margin-left:auto">CLASSIFICATION: <b class="r">TOP SECRET</b></span>
+  <div style="color:var(--pink);text-shadow:0 0 10px var(--pink);letter-spacing:2px;animation:blink-slow 1.5s step-end infinite">— BUDA HACK SECURITY —</div>
+  <div style="display:flex;gap:12px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:1px;align-items:flex-end"><span class="cs-label">STAGE</span><span class="cs-val">03</span></div>
+    <span class="life-icon">♥</span><span class="life-icon">♥</span><span class="life-icon">♥</span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar-arc">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/img/la.png" alt="Logo">BUDAHACK
+  </a>
+  <div class="nav-links">
+    <a href="index.html"   class="nav-link-arc">HOME</a>
+    <a href="about.html"   class="nav-link-arc">ABOUT</a>
+    <a href="gallery.html" class="nav-link-arc active">GALLERY</a>
+  </div>
+</nav>
+
+<div class="content">
+
+  <div class="sec-div">[ VISUAL ARCHIVE — STAGE 03 ]</div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">ALL FILES</button>
+    <button class="filter-btn" data-filter="ctf">CTF</button>
+    <button class="filter-btn" data-filter="labs">LABS</button>
+    <button class="filter-btn" data-filter="setup">SETUP</button>
+    <button class="filter-btn" data-filter="other">OTHER</button>
   </div>
 
-  <!-- ░░ CONTENIDO ░░ -->
-  <div class="content-wrapper">
-
-    <!-- NAVBAR (consistente con index.html) -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="index.html">
-          <img src="assets/img/la.png" alt="Logo ByteZero" class="navbar-logo me-2">
-          <span>Buda Hack Security</span>
-        </a>
-        <button class="navbar-toggler" type="button"
-          data-bs-toggle="collapse" data-bs-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="about.html">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="gallery.html">Gallery</a>
-            </li>
-          </ul>
-        </div>
+  <!-- CAROUSEL -->
+  <div class="carousel-wrapper">
+    <div class="carousel-box">
+      <div class="glitch-overlay" id="glitch-overlay">
+        <div class="glitch-scan-line" id="scan-line"></div>
       </div>
-    </nav>
-
-    <!-- HEADER DE SECCIÓN -->
-    <div class="gallery-header text-center">
-      <div class="section-divider mx-auto" style="max-width:600px;">[ VISUAL ARCHIVE ]</div>
-      <h2 class="gallery-title mt-3">Gallery</h2>
-      
+      <!-- Chrome -->
+      <div class="carousel-chrome">
+        <span class="carousel-chrome-title">▶ EVIDENCE VIEWER — AUTHORIZED ACCESS ONLY</span>
+        <span class="stage-counter" id="stage-counter">STAGE 1/7</span>
+      </div>
+      <!-- Image -->
+      <div class="carousel-img-wrap" id="carousel-img-wrap">
+        <img id="carousel-main-img" src="assets/gallery/t1.png" alt="Gallery Image">
+        <button class="carousel-ctrl prev" id="carousel-prev">&#8249;</button>
+        <button class="carousel-ctrl next" id="carousel-next">&#8250;</button>
+      </div>
+      <!-- Caption -->
+      <div class="carousel-caption-bar">
+        <span class="caption-tag" id="caption-tag" style="color:var(--cyan);border-color:var(--cyan)">CTF</span>
+        <span class="caption-name" id="caption-name">IMAGE_001.PNG</span>
+        <span style="font-family:var(--pixel);font-size:5px;color:var(--dimmer);letter-spacing:1px" id="caption-date">2025.01.01</span>
+      </div>
+      <!-- Dots -->
+      <div class="carousel-dots" id="carousel-dots"></div>
     </div>
+  </div>
 
-    <!-- CARRUSEL -->
-    <div id="galleryCarousel" class="carousel slide gallery-carousel" data-bs-ride="carousel">
+  <!-- THUMBNAIL GRID -->
+  <div class="sec-div">[ THUMBNAIL INDEX ]</div>
+  <div class="thumb-grid" id="thumb-grid"></div>
 
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
-        <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="2"></button>
-        <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="3"></button>
-        <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="4"></button>
-        <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="5"></button>
-        <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="6"></button>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div style="max-width:960px;margin:0 auto">
+      <h5 class="footer-title mb-1">BUDA HACK SECURITY</h5>
+      <p class="footer-subtitle my-2">PENTEST EXPLORATIONS · LABS · WRITE-UPS</p>
+      <div class="footer-social">
+        <a href="https://github.com/buda-sys/buda-sys" class="social-link"><i class="bi bi-github"></i></a>
+        <a href="https://discord.gg/mqXsQYN3" class="social-link"><i class="bi bi-discord"></i></a>
+        <a href="contact.html" class="social-link"><i class="bi bi-envelope"></i></a>
+        <a href="disclaimer.html" class="social-link"><i class="bi bi-shield-check"></i></a>
       </div>
-
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="assets/gallery/t1.png" class="d-block w-100" alt="Imagen 1">
-        </div>
-        <div class="carousel-item">
-          <img src="assets/gallery/t2.png" class="d-block w-100" alt="Imagen 2">
-        </div>
-        <div class="carousel-item">
-          <img src="assets/gallery/t3.png" class="d-block w-100" alt="Imagen 3">
-        </div>
-        <div class="carousel-item">
-          <img src="assets/gallery/t4.png" class="d-block w-100" alt="Imagen 4">
-        </div>
-        <div class="carousel-item">
-          <img src="assets/gallery/t5.png" class="d-block w-100" alt="Imagen 5">
-        </div>
-        <div class="carousel-item">
-          <img src="assets/gallery/t6.png" class="d-block w-100" alt="Imagen 6">
-        </div>
-        <div class="carousel-item">
-          <img src="assets/gallery/t7.png" class="d-block w-100" alt="Imagen 7">
-        </div>
-      </div>
-
-      <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Siguiente</span>
-      </button>
+      <p class="footer-copy">© 2025 <span style="color:var(--pink);text-shadow:0 0 6px var(--pink)">BUDA HACK SECURITY</span> · ALL RIGHTS RESERVED</p>
     </div>
+  </footer>
+</div>
 
-    <!-- FOOTER -->
-    <footer class="footer text-center text-light py-4">
-      <div class="container">
-        <h5 class="footer-title">Buda Hack Security</h5>
-        <p class="footer-subtitle">Pentest explorations, labs &amp; write-ups</p>
-        <div class="footer-social my-3">
-          <a href="https://github.com/buda-sys/buda-sys" class="social-link">
-            <i class="bi bi-github"></i>
-          </a>
-          <a href="https://discord.gg/mqXsQYN3" class="social-link">
-            <i class="bi bi-discord"></i>
-          </a>
-          <a href="contact.html" class="social-link">
-            <i class="bi bi-envelope"></i>
-          </a>
-          <a href="disclaimer.html" class="social-link" title="Legal Disclaimer & Responsible Use">
-            <i class="bi bi-shield-check"></i>
-          </a>
-        </div>
-        <p class="footer-copy mt-3 mb-0">
-          © 2025 <span class="text-danger">Buda Hack Security</span> — All rights reserved.
-        </p>
-      </div>
-    </footer>
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button class="lb-close" id="lb-close">✕ CLOSE</button>
+  <button class="lb-nav prev" id="lb-prev">&#8249;</button>
+  <button class="lb-nav next" id="lb-next">&#8250;</button>
+  <div class="lb-img-wrap">
+    <img id="lb-img" src="" alt="">
+    <div class="lb-caption" id="lb-caption"></div>
+  </div>
+</div>
 
-  </div><!-- /content-wrapper -->
+<script>
+// ── DATA ──────────────────────────────────────────
+const IMAGES = [
+  { src:'assets/gallery/t1.png', name:'WRITEUP_HTB_001.PNG', cat:'ctf',   catLabel:'CTF',   date:'2025.03.12', catColor:'#00ffff' },
+  { src:'assets/gallery/t2.png', name:'WRITEUP_HTB_002.PNG', cat:'ctf',   catLabel:'CTF',   date:'2025.03.14', catColor:'#00ffff' },
+  { src:'assets/gallery/t3.png', name:'LAB_KALI_001.PNG',    cat:'labs',  catLabel:'LABS',  date:'2025.02.20', catColor:'#00ff41' },
+  { src:'assets/gallery/t4.png', name:'LAB_WIN_002.PNG',     cat:'labs',  catLabel:'LABS',  date:'2025.02.22', catColor:'#00ff41' },
+  { src:'assets/gallery/t5.png', name:'SETUP_DESK_001.PNG',  cat:'setup', catLabel:'SETUP', date:'2025.01.05', catColor:'#ffe600' },
+  { src:'assets/gallery/t6.png', name:'WRITEUP_THM_001.PNG', cat:'ctf',   catLabel:'CTF',   date:'2025.03.18', catColor:'#00ffff' },
+  { src:'assets/gallery/t7.png', name:'MISC_TOOL_001.PNG',   cat:'other', catLabel:'OTHER', date:'2025.04.01', catColor:'#bf5fff' },
+];
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+let currentFilter = 'all';
+let visibleImages  = [...IMAGES];
+let currentIdx     = 0;
+let lbIdx          = 0;
 
-  <!-- Background layers + status bars (mini versión sin terminal) -->
-  <script>
-    // Matrix Rain
-    (function() {
-      var canvas = document.getElementById('matrix-canvas');
-      if (!canvas) return;
-      var ctx = canvas.getContext('2d');
-      var chars = '0123456789ABCDEF<>[]{}|\\/?!@#$%^&*ROOTEXPLOITHACK';
-      var fontSize = 14, drops = [];
-      function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        drops = Array(Math.floor(canvas.width / fontSize)).fill(1);
-      }
-      resize();
-      window.addEventListener('resize', resize);
-      setInterval(function() {
-        ctx.fillStyle = 'rgba(0,0,0,0.04)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.font = fontSize + 'px monospace';
-        drops.forEach(function(y, i) {
-          var ch = chars[Math.floor(Math.random() * chars.length)];
-          if (y === 1)       ctx.fillStyle = '#ff2200';
-          else if (y < 4)    ctx.fillStyle = '#cc0000';
-          else               ctx.fillStyle = 'rgba(140,0,0,0.4)';
-          ctx.fillText(ch, i * fontSize, y * fontSize);
-          if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-          drops[i]++;
-        });
-      }, 50);
-    })();
+// ── SCORE COUNTER ─────────────────────────────────
+(function(){
+  let sc=0; const sv=document.getElementById('score-val');
+  setInterval(()=>{ sc=Math.min(sc+Math.floor(Math.random()*100+20),999999); if(sv)sv.textContent=String(sc).padStart(6,'0'); },600);
+})();
 
-    // Watermark
-    (function() {
-      var el = document.getElementById('classified-watermark');
-      if (!el) return;
-      var words = ['CLASSIFIED','TOP SECRET','CONFIDENTIAL','RESTRICTED','NOFORN','EYES ONLY'];
-      var html = '';
-      for (var r = 0; r < 14; r++)
-        for (var c = 0; c < 7; c++) {
-          var word = words[(r+c) % words.length];
-          html += '<span style="top:'+(r*8-2)+'%;left:'+(c*16-2)+'%">'+word+'</span>';
-        }
-      el.innerHTML = html;
-    })();
+// ── GLITCH EFFECT ────────────────────────────────
+function triggerGlitch() {
+  const overlay  = document.getElementById('glitch-overlay');
+  const scanline = document.getElementById('scan-line');
+  const img      = document.getElementById('carousel-main-img');
+  overlay.classList.add('active');
+  img.classList.add('glitching');
+  // reset scan line animation
+  scanline.style.animation = 'none';
+  scanline.offsetHeight; // reflow
+  scanline.style.animation = 'scanWipe .4s ease forwards';
+  setTimeout(() => {
+    overlay.classList.remove('active');
+    img.classList.remove('glitching');
+  }, 400);
+}
 
-    // Status bars
-    (function() {
-      var clockEl = document.getElementById('status-clock');
-      var encEl   = document.getElementById('enc-label');
-      var pktEl   = document.getElementById('pkt');
-      if (clockEl) setInterval(function() {
-        var now = new Date();
-        var pad = function(n){ return String(n).padStart(2,'0'); };
-        clockEl.textContent = pad(now.getUTCHours())+':'+pad(now.getUTCMinutes())+':'+pad(now.getUTCSeconds())+' UTC | NODE: TOR-'+String(Math.floor(Math.random()*9000+1000));
-      }, 1000);
-      if (encEl) setInterval(function() {
-        encEl.style.opacity = encEl.style.opacity === '0.25' ? '1' : '0.25';
-      }, 800);
-      if (pktEl) {
-        var packets = 0;
-        setInterval(function() {
-          packets += Math.floor(Math.random() * 120 + 40);
-          pktEl.textContent = packets.toLocaleString();
-        }, 300);
-      }
-    })();
-  </script>
+// ── UPDATE CAROUSEL ───────────────────────────────
+function updateCarousel(idx, withGlitch=true) {
+  currentIdx = idx;
+  const img  = IMAGES.indexOf(visibleImages[idx]);
+  const data = visibleImages[idx];
+  if (!data) return;
 
-  <!-- Vercel Analytics -->
-  <script defer src="/_vercel/insights/script.js"></script>
+  if (withGlitch) triggerGlitch();
 
+  setTimeout(() => {
+    const mainImg = document.getElementById('carousel-main-img');
+    mainImg.src = data.src;
+    mainImg.alt = data.name;
+    document.getElementById('stage-counter').textContent = `STAGE ${idx+1}/${visibleImages.length}`;
+    document.getElementById('caption-tag').textContent    = data.catLabel;
+    document.getElementById('caption-tag').style.color    = data.catColor;
+    document.getElementById('caption-tag').style.borderColor = data.catColor;
+    document.getElementById('caption-name').textContent   = data.name;
+    document.getElementById('caption-date').textContent   = data.date;
+    updateDots();
+    updateThumbActive();
+  }, withGlitch ? 120 : 0);
+}
+
+// ── DOTS ──────────────────────────────────────────
+function buildDots() {
+  const wrap = document.getElementById('carousel-dots');
+  wrap.innerHTML = '';
+  visibleImages.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'carousel-dot' + (i === currentIdx ? ' active' : '');
+    d.onclick = () => updateCarousel(i);
+    wrap.appendChild(d);
+  });
+}
+function updateDots() {
+  document.querySelectorAll('.carousel-dot').forEach((d,i) => {
+    d.classList.toggle('active', i === currentIdx);
+  });
+}
+
+// ── THUMBNAILS ────────────────────────────────────
+function buildThumbs() {
+  const grid = document.getElementById('thumb-grid');
+  grid.innerHTML = '';
+  IMAGES.forEach((img, i) => {
+    const item = document.createElement('div');
+    item.className = 'thumb-item' + (img.cat !== currentFilter && currentFilter !== 'all' ? ' hidden' : '');
+    item.dataset.idx = i;
+    item.dataset.cat = img.cat;
+    item.innerHTML = `
+      <img src="${img.src}" alt="${img.name}" loading="lazy">
+      <div class="thumb-cat" style="color:${img.catColor}">${img.catLabel}</div>`;
+    item.onclick = () => {
+      const vi = visibleImages.indexOf(img);
+      if (vi !== -1) updateCarousel(vi);
+      // also open lightbox on dblclick is handled below
+    };
+    item.ondblclick = () => openLightbox(IMAGES.indexOf(img));
+    grid.appendChild(item);
+  });
+}
+function updateThumbActive() {
+  const active = visibleImages[currentIdx];
+  document.querySelectorAll('.thumb-item').forEach(t => {
+    const img = IMAGES[parseInt(t.dataset.idx)];
+    t.classList.toggle('active', img === active);
+  });
+}
+
+// ── FILTER ───────────────────────────────────────
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    visibleImages = currentFilter === 'all' ? [...IMAGES] : IMAGES.filter(i => i.cat === currentFilter);
+    currentIdx = 0;
+    // update thumb visibility
+    document.querySelectorAll('.thumb-item').forEach(t => {
+      const cat = t.dataset.cat;
+      t.classList.toggle('hidden', currentFilter !== 'all' && cat !== currentFilter);
+    });
+    buildDots();
+    updateCarousel(0, false);
+  };
+});
+
+// ── PREV / NEXT ───────────────────────────────────
+document.getElementById('carousel-prev').onclick = () => {
+  updateCarousel((currentIdx - 1 + visibleImages.length) % visibleImages.length);
+};
+document.getElementById('carousel-next').onclick = () => {
+  updateCarousel((currentIdx + 1) % visibleImages.length);
+};
+
+// Keyboard nav for carousel
+document.addEventListener('keydown', e => {
+  if (document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowLeft')  document.getElementById('carousel-prev').click();
+  if (e.key === 'ArrowRight') document.getElementById('carousel-next').click();
+});
+
+// ── LIGHTBOX ──────────────────────────────────────
+function openLightbox(idx) {
+  lbIdx = idx;
+  const lb    = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbCap = document.getElementById('lb-caption');
+  lbImg.src   = IMAGES[idx].src;
+  lbImg.alt   = IMAGES[idx].name;
+  lbCap.textContent = IMAGES[idx].name + ' — ' + IMAGES[idx].date;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('lb-close').onclick = closeLightbox;
+document.getElementById('lightbox').onclick  = function(e){ if(e.target===this) closeLightbox(); };
+document.getElementById('lb-prev').onclick   = () => { lbIdx=(lbIdx-1+IMAGES.length)%IMAGES.length; openLightbox(lbIdx); };
+document.getElementById('lb-next').onclick   = () => { lbIdx=(lbIdx+1)%IMAGES.length; openLightbox(lbIdx); };
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape')    closeLightbox();
+  if (e.key === 'ArrowLeft') document.getElementById('lb-prev').click();
+  if (e.key === 'ArrowRight')document.getElementById('lb-next').click();
+});
+
+// Open lightbox on main image click
+document.getElementById('carousel-main-img').onclick = () => {
+  const globalIdx = IMAGES.indexOf(visibleImages[currentIdx]);
+  openLightbox(globalIdx);
+};
+
+// ── INIT ──────────────────────────────────────────
+buildDots();
+buildThumbs();
+updateCarousel(0, false);
+</script>
+
+<!-- Buy Me a Coffee -->
+<script data-name="BMC-Widget" data-cfasync="false"
+  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+  data-id="krav0" data-description="Apoya a Buda Hack Security"
+  data-message="Gracias por el apoyo ☕" data-color="#FF0033"
+  data-position="Right" data-x_margin="18" data-y_margin="18">
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

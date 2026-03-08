@@ -3,172 +3,326 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Disclaimer | Buda Hack Security</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="assets/css/main.css">
+  <title>DISCLAIMER | BUDA HACK SECURITY</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/img/favicon_ico/favicon.ico">
   <style>
-  /* ══ DISCLAIMER — estilos locales ══ */
-  #scroll-bar{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,#cc0000,#ff2200,#cc0000);z-index:99999;transition:width .08s linear;box-shadow:0 0 10px rgba(204,0,0,0.8);pointer-events:none;}
+    :root{
+      --black:#000;--screen:#050810;--panel:#0a0f1a;
+      --cyan:#00ffff;--pink:#ff2d78;--yellow:#ffe600;
+      --green:#00ff41;--purple:#bf5fff;--white:#e8f4ff;
+      --dim:rgba(232,244,255,.35);--dimmer:rgba(232,244,255,.18);
+      --pixel:'Press Start 2P',monospace;
+      --vt:'VT323',monospace;
+      --mono:'Share Tech Mono',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;background:#000;}
+    body{background:var(--screen);color:var(--white);font-family:var(--mono);overflow-x:hidden;
+      cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='7' y='0' width='2' height='16' fill='%2300ffff'/%3E%3Crect x='0' y='7' width='16' height='2' fill='%2300ffff'/%3E%3C/svg%3E") 8 8,crosshair;}
+    body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
+      background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.18) 2px,rgba(0,0,0,.18) 4px);
+      animation:scanroll 12s linear infinite;}
+    @keyframes scanroll{to{background-position:0 100vh;}}
+    body::after{content:'';position:fixed;inset:0;z-index:8999;pointer-events:none;
+      background:radial-gradient(ellipse 100% 100% at 50% 50%,transparent 60%,rgba(0,0,0,.55) 100%);}
+    ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:#000;}::-webkit-scrollbar-thumb{background:var(--cyan);}
 
-  /* PAGE HERO */
-  .page-hero{position:relative;padding:52px 0 36px;text-align:center;background:radial-gradient(ellipse at top,rgba(140,0,0,0.4) 0%,rgba(8,0,0,0.98) 70%),#000;border-bottom:1px solid rgba(204,0,0,0.3);overflow:hidden;}
-  #hero-matrix{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:0.35;}
-  .page-hero>.container{position:relative;z-index:2;}
-  .page-hero::after{content:"";position:absolute;bottom:0;left:5%;width:90%;height:1px;background:linear-gradient(90deg,transparent,var(--red),rgba(204,0,0,0.4),var(--red),transparent);box-shadow:0 0 18px rgba(204,0,0,0.5);}
-  .hero-tag{font-family:var(--mono);font-size:0.55rem;color:rgba(204,0,0,0.5);letter-spacing:4px;margin-bottom:.75rem;}
-  .page-hero h1{font-family:var(--display);font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:3px;color:var(--red);text-shadow:0 0 8px var(--red),0 0 22px rgba(180,0,0,0.65),0 0 50px rgba(140,0,0,0.35);animation:flicker 4s infinite;}
-  .page-hero p{font-family:var(--mono);font-size:0.78rem;color:#555;letter-spacing:1px;margin:6px auto 0;max-width:600px;}
+    @keyframes blink-slow{50%{opacity:0;}}
+    @keyframes rainbow-shift{to{background-position:200% 0;}}
+    @keyframes crt-flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1;}20%,24%,55%{opacity:.97;}}
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    @keyframes glitch-title{
+      0%,89%,100%{text-shadow:0 0 10px rgba(255,255,255,.5),3px 0 0 var(--cyan),-3px 0 0 var(--pink);}
+      90%{text-shadow:5px 0 0 var(--pink),-5px 0 0 var(--cyan);transform:translateX(-2px);}
+      91%{text-shadow:-5px 0 0 var(--pink),5px 0 0 var(--cyan);transform:translateX(2px);}
+      92%{text-shadow:0 0 10px rgba(255,255,255,.5),3px 0 0 var(--cyan),-3px 0 0 var(--pink);transform:none;}
+    }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+    @keyframes player-flash{90%,92%{opacity:.4}}
 
-  /* LEGAL BOX */
-  .legal-box{max-width:860px;margin:40px auto 56px;padding:36px 40px;background:rgba(6,0,0,0.92);border:1px solid rgba(204,0,0,0.2);box-shadow:0 0 30px rgba(0,0,0,0.8),inset 0 0 30px rgba(0,0,0,0.5);border-radius:4px;backdrop-filter:blur(8px);}
+    /* SCROLL BAR */
+    #scroll-bar{position:fixed;top:0;left:0;height:3px;width:0%;
+      background:linear-gradient(90deg,var(--cyan),var(--pink),var(--yellow));
+      z-index:99999;box-shadow:0 0 10px var(--cyan);pointer-events:none;transition:width .08s linear;}
 
-  .legal-box h3{font-family:var(--display);font-size:0.9rem;letter-spacing:3px;color:var(--red-dim);text-transform:uppercase;margin-top:28px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(204,0,0,0.15);}
-  .legal-box h3 i{margin-right:8px;opacity:.7;}
+    /* MARQUEE */
+    #marquee-bar{position:sticky;top:0;z-index:1000;height:28px;background:var(--black);border-bottom:2px solid var(--cyan);box-shadow:0 0 12px var(--cyan);display:flex;align-items:center;overflow:hidden;}
+    .marquee-label{background:var(--cyan);color:var(--black);font-family:var(--pixel);font-size:7px;padding:0 12px;height:100%;display:flex;align-items:center;flex-shrink:0;letter-spacing:1px;box-shadow:4px 0 0 var(--black);}
+    .marquee-track{display:flex;overflow:hidden;flex:1;}
+    .marquee-text{font-family:var(--pixel);font-size:7px;color:var(--cyan);white-space:nowrap;animation:marquee 30s linear infinite;letter-spacing:1px;text-shadow:0 0 8px var(--cyan);padding:0 20px;}
 
-  .legal-box p,.legal-box li{font-family:var(--mono);font-size:0.82rem;color:#666;line-height:1.7;letter-spacing:0.3px;}
-  .legal-box ul{padding-left:20px;margin-bottom:0;}
-  .legal-box ul li{margin-bottom:4px;}
-  .legal-box ul li::marker{color:var(--red-dim);}
-  .legal-box strong{color:var(--red-dim);}
+    /* COIN BAR */
+    #coin-bar{position:sticky;top:28px;z-index:999;height:36px;background:var(--black);border-bottom:2px solid var(--pink);box-shadow:0 0 12px var(--pink);display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-family:var(--pixel);font-size:7px;animation:crt-flicker 8s infinite;}
+    .cs-label{color:var(--dimmer);font-size:5.5px;letter-spacing:1px;}
+    .cs-val{color:var(--yellow);text-shadow:0 0 8px var(--yellow);font-size:8px;}
+    .life-icon{color:var(--pink);text-shadow:0 0 6px var(--pink);font-size:10px;}
 
-  .warning-box{margin-top:26px;padding:14px 18px;border-radius:3px;background:rgba(204,0,0,0.06);border:1px solid rgba(204,0,0,0.3);font-family:var(--mono);font-size:0.8rem;color:#888;letter-spacing:0.3px;}
-  .warning-box i{color:var(--red);margin-right:8px;}
+    /* NAVBAR */
+    .navbar-arc{position:sticky;top:64px;z-index:900;height:52px;background:rgba(0,0,0,.92);border-bottom:1px solid rgba(0,255,255,.2);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:space-between;padding:0 16px;}
+    .nav-brand{font-family:var(--pixel);font-size:9px;color:var(--cyan);text-shadow:0 0 10px var(--cyan);text-decoration:none;display:flex;align-items:center;gap:10px;}
+    .nav-brand img{width:32px;height:32px;border-radius:2px;border:1px solid var(--cyan);box-shadow:0 0 8px rgba(0,255,255,.4);}
+    .nav-links{display:flex;height:52px;}
+    .nav-link-arc{font-family:var(--pixel);font-size:7px;color:var(--dimmer);text-decoration:none;display:flex;align-items:center;padding:0 14px;border-bottom:2px solid transparent;transition:color .15s;}
+    .nav-link-arc:hover{color:var(--yellow);text-shadow:0 0 8px var(--yellow);}
+    .nav-link-arc.active{color:var(--cyan);border-bottom-color:var(--cyan);text-shadow:0 0 8px var(--cyan);}
 
-  .back-link{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:0.72rem;letter-spacing:2px;color:#444;text-decoration:none;border:1px solid rgba(204,0,0,0.15);padding:7px 14px;border-radius:3px;transition:all 0.2s ease;margin-top:24px;}
-  .back-link:hover{border-color:rgba(204,0,0,0.4);color:var(--red-dim);box-shadow:0 0 10px rgba(204,0,0,0.15);}
+    /* CONTENT */
+    .content{position:relative;z-index:10;padding-bottom:60px;}
+
+    /* HERO */
+    .page-hero{position:relative;overflow:hidden;margin:16px;background:var(--black);
+      box-shadow:0 0 0 2px var(--pink),0 0 0 4px var(--black),0 0 0 6px var(--cyan),0 0 40px rgba(255,45,120,.3);}
+    .page-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
+      background:linear-gradient(90deg,var(--cyan),var(--pink),var(--yellow),var(--green),var(--purple),var(--cyan));
+      background-size:200% 100%;animation:rainbow-shift 3s linear infinite;z-index:6;}
+    .hero-crt{position:absolute;inset:0;pointer-events:none;z-index:5;
+      background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.1) 2px,rgba(0,0,0,.1) 4px);}
+    #star-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+    .px-corner{position:absolute;width:20px;height:20px;pointer-events:none;z-index:7;}
+    .px-corner::before,.px-corner::after{content:'';position:absolute;background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
+    .px-corner::before{width:100%;height:2px;top:0;left:0;}.px-corner::after{width:2px;height:100%;top:0;left:0;}
+    .pc-tl{top:8px;left:8px;}.pc-tr{top:8px;right:8px;transform:rotate(90deg);}
+    .pc-bl{bottom:8px;left:8px;transform:rotate(270deg);}.pc-br{bottom:8px;right:8px;transform:rotate(180deg);}
+    .hero-inner{position:relative;z-index:8;padding:48px 32px 52px;text-align:center;}
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--pixel);font-size:7px;letter-spacing:2px;color:var(--black);background:var(--yellow);padding:5px 16px;margin-bottom:24px;box-shadow:3px 3px 0 rgba(0,0,0,.8);animation:player-flash 4s step-end infinite;}
+    .hero-title{font-family:var(--pixel);font-size:clamp(.9rem,2.5vw,1.8rem);line-height:1.5;letter-spacing:3px;color:var(--white);animation:glitch-title 6s step-end infinite;margin-bottom:12px;}
+    .hero-sub{font-family:var(--vt);font-size:22px;letter-spacing:4px;color:var(--dim);}
+
+    /* SECTION DIVIDER */
+    .sec-div{display:flex;align-items:center;gap:12px;font-family:var(--pixel);font-size:7px;letter-spacing:2px;color:var(--cyan);text-shadow:0 0 8px var(--cyan);margin:32px 0 20px;}
+    .sec-div::before,.sec-div::after{content:'';flex:1;height:2px;}
+    .sec-div::before{background:linear-gradient(90deg,transparent,var(--cyan));}
+    .sec-div::after{background:linear-gradient(90deg,var(--cyan),transparent);}
+
+    /* LEGAL BOX */
+    .legal-wrap{max-width:860px;margin:0 auto;padding:0 16px 48px;}
+    .legal-box{background:var(--panel);border:2px solid rgba(0,255,255,.2);box-shadow:3px 3px 0 rgba(0,255,255,.1);position:relative;overflow:hidden;animation:fadeUp .5s ease both;}
+    .legal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+      background:linear-gradient(90deg,var(--cyan),var(--pink),var(--yellow),var(--green),var(--purple),var(--cyan));
+      background-size:200% 100%;animation:rainbow-shift 4s linear infinite;}
+    .legal-chrome{background:var(--black);border-bottom:1px solid rgba(0,255,255,.15);padding:8px 16px;margin-top:3px;display:flex;align-items:center;justify-content:space-between;}
+    .legal-chrome-title{font-family:var(--pixel);font-size:6px;color:var(--cyan);letter-spacing:1px;text-shadow:0 0 8px var(--cyan);}
+    .legal-chrome-badge{font-family:var(--pixel);font-size:5px;color:var(--yellow);border:1px solid var(--yellow);padding:2px 8px;animation:blink-slow 1.4s step-end infinite;}
+    .legal-body{padding:24px 28px 28px;}
+
+    /* SECTIONS */
+    .legal-section{margin-bottom:28px;animation:fadeUp .5s ease both;}
+    .legal-section:nth-child(1){animation-delay:.1s}
+    .legal-section:nth-child(2){animation-delay:.2s}
+    .legal-section:nth-child(3){animation-delay:.3s}
+    .legal-section:nth-child(4){animation-delay:.4s}
+    .legal-section:nth-child(5){animation-delay:.5s}
+
+    .legal-section-header{display:flex;align-items:center;gap:10px;font-family:var(--pixel);font-size:7px;letter-spacing:2px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(0,255,255,.12);}
+    .lsh-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+    .lsh-text{color:var(--cyan);text-shadow:0 0 8px var(--cyan);}
+
+    .legal-p{font-family:var(--mono);font-size:13px;color:rgba(232,244,255,.55);line-height:1.85;margin-bottom:10px;}
+    .legal-p strong{color:var(--yellow);}
+
+    .legal-list{list-style:none;padding:0;margin:0;}
+    .legal-list li{font-family:var(--mono);font-size:13px;color:rgba(232,244,255,.5);line-height:1.8;padding:5px 0 5px 20px;position:relative;border-bottom:1px solid rgba(0,255,255,.05);}
+    .legal-list li:last-child{border-bottom:none;}
+    .legal-list li::before{content:'▶';position:absolute;left:0;font-size:8px;top:8px;}
+
+    /* Colors per section */
+    .s-edu  .lsh-icon{color:var(--cyan);  }.s-edu  .legal-list li::before{color:var(--cyan);}
+    .s-no   .lsh-icon{color:var(--pink);  }.s-no   .legal-list li::before{color:var(--pink);  }.s-no   .lsh-text{color:var(--pink);text-shadow:0 0 8px var(--pink);}
+    .s-warn .lsh-icon{color:var(--yellow);}.s-warn .lsh-text{color:var(--yellow);text-shadow:0 0 8px var(--yellow);}
+    .s-eth  .lsh-icon{color:var(--green); }.s-eth  .legal-list li::before{color:var(--green); }.s-eth  .lsh-text{color:var(--green);text-shadow:0 0 8px var(--green);}
+
+    /* WARNING BOX */
+    .warn-box{background:rgba(255,45,120,.04);border:1px solid rgba(255,45,120,.3);padding:16px 20px;display:flex;gap:14px;align-items:flex-start;box-shadow:3px 3px 0 rgba(255,45,120,.15);}
+    .warn-box-icon{font-size:22px;color:var(--pink);flex-shrink:0;text-shadow:0 0 12px var(--pink);}
+    .warn-box-text{font-family:var(--mono);font-size:13px;color:rgba(232,244,255,.6);line-height:1.75;}
+    .warn-box-text strong{color:var(--pink);}
+
+    /* BACK BUTTON */
+    .back-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--pixel);font-size:7px;letter-spacing:1px;color:var(--black);background:var(--cyan);padding:10px 20px;text-decoration:none;box-shadow:3px 3px 0 rgba(0,0,0,.8);transition:all .15s;margin-top:24px;}
+    .back-btn:hover{background:var(--yellow);transform:translate(-1px,-1px);box-shadow:4px 4px 0 rgba(0,0,0,.8);}
+    .back-btn::before{content:'◀';font-size:9px;}
+
+    /* FOOTER */
+    .footer{background:var(--black);border-top:3px solid var(--cyan);box-shadow:0 -8px 24px rgba(0,255,255,.15);padding:40px 24px 64px;text-align:center;}
+    .footer::before{content:'● INSERT COIN TO CONTINUE ●';display:block;font-family:var(--pixel);font-size:7px;letter-spacing:3px;color:var(--yellow);text-shadow:0 0 10px var(--yellow);margin-bottom:24px;animation:blink-slow 1.5s step-end infinite;}
+    .footer-title{font-family:var(--pixel);font-size:10px;letter-spacing:2px;color:var(--cyan);text-shadow:0 0 10px var(--cyan);}
+    .footer-subtitle{font-family:var(--vt);font-size:18px;letter-spacing:2px;color:var(--dimmer);}
+    .footer-social{display:flex;justify-content:center;gap:10px;margin:16px 0;}
+    .social-link{width:40px;height:40px;border:2px solid rgba(0,255,255,.3);background:var(--panel);display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:15px;text-decoration:none;box-shadow:2px 2px 0 rgba(0,0,0,.8);transition:all .15s;}
+    .social-link:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,255,255,.1);transform:translate(-1px,-1px);}
+    .footer-copy{font-family:var(--pixel);font-size:6px;letter-spacing:1px;color:var(--dimmer);}
   </style>
 </head>
 <body>
 
-  <div id="scroll-bar"></div>
+<div id="scroll-bar"></div>
 
-  <!-- BACKGROUND LAYERS -->
-  <canvas id="matrix-canvas"></canvas>
-  <div id="hex-grid-layer">
-    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-      <defs><pattern id="hexPat" x="0" y="0" width="56" height="48" patternUnits="userSpaceOnUse">
-        <polygon points="28,2 52,14 52,38 28,50 4,38 4,14" fill="none" stroke="#cc0000" stroke-width="0.7"/>
-      </pattern></defs>
-      <rect width="100%" height="100%" fill="url(#hexPat)"/>
-    </svg>
+<!-- MARQUEE -->
+<div id="marquee-bar">
+  <div class="marquee-label">DISCLAIMER</div>
+  <div class="marquee-track">
+    <div class="marquee-text">★ LEGAL NOTICE — READ BEFORE PROCEEDING ★ EDUCATIONAL PURPOSES ONLY ★ ETHICAL HACKING ONLY ★ NO UNAUTHORIZED ACCESS ★ RESPONSIBLE DISCLOSURE ★ ★ LEGAL NOTICE — READ BEFORE PROCEEDING ★ EDUCATIONAL PURPOSES ONLY ★ ETHICAL HACKING ONLY ★ NO UNAUTHORIZED ACCESS ★ RESPONSIBLE DISCLOSURE ★</div>
   </div>
-  <div id="classified-watermark"></div>
-  <div id="scanline-bar"></div>
-  <div id="noise-layer"></div>
-  <div id="vignette-layer"></div>
+</div>
 
-  <!-- STATUS BARS -->
-  <div id="top-status-bar">
-    <span class="tsci">&#x26A0; TOP SECRET // SCI // NOFORN</span>
-    <span class="enc-blink" id="enc-label">&#x258C; ENCRYPTED CHANNEL ACTIVE &#x258C;</span>
-    <span id="status-clock">00:00:00 UTC | NODE: TOR-0000</span>
+<!-- COIN BAR -->
+<div id="coin-bar">
+  <div style="display:flex;gap:20px">
+    <div style="display:flex;flex-direction:column;gap:1px"><span class="cs-label">SCORE</span><span class="cs-val" id="score-val">000000</span></div>
+    <div style="display:flex;flex-direction:column;gap:1px"><span class="cs-label">HI-SCORE</span><span class="cs-val">999999</span></div>
   </div>
-  <div id="bottom-status-bar">
-    <span>&#x25C9; SECURE_CONN: <b class="g">ESTABLISHED</b></span>
-    <span>PACKETS_RX: <b class="g" id="pkt">0</b></span>
-    <span>ENCRYPT: <b class="g">AES-256-GCM</b></span>
-    <span>TOR_HOP: <b class="g">3/3</b></span>
-    <span style="margin-left:auto">CLASSIFICATION: <b class="r">TOP SECRET</b></span>
+  <div style="color:var(--pink);text-shadow:0 0 10px var(--pink);letter-spacing:2px;animation:blink-slow 1.5s step-end infinite">— BUDA HACK SECURITY —</div>
+  <div style="display:flex;gap:12px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:1px;align-items:flex-end"><span class="cs-label">STAGE</span><span class="cs-val">??</span></div>
+    <span class="life-icon">♥</span><span class="life-icon">♥</span><span class="life-icon">♥</span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar-arc">
+  <a href="index.html" class="nav-brand">
+    <img src="assets/img/la.png" alt="Logo">BUDAHACK
+  </a>
+  <div class="nav-links">
+    <a href="index.html"     class="nav-link-arc">HOME</a>
+    <a href="about.html"     class="nav-link-arc">ABOUT</a>
+    <a href="gallery.html"   class="nav-link-arc">GALLERY</a>
+  </div>
+</nav>
+
+<div class="content">
+
+  <!-- HERO -->
+  <div class="page-hero" style="margin:16px">
+    <canvas id="star-canvas"></canvas>
+    <div class="hero-crt"></div>
+    <div class="px-corner pc-tl"></div><div class="px-corner pc-tr"></div>
+    <div class="px-corner pc-bl"></div><div class="px-corner pc-br"></div>
+    <div class="hero-inner">
+      <div class="hero-tag">▶ LEGAL NOTICE — READ BEFORE PROCEEDING</div>
+      <h1 class="hero-title"><i class="bi bi-shield-lock-fill" style="margin-right:12px"></i>LEGAL DISCLAIMER</h1>
+      <p class="hero-sub">RESPONSIBLE USE · ETHICAL HACKING COMMITMENT</p>
+    </div>
   </div>
 
-  <div class="content-wrapper">
+  <!-- LEGAL CONTENT -->
+  <div class="legal-wrap">
+    <div class="sec-div">[ TERMS OF USE — CLASSIFIED DOCUMENT ]</div>
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="index.html">
-          <img src="assets/img/la.png" alt="ByteZero Logo" class="navbar-logo me-2">
-          <span>Buda Hack Security</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+    <div class="legal-box">
+      <div class="legal-chrome">
+        <span class="legal-chrome-title">▶ BUDA HACK SECURITY — LEGAL NOTICE v1.0</span>
+        <span class="legal-chrome-badge">● ACTIVE</span>
+      </div>
+      <div class="legal-body">
+
+        <p class="legal-p" style="margin-bottom:20px">All content published on <strong>Buda Hack Security</strong> is provided strictly for <strong>educational</strong>, <strong>research</strong> and <strong>training</strong> purposes within legal and ethical boundaries.</p>
+
+        <!-- EDUCATIONAL PURPOSE -->
+        <div class="legal-section s-edu">
+          <div class="legal-section-header">
+            <div class="lsh-icon"><i class="bi bi-mortarboard-fill"></i></div>
+            <span class="lsh-text">EDUCATIONAL PURPOSE ONLY</span>
+          </div>
+          <p class="legal-p">Techniques, tools, methodologies, and write-ups shared here are intended exclusively for use in:</p>
+          <ul class="legal-list">
+            <li>Personal learning environments and home labs</li>
+            <li>Capture The Flag (CTF) platforms — TryHackMe, Hack The Box, DockerLabs</li>
+            <li>Labs created and controlled by the user</li>
+            <li>Explicitly authorized and documented systems</li>
           </ul>
         </div>
-      </div>
-    </nav>
 
-    <!-- HERO -->
-    <div class="page-hero">
-      <canvas id="hero-matrix"></canvas>
-      <div class="container">
-        <p class="hero-tag">[ LEGAL NOTICE — READ BEFORE PROCEEDING ]</p>
-        <h1><i class="bi bi-shield-lock-fill me-3"></i>Legal Disclaimer</h1>
-        <p>Responsible Use &amp; Ethical Hacking Commitment</p>
-      </div>
-    </div>
-
-    <!-- CONTENT -->
-    <div class="container">
-      <div class="legal-box">
-
-        <p>All content published on <strong>Buda Hack Security</strong> is provided strictly for <strong>educational</strong>, <strong>research</strong> and <strong>training</strong> purposes.</p>
-
-        <h3><i class="bi bi-mortarboard-fill"></i>Educational Purpose Only</h3>
-        <p>The techniques, tools, methodologies, and write-ups shared on this website are intended exclusively for use in:</p>
-        <ul>
-          <li>Personal learning environments</li>
-          <li>Capture The Flag (CTF) platforms</li>
-          <li>Labs created and controlled by the user</li>
-          <li>Explicitly authorized systems</li>
-        </ul>
-
-        <h3><i class="bi bi-slash-circle-fill"></i>No Illegal Use</h3>
-        <p>You must <strong>NOT</strong> use any information from this website to:</p>
-        <ul>
-          <li>Attack systems without explicit written authorization</li>
-          <li>Access data or services unlawfully</li>
-          <li>Cause damage, disruption, or data loss</li>
-          <li>Violate local, national, or international laws</li>
-        </ul>
-
-        <h3><i class="bi bi-exclamation-triangle-fill"></i>Liability Disclaimer</h3>
-        <p>The author and owner of this website <strong>does not assume any responsibility</strong> for misuse, damage, or legal consequences resulting from the application of information published here. You are solely responsible for your actions.</p>
-
-        <div class="warning-box">
-          <i class="bi bi-exclamation-triangle-fill"></i>
-          You are solely responsible for how you apply the knowledge obtained from this site. Always act ethically, legally, and with proper authorization.
+        <!-- NO ILLEGAL USE -->
+        <div class="legal-section s-no">
+          <div class="legal-section-header">
+            <div class="lsh-icon"><i class="bi bi-slash-circle-fill"></i></div>
+            <span class="lsh-text">NO ILLEGAL USE</span>
+          </div>
+          <p class="legal-p">You must <strong>NOT</strong> use any information from this website to:</p>
+          <ul class="legal-list">
+            <li>Attack systems without explicit written authorization</li>
+            <li>Access data or services unlawfully</li>
+            <li>Cause damage, disruption, or data loss to any system</li>
+            <li>Violate local, national, or international cybersecurity laws</li>
+          </ul>
         </div>
 
-        <h3><i class="bi bi-check-circle-fill"></i>Ethical Hacking Commitment</h3>
-        <p>This website promotes <strong>ethical hacking</strong>, <strong>responsible disclosure</strong>, and continuous learning within the full boundaries of the law.</p>
+        <!-- LIABILITY -->
+        <div class="legal-section s-warn">
+          <div class="legal-section-header">
+            <div class="lsh-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+            <span class="lsh-text">LIABILITY DISCLAIMER</span>
+          </div>
+          <p class="legal-p">The author and owner of this website <strong>does not assume any responsibility</strong> for misuse, damage, or legal consequences resulting from the application of information published here.</p>
+          <div class="warn-box">
+            <span class="warn-box-icon"><i class="bi bi-exclamation-triangle-fill"></i></span>
+            <span class="warn-box-text">You are <strong>solely responsible</strong> for how you apply the knowledge obtained from this site. Always act ethically, legally, and with proper authorization from the system owner.</span>
+          </div>
+        </div>
 
-        <a href="index.html" class="back-link"><i class="bi bi-arrow-left"></i> Return to Index</a>
+        <!-- ETHICAL HACKING -->
+        <div class="legal-section s-eth">
+          <div class="legal-section-header">
+            <div class="lsh-icon"><i class="bi bi-check-circle-fill"></i></div>
+            <span class="lsh-text">ETHICAL HACKING COMMITMENT</span>
+          </div>
+          <p class="legal-p">This website promotes <strong>ethical hacking</strong>, <strong>responsible disclosure</strong>, and continuous learning within the full boundaries of the law. All write-ups document challenges on authorized platforms only.</p>
+        </div>
+
+        <a href="index.html" class="back-btn">RETURN TO HOME</a>
 
       </div>
     </div>
-
-    <!-- FOOTER -->
-    <footer class="footer text-center text-light py-4">
-      <div class="container">
-        <h5 class="footer-title">Buda Hack Security</h5>
-        <p class="footer-subtitle">Pentest explorations, labs &amp; write-ups</p>
-        <div class="footer-social my-3">
-          <a href="https://github.com/buda-sys/buda-sys" class="social-link"><i class="bi bi-github"></i></a>
-          <a href="https://discord.gg/mqXsQYN3" class="social-link"><i class="bi bi-discord"></i></a>
-          <a href="contact.html" class="social-link"><i class="bi bi-envelope"></i></a>
-          <a href="disclaimer.html" class="social-link"><i class="bi bi-shield-check"></i></a>
-        </div>
-        <p class="footer-copy mt-3 mb-0">&copy; 2025 <span class="text-danger">Buda Hack Security</span> &mdash; All rights reserved.</p>
-      </div>
-    </footer>
-
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    (function(){var b=document.getElementById('scroll-bar');window.addEventListener('scroll',function(){var t=document.documentElement.scrollHeight-window.innerHeight;b.style.width=(t>0?(window.scrollY/t)*100:0)+'%';},{passive:true});})();
-    (function(){var c=document.getElementById('matrix-canvas');if(!c)return;var x=c.getContext('2d');var ch='0123456789ABCDEF<>[]{}ROOTEXPLOITHACK';var fs=14,d=[];function r(){c.width=window.innerWidth;c.height=window.innerHeight;d=Array(Math.floor(c.width/fs)).fill(1);}r();window.addEventListener('resize',r);setInterval(function(){x.fillStyle='rgba(0,0,0,0.04)';x.fillRect(0,0,c.width,c.height);x.font=fs+'px monospace';d.forEach(function(y,i){var s=ch[Math.floor(Math.random()*ch.length)];if(y===1)x.fillStyle='#ff2200';else if(y<4)x.fillStyle='#cc0000';else x.fillStyle='rgba(140,0,0,0.4)';x.fillText(s,i*fs,y*fs);if(y*fs>c.height&&Math.random()>0.975)d[i]=0;d[i]++;});},50);})();
-    (function(){var c=document.getElementById('hero-matrix');if(!c)return;var hero=c.closest('.page-hero');var x=c.getContext('2d');var ch='01ROOTPWNDHACK><[]{}';var fs=16,d=[];function r(){c.width=hero.offsetWidth;c.height=hero.offsetHeight;d=Array(Math.floor(c.width/fs)).fill(1);}r();window.addEventListener('resize',r);function draw(){x.fillStyle='rgba(0,0,0,0.12)';x.fillRect(0,0,c.width,c.height);x.font=fs+'px monospace';d.forEach(function(y,i){x.fillStyle=y<3?'#ff2200':'rgba(180,0,0,0.3)';x.fillText(Math.random()>0.5?'1':'0',i*fs,y*fs);if(y*fs>c.height&&Math.random()>0.96)d[i]=0;d[i]++;});requestAnimationFrame(draw);}draw();})();
-    (function(){var el=document.getElementById('classified-watermark');if(!el)return;var words=['CLASSIFIED','TOP SECRET','CONFIDENTIAL','RESTRICTED','NOFORN','EYES ONLY'];var html='';for(var r=0;r<14;r++)for(var c=0;c<7;c++){var w=words[(r+c)%words.length];html+='<span style="top:'+(r*8-2)+'%;left:'+(c*16-2)+'%">'+w+'</span>';}el.innerHTML=html;})();
-    (function(){var cl=document.getElementById('status-clock');var en=document.getElementById('enc-label');var pk=document.getElementById('pkt');if(cl)setInterval(function(){var n=new Date(),p=function(x){return String(x).padStart(2,'0');};cl.textContent=p(n.getUTCHours())+':'+p(n.getUTCMinutes())+':'+p(n.getUTCSeconds())+' UTC | NODE: TOR-'+String(Math.floor(Math.random()*9000+1000));},1000);if(en)setInterval(function(){en.style.opacity=en.style.opacity==='0.25'?'1':'0.25';},800);if(pk){var p=0;setInterval(function(){p+=Math.floor(Math.random()*120+40);pk.textContent=p.toLocaleString();},300);}})();
-  </script>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <h5 class="footer-title mb-1">BUDA HACK SECURITY</h5>
+    <p class="footer-subtitle my-2">PENTEST EXPLORATIONS · LABS · WRITE-UPS</p>
+    <div class="footer-social">
+      <a href="https://github.com/buda-sys/buda-sys" class="social-link"><i class="bi bi-github"></i></a>
+      <a href="https://discord.gg/mqXsQYN3" class="social-link"><i class="bi bi-discord"></i></a>
+      <a href="contact.html" class="social-link"><i class="bi bi-envelope"></i></a>
+      <a href="disclaimer.html" class="social-link"><i class="bi bi-shield-check"></i></a>
+    </div>
+    <p class="footer-copy">© 2025 <span style="color:var(--pink);text-shadow:0 0 6px var(--pink)">BUDA HACK SECURITY</span> · ALL RIGHTS RESERVED</p>
+  </footer>
+</div>
+
+<script>
+// SCROLL BAR
+window.addEventListener('scroll',function(){
+  var t=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('scroll-bar').style.width=(t>0?(window.scrollY/t)*100:0)+'%';
+},{passive:true});
+
+// STARFIELD
+(function(){
+  var sc=document.getElementById('star-canvas'); if(!sc)return;
+  var ctx=sc.getContext('2d');
+  function resize(){sc.width=sc.offsetWidth;sc.height=sc.offsetHeight;} resize(); window.addEventListener('resize',resize);
+  var cols=['rgba(0,255,255,','rgba(255,45,120,','rgba(255,230,0,','rgba(255,255,255,'];
+  var stars=Array.from({length:100},function(){return{x:Math.random()*sc.width,y:Math.random()*sc.height,s:Math.random()>.85?2:1,b:Math.random()*Math.PI*2,sp:Math.random()*.015+.005,c:cols[Math.random()*4|0]};});
+  function draw(){ctx.clearRect(0,0,sc.width,sc.height);stars.forEach(function(s){s.b+=s.sp;var a=.15+.6*Math.abs(Math.sin(s.b));ctx.fillStyle=s.c+a+')';ctx.fillRect(s.x,s.y,s.s,s.s);});requestAnimationFrame(draw);}draw();
+})();
+
+// SCORE
+(function(){
+  var sc=0,sv=document.getElementById('score-val');
+  setInterval(function(){sc=Math.min(sc+Math.floor(Math.random()*100+20),999999);if(sv)sv.textContent=String(sc).padStart(6,'0');},600);
+})();
+</script>
+
+<!-- Buy Me a Coffee -->
+<script data-name="BMC-Widget" data-cfasync="false"
+  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+  data-id="krav0" data-description="Apoya a Buda Hack Security"
+  data-message="Gracias por el apoyo ☕" data-color="#FF0033"
+  data-position="Right" data-x_margin="18" data-y_margin="18">
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

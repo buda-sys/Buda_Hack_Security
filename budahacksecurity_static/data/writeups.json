@@ -214,7 +214,7 @@
 
   {
   "slug": "picoctf-steganography-steghide",
-  "file": "uploads/picoCTF-Writeup.md",
+  "file": "uploads/riddle.md",
   "title": "picoCTF - Steganography with Steghide",
   "category": "picoCTF",
   "difficulty": "Easy",
@@ -224,7 +224,7 @@
 },
 {
   "slug": "picoctf-hidden-pdf-metadata",
-  "file": "uploads/picoCTF-Writeup.md",
+  "file": "uploads/hidden.md",
   "title": "picoCTF - Hidden Metadata in PDF",
   "category": "picoCTF",
   "difficulty": "Easy",

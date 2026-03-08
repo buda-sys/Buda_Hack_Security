@@ -3,353 +3,660 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>About | Buda Hack Security</title>
-
-  <!-- Bootstrap + Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-  <!-- CSS del sitio -->
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/about.css">
-
+  <title>ABOUT | BUDA HACK SECURITY</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/img/favicon_ico/favicon.ico">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --black:#000;--screen:#050810;--panel:#0a0f1a;
+      --cyan:#00ffff;--pink:#ff2d78;--yellow:#ffe600;
+      --green:#00ff41;--purple:#bf5fff;--white:#e8f4ff;
+      --dim:rgba(232,244,255,.35);--dimmer:rgba(232,244,255,.18);
+    }
+    html{scroll-behavior:smooth;background:#000;}
+    body{
+      background:var(--screen);color:var(--white);
+      font-family:'Share Tech Mono',monospace;
+      overflow-x:hidden;
+      cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='7' y='0' width='2' height='16' fill='%2300ffff'/%3E%3Crect x='0' y='7' width='16' height='2' fill='%2300ffff'/%3E%3C/svg%3E") 8 8,crosshair;
+    }
+    body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.18) 2px,rgba(0,0,0,.18) 4px);animation:scanroll 12s linear infinite;}
+    @keyframes scanroll{to{background-position:0 100vh;}}
+    body::after{content:'';position:fixed;inset:0;z-index:8999;pointer-events:none;background:radial-gradient(ellipse 100% 100% at 50% 50%,transparent 60%,rgba(0,0,0,.55) 100%);}
+    ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:#000;}::-webkit-scrollbar-thumb{background:#00ffff;}
+    #root{position:relative;z-index:10;}
+    @keyframes blink-slow{50%{opacity:0;}}
+    @keyframes rainbow-shift{to{background-position:200% 0;}}
+    @keyframes crt-flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1;}20%,24%,55%{opacity:.97;}}
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    @keyframes player-flash{90%,92%{opacity:.4}}
+    @keyframes pulse-pink{0%,100%{text-shadow:0 0 8px #ff2d78,0 0 20px rgba(255,45,120,.5);}50%{text-shadow:0 0 18px #ff2d78,0 0 45px rgba(255,45,120,.8);}}
+    @keyframes ascii-glitch-1{0%,92%,100%{clip-path:inset(0 0 100% 0);transform:translate(0);}93%{clip-path:inset(10% 0 60% 0);transform:translate(-4px,2px);}94%{clip-path:inset(40% 0 20% 0);transform:translate(4px,-1px);}95%{clip-path:inset(70% 0 5% 0);transform:translate(-2px,3px);}96%{clip-path:inset(0 0 100% 0);transform:translate(0);}}
+    @keyframes ascii-glitch-2{0%,92%,100%{clip-path:inset(0 0 100% 0);transform:translate(0);}93%{clip-path:inset(30% 0 50% 0);transform:translate(5px,-2px);}94%{clip-path:inset(60% 0 10% 0);transform:translate(-3px,2px);}95%{clip-path:inset(5% 0 80% 0);transform:translate(2px,-3px);}96%{clip-path:inset(0 0 100% 0);transform:translate(0);}}
+    @keyframes ascii-flicker{0%,88%,100%{opacity:1;}89%{opacity:.4;}90%{opacity:1;}91%{opacity:.2;}92%{opacity:1;}}
+    @keyframes scanline-move{0%{top:-10%;}100%{top:110%;}}
+    @keyframes status-pulse{0%,100%{box-shadow:0 0 6px #00ff41,0 0 12px rgba(0,255,65,.3);}50%{box-shadow:0 0 12px #00ff41,0 0 24px rgba(0,255,65,.6);}}
+  </style>
 </head>
-
 <body>
+<div id="root"></div>
 
-  <!-- ░░ BACKGROUND LAYERS ░░ -->
-  <canvas id="matrix-canvas"></canvas>
-  <div id="hex-grid-layer">
-    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="hexPat" x="0" y="0" width="56" height="48" patternUnits="userSpaceOnUse">
-          <polygon points="28,2 52,14 52,38 28,50 4,38 4,14"
-            fill="none" stroke="#cc0000" stroke-width="0.7"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#hexPat)" />
-    </svg>
-  </div>
-  <div id="classified-watermark"></div>
-  <div id="scanline-bar"></div>
-  <div id="noise-layer"></div>
-  <div id="vignette-layer"></div>
+<script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
 
-  <!-- ░░ STATUS BARS ░░ -->
-  <div id="top-status-bar">
-    <span class="tsci">⚠ TOP SECRET // SCI // NOFORN</span>
-    <span class="enc-blink" id="enc-label">▌ ENCRYPTED CHANNEL ACTIVE ▌</span>
-    <span id="status-clock">00:00:00 UTC | NODE: TOR-0000</span>
-  </div>
-  <div id="bottom-status-bar">
-    <span>◉ SECURE_CONN: <b class="g">ESTABLISHED</b></span>
-    <span>PACKETS_RX: <b class="g" id="pkt">0</b></span>
-    <span>ENCRYPT: <b class="g">AES-256-GCM</b></span>
-    <span>TOR_HOP: <b class="g">3/3</b></span>
-    <span style="margin-left:auto">CLASSIFICATION: <b class="r">TOP SECRET</b></span>
-  </div>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
 
-  <!-- ░░ CONTENIDO ░░ -->
-  <div class="content-wrapper">
+const RAINBOW = 'linear-gradient(90deg,#00ffff,#ff2d78,#ffe600,#00ff41,#bf5fff,#00ffff)';
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="index.html">
-          <img src="assets/img/la.png" alt="ByteZero Logo" class="navbar-logo me-2">
-          <span>Buda Hack Security</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link active" aria-current="page" href="about.html">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+const ASCII_LINES = [
+  " ██████╗ ██╗   ██╗██████╗  █████╗ ",
+  " ██╔══██╗██║   ██║██╔══██╗██╔══██╗",
+  " ██████╔╝██║   ██║██║  ██║███████║",
+  " ██╔══██╗██║   ██║██║  ██║██╔══██║",
+  " ██████╔╝╚██████╔╝██████╔╝██║  ██║",
+  " ╚═════╝  ╚═════╝ ╚═════╝ ╚═╝  ╚═╝",
+  "",
+  " ███████╗██╗   ██╗███████╗",
+  " ██╔════╝╚██╗ ██╔╝██╔════╝",
+  " ███████╗ ╚████╔╝ ███████╗",
+  " ╚════██║  ╚██╔╝  ╚════██║",
+  " ███████║   ██║   ███████║",
+  " ╚══════╝   ╚═╝   ╚══════╝",
+];
 
-    <div class="container-fluid mt-4">
-      <div class="row g-4">
+const GLITCH_CHARS = '!@#$%^&*<>[]{}|/\\~`ÆØÐŒΨΔΩλ░▒▓█';
 
-        <!-- SIDEBAR -->
-        <aside class="col-md-3">
-          <div class="about-sidebar">
+const SKILLS = [
+  { name:'LINUX / BASH', val:75, color:'#00ffff', grad:'#00ffff,#00ff41' },
+  { name:'PYTHON',       val:40, color:'#ff2d78', grad:'#ff2d78,#bf5fff' },
+  { name:'RUST',         val:50, color:'#ffe600', grad:'#ffe600,#00ff41' },
+];
+const TOOLS = {
+  '// RECON':        ['Nmap','FFUF','Burp Suite'],
+  '// EXPLOITATION': ['Metasploit','SQLMap','Hydra','NetExec','Mimikatz','Kerbrute','Rubeus'],
+  '// POST-EXPLOIT': ['John / Hashcat','LinPEAS','WinPEAS','BloodHound'],
+};
+const LABS = [
+  { icon:'bi-lightning-charge-fill', color:'#ffe600', label:'TryHackMe',    handle:'Krav0', url:'https://tryhackme.com/p/Kravn0' },
+  { icon:'bi-box-fill',              color:'#00ff41', label:'Hack The Box', handle:'Krav0', url:'https://app.hackthebox.com/users/2192414' },
+];
+const CURRENT = [
+  { id:'P-01', icon:'bi-code-slash',  title:'BUDA HACK SECURITY BLOG', fill:70, fillC:'#00ffff,#00ff41',
+    desc:'Development of my personal blog Buda Hack Security, focused on documenting write-ups, vulnerabilities, and ethical hacking practices with a terminal-inspired design.' },
+  { id:'P-02', icon:'bi-hdd-network', title:'KAYRAT', fill:45, fillC:'#ff2d78,#bf5fff',
+    desc:'An educational RAT for Windows, designed for controlled lab environments to study persistence techniques.' },
+  { id:'P-03', icon:'bi-diagram-3',   title:'SCAPOT', fill:80, fillC:'#ffe600,#00ff41',
+    desc:'High-performance port scanner written in Rust, designed for fast network discovery and practical cybersecurity testing.',
+    repo:'https://github.com/buda-sys/scapot.git' },
+];
+const FUTURE = [
+  { id:'F-01', icon:'bi-terminal',         title:'RUSTCAT',          danger:false,
+    desc:'Lightweight networking tool written in Rust for receiving reverse shells and managing interactive bind shells.' },
+  { id:'F-02', icon:'bi-bug-fill',          title:'ROOTKIT',          danger:true,
+    desc:'Educational rootkit for Red Team — controlled lab focused on persistence, detection, and mitigation.' },
+  { id:'F-03', icon:'bi-shield-lock-fill',  title:'SENTINEL HIDS MP', danger:false,
+    desc:'Cross-platform HIDS (Linux / Windows) using periodic scans, security baselines, and anomaly detection to reduce false positives.' },
+];
 
-            <!-- Avatar -->
-            <div class="sidebar-avatar text-center mb-4">
-              <img src="assets/img/avatar.png" alt="Buda-sys Avatar"
-                class="img-fluid rounded-circle avatar-img mb-3" width="110">
-              <h4 class="sidebar-name">Buda-sys</h4>
-              <p class="sidebar-role">Pentester</p>
-            </div>
+/* ASCII BANNER — solo sidebar, dividido en 2 bloques para que entre */
+function AsciiBanner() {
+  const [lines, setLines] = useState(ASCII_LINES);
+  const intervalRef = useRef(null);
+  const frameRef = useRef(null);
 
-            <!-- Skills -->
-            <div class="sidebar-section">
-              <h5 class="sidebar-heading"><i class="bi bi-activity"></i> Skills</h5>
-              <div class="mb-3">
-                <div class="skill-label">Python</div>
-                <div class="progress about-progress">
-                  <div class="progress-bar neon" data-value="40"></div>
-                </div>
-              </div>
-              <div class="mb-3">
-                <div class="skill-label">Linux / Bash</div>
-                <div class="progress about-progress">
-                  <div class="progress-bar neon" data-value="75"></div>
-                </div>
-              </div>
-            </div>
+  useEffect(() => {
+    const triggerGlitch = () => {
+      let frame = 0;
+      const glitch = () => {
+        frame++;
+        setLines(ASCII_LINES.map(line =>
+          Math.random() > 0.55
+            ? line
+            : line.split('').map(ch => Math.random() > 0.88 ? GLITCH_CHARS[Math.floor(Math.random()*GLITCH_CHARS.length)] : ch).join('')
+        ));
+        if (frame < 18) frameRef.current = setTimeout(glitch, 40);
+        else setLines(ASCII_LINES);
+      };
+      glitch();
+    };
+    intervalRef.current = setInterval(triggerGlitch, 4800);
+    return () => { clearInterval(intervalRef.current); clearTimeout(frameRef.current); };
+  }, []);
 
-            <hr class="sidebar-divider">
-
-            <!-- Tools -->
-            <div class="sidebar-section">
-              <h5 class="sidebar-heading"><i class="bi bi-tools"></i> Tools</h5>
-
-              <div class="tool-category">
-                <h6 class="tool-cat-title"><i class="bi bi-radar"></i> Reconnaissance</h6>
-                <div class="tool-list">
-                  <span class="tool-item" data-bs-toggle="tooltip" title="Nmap"><i class="bi bi-wifi"></i> Nmap</span>
-                  <span class="tool-item" data-bs-toggle="tooltip" title="FFUF"><i class="bi bi-broadcast-pin"></i> FFUF</span>
-                  <span class="tool-item" data-bs-toggle="tooltip" title="Burp Suite"><i class="bi bi-search"></i> Burp Suite</span>
-                </div>
-              </div>
-
-              <div class="tool-category mt-3">
-                <h6 class="tool-cat-title"><i class="bi bi-bug"></i> Exploitation</h6>
-                <div class="tool-list">
-                  <span class="tool-item"><i class="bi bi-terminal-fill"></i> Metasploit</span>
-                  <span class="tool-item"><i class="bi bi-braces"></i> SQLMap</span>
-                  <span class="tool-item"><i class="bi bi-code-slash"></i> Hydra</span>
-                  <span class="tool-item"><i class="bi bi-code-slash"></i> NetExec</span>
-                  <span class="tool-item"><i class="bi bi-bug-fill"></i> Mimikatz</span>
-                  <span class="tool-item"><i class="bi bi-bug-fill"></i> Kerbrute</span>
-                  <span class="tool-item"><i class="bi bi-bug-fill"></i> Rubeus</span>
-                </div>
-              </div>
-
-              <div class="tool-category mt-3">
-                <h6 class="tool-cat-title"><i class="bi bi-hdd-network"></i> Post-Exploitation</h6>
-                <div class="tool-list">
-                  <span class="tool-item"><i class="bi bi-shield-lock"></i> John / Hashcat</span>
-                  <span class="tool-item"><i class="bi bi-graph-up-arrow"></i> LinPEAS / WinPEAS</span>
-                  <span class="tool-item"><i class="bi bi-bug-fill"></i> BloodHound</span>
-                </div>
-              </div>
-            </div>
-
-            <hr class="sidebar-divider">
-
-            <!-- Labs -->
-            <div class="sidebar-section">
-              <h5 class="sidebar-heading"><i class="bi bi-lightning-charge"></i> Labs & Training</h5>
-              <div class="tool-list flex-column gap-2">
-                <a href="https://tryhackme.com/p/Kravn0" target="_blank"
-                   class="tool-item lab-link text-decoration-none">
-                  <i class="bi bi-lightning-charge-fill"></i>
-                  TryHackMe: <strong>Krav0</strong>
-                </a>
-                <a href="https://app.hackthebox.com/users/2192414" target="_blank"
-                   class="tool-item lab-link text-decoration-none">
-                  <i class="bi bi-box-fill"></i>
-                  Hack The Box: <strong>Krav0</strong>
-                </a>
-              </div>
-            </div>
-
-            <hr class="sidebar-divider">
-
-            <!-- Knowledge Metrics -->
-            <div class="sidebar-section text-center">
-              <h5 class="sidebar-heading"><i class="bi bi-radar"></i> Knowledge Metrics</h5>
-              <div class="skills-card">
-                <canvas id="skillsChart"></canvas>
-              </div>
-              <p class="mt-2 sidebar-overall">
-                Overall level: <span id="overall-skill" class="overall-value">0%</span>
-              </p>
-            </div>
-
-          </div>
-        </aside>
-
-        <!-- MAIN CONTENT -->
-        <main class="col-md-9">
-
-          <!-- HERO -->
-          <header class="about-hero mb-4">
-            <canvas id="matrix-about"></canvas>
-            <div class="about-hero-content">
-              <h1 id="typewriter"></h1>
-              <p class="about-sub">CYBERSECURITY • RED TEAM • OFFENSIVE RESEARCH</p>
-            </div>
-          </header>
-
-          <!-- ABOUT ME -->
-          <section class="about-section px-4 mb-5">
-            <h2 class="about-section-title"><i class="bi bi-person-badge"></i> About Me</h2>
-            <div class="about-intro-box">
-              <p>
-                I am <strong class="highlight">Buda-sys</strong>, a pentester and cybersecurity undergraduate student,
-                focused on <span class="highlight">red team operations</span>.
-                I am passionate about vulnerability research, offensive automation, and building lab environments
-                to develop and test security tools.
-                <strong>Buda Hack Security</strong> is my personal space to share learning experiences, write-ups,
-                exploits, and technical reflections on offensive security.
-              </p>
-            </div>
-          </section>
-
-          <!-- CURRENT PROJECTS -->
-          <section class="about-section px-4 mb-5">
-            <h2 class="about-section-title"><i class="bi bi-cpu"></i> Current Projects</h2>
-
-            <div class="project-card mb-4 p-3">
-              <h5 class="project-card-title"><i class="bi bi-code-slash"></i> Buda Hack Security Blog</h5>
-              <p class="project-card-desc">
-                Development of my personal blog <strong>Buda Hack Security</strong>, focused on documenting write-ups,
-                vulnerabilities, and ethical hacking practices with a terminal-inspired design.
-              </p>
-            </div>
-
-            <div class="project-card mb-4 p-3">
-              <h5 class="project-card-title"><i class="bi bi-hdd-network"></i> Kayrat</h5>
-              <p class="project-card-desc">
-                An educational RAT for <strong>Windows</strong>, designed for controlled lab environments
-                to study persistence techniques.
-              </p>
-            </div>
-
-            <div class="project-card mb-4 p-3">
-              <h5 class="project-card-title"><i class="bi bi-shield-lock"></i> BudaCrypt</h5>
-              <p class="project-card-desc">
-                CLI tool for encryption, hashing, and encoding, focused on applied cryptography
-                and data protection techniques.
-              </p>
-              <a href="https://github.com/buda-sys/budacrypt.git" target="_blank"
-                 class="btn btn-neon btn-sm mt-2">
-                <i class="bi bi-github me-1"></i> View repository
-              </a>
-            </div>
-          </section>
-
-          <!-- FUTURE PROJECTS -->
-          <section class="about-section px-4 mb-5">
-            <h2 class="about-section-title"><i class="bi bi-rocket-takeoff"></i> Future Projects</h2>
-
-            <div class="project-card mb-4 p-3">
-              <h5 class="project-card-title"><i class="bi bi-shield-lock"></i> Port Scanner</h5>
-              <p class="project-card-desc">Building my own port scanner using Bash for learning purposes.</p>
-            </div>
-
-            <div class="project-card mb-4 p-3">
-              <h5 class="project-card-title project-card-title--danger"><i class="bi bi-bug-fill"></i> Rootkit</h5>
-              <p class="project-card-desc">
-                Educational rootkit for Red Team — controlled lab project focused on
-                <em>persistence</em>, <em>detection</em>, and <em>mitigation</em>.
-              </p>
-            </div>
-
-            <div class="project-card mb-4 p-3">
-              <h5 class="project-card-title"><i class="bi bi-shield-lock-fill"></i> SentinelHIDS MP</h5>
-              <p class="project-card-desc">
-                Cross-platform Host-based Intrusion Detection System (Linux / Windows)
-                using periodic scans, security baselines, and anomaly detection
-                to reduce false positives.
-              </p>
-            </div>
-          </section>
-
-          <!-- CERTIFICACIONES -->
-          <section class="about-section px-4 mb-5 text-center">
-            <h2 class="about-section-title"><i class="bi bi-award"></i> Professional Certifications</h2>
-            <div class="coming-soon-box">
-              <i class="bi bi-hourglass-split fs-1 d-block mb-3" style="color:var(--red-dim)"></i>
-              <h4 class="neon-text">Coming soon...</h4>
-              <p class="cert-locked-label">ACCESS LOCKED</p>
-            </div>
-          </section>
-
-          <!-- FOOTER -->
-          <footer class="footer text-center text-light py-4">
-            <div class="container">
-              <h5 class="footer-title">Buda Hack Security</h5>
-              <p class="footer-subtitle">Pentest explorations, labs &amp; write-ups</p>
-              <div class="footer-social my-3">
-                <a href="https://github.com/buda-sys/buda-sys" class="social-link"><i class="bi bi-github"></i></a>
-                <a href="https://discord.gg/mqXsQYN3" class="social-link"><i class="bi bi-discord"></i></a>
-                <a href="contact.html" class="social-link"><i class="bi bi-envelope"></i></a>
-                <a href="disclaimer.html" class="social-link" title="Legal Disclaimer & Responsible Use">
-                  <i class="bi bi-shield-check"></i>
-                </a>
-              </div>
-              <p class="footer-copy mt-3 mb-0">
-                © 2025 <span class="text-danger">Buda Hack Security</span> — All rights reserved.
-              </p>
-            </div>
-          </footer>
-
-        </main>
+  return (
+    <div style={{
+      position:'relative', background:'rgba(0,0,0,.92)',
+      border:'1px solid rgba(0,255,255,.15)', borderRadius:2,
+      padding:'12px 8px 8px', overflow:'hidden', marginBottom:0,
+      boxShadow:'inset 0 0 40px rgba(0,255,255,.05)'
+    }}>
+      {/* Scanline sweep */}
+      <div style={{position:'absolute',left:0,right:0,height:'18%',background:'linear-gradient(to bottom,transparent,rgba(0,255,255,.04),transparent)',animation:'scanline-move 3.5s linear infinite',pointerEvents:'none',zIndex:2}}/>
+      {/* Main text */}
+      <pre style={{
+        fontFamily:"'Share Tech Mono',monospace",
+        fontSize:'clamp(5px,0.95vw,8px)',
+        lineHeight:1.4, color:'#00ffff',
+        textShadow:'0 0 8px rgba(0,255,255,.7), 0 0 20px rgba(0,255,255,.3)',
+        animation:'ascii-flicker 6s step-end infinite',
+        whiteSpace:'pre', overflow:'hidden', position:'relative', zIndex:1,
+        letterSpacing:'0.02em', margin:0
+      }}>
+        {lines.map((l,i)=><div key={i}>{l}</div>)}
+      </pre>
+      {/* Ghost red */}
+      <pre aria-hidden style={{
+        fontFamily:"'Share Tech Mono',monospace", fontSize:'clamp(5px,0.95vw,8px)',
+        lineHeight:1.4, color:'#ff2d78', opacity:0.3,
+        whiteSpace:'pre', overflow:'hidden',
+        position:'absolute', top:12, left:8,
+        transform:'translate(2px,0)',
+        animation:'ascii-glitch-1 6s step-end infinite',
+        pointerEvents:'none', zIndex:3, margin:0
+      }}>
+        {ASCII_LINES.map((l,i)=><div key={i}>{l}</div>)}
+      </pre>
+      {/* Ghost cyan */}
+      <pre aria-hidden style={{
+        fontFamily:"'Share Tech Mono',monospace", fontSize:'clamp(5px,0.95vw,8px)',
+        lineHeight:1.4, color:'#00ffff', opacity:0.15,
+        whiteSpace:'pre', overflow:'hidden',
+        position:'absolute', top:12, left:8,
+        transform:'translate(-2px,0)',
+        animation:'ascii-glitch-2 6s step-end infinite',
+        pointerEvents:'none', zIndex:3, margin:0
+      }}>
+        {ASCII_LINES.map((l,i)=><div key={i}>{l}</div>)}
+      </pre>
+      {/* Sub label */}
+      <div style={{fontFamily:"'Press Start 2P',monospace",fontSize:'4.5px',color:'rgba(0,255,255,.35)',letterSpacing:'0.25em',textAlign:'center',marginTop:6,position:'relative',zIndex:1}}>
+        PENTESTER · RED TEAM · OFFENSIVE SECURITY
       </div>
     </div>
+  );
+}
 
-  </div><!-- /content-wrapper -->
+/* STATUS BADGE */
+function StatusBadge() {
+  const [uptime, setUptime] = useState(0);
+  const startRef = useRef(Date.now());
+  useEffect(() => {
+    const BASE = 7*24*3600 + 4*3600 + 22*60 + 11;
+    const iv = setInterval(() => setUptime(Math.floor((Date.now()-startRef.current)/1000)+BASE), 1000);
+    return () => clearInterval(iv);
+  }, []);
+  const fmt = s => {
+    const d=Math.floor(s/86400), h=Math.floor((s%86400)/3600),
+          m=Math.floor((s%3600)/60), sec=s%60;
+    return `${d}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(sec).padStart(2,'0')}s`;
+  };
+  return (
+    <div style={{background:'rgba(0,255,65,.05)',border:'1px solid rgba(0,255,65,.2)',padding:'10px 12px'}}>
+      <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:8}}>
+        <div style={{width:8,height:8,borderRadius:'50%',background:'#00ff41',animation:'status-pulse 1.8s ease-in-out infinite',flexShrink:0}}/>
+        <span style={{fontFamily:"'Press Start 2P',monospace",fontSize:'6px',color:'#00ff41',letterSpacing:2}}>ONLINE</span>
+        <span style={{marginLeft:'auto',fontFamily:"'Press Start 2P',monospace",fontSize:'5px',color:'rgba(0,255,65,.5)',letterSpacing:1}}>SECURE</span>
+      </div>
+      <div style={{fontFamily:"'Share Tech Mono',monospace",fontSize:11,color:'rgba(232,244,255,.35)',lineHeight:1.7}}>
+        {[['HANDLE','Buda-sys','#00ffff'],['ROLE','Pentester','#ff2d78'],['STATUS','Active','#00ff41'],['UPTIME',fmt(uptime),'#ffe600'],['CONN','TOR // VPN','rgba(232,244,255,.5)']].map(([l,v,c])=>(
+          <div key={l} style={{display:'flex',justifyContent:'space-between',gap:8}}>
+            <span style={{color:'rgba(232,244,255,.3)',minWidth:52}}>{l}</span>
+            <span style={{color:c,textAlign:'right'}}>{v}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-  <!-- JS -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/about.js"></script>
-  <script src="assets/js/about-a.js"></script>
-  <script src="assets/js/about-habi.js"></script>
-  <script src="assets/js/radar.js"></script>
+/* CTF STATS */
+function CTFBar({label,pct,color}) {
+  const ref=useRef();
+  useEffect(()=>{setTimeout(()=>{if(ref.current)ref.current.style.width=pct+'%';},600);},[pct]);
+  return (
+    <div style={{marginBottom:8}}>
+      <div style={{fontFamily:"'Share Tech Mono',monospace",fontSize:11,color:'rgba(232,244,255,.3)',marginBottom:3}}>{label}</div>
+      <div style={{height:4,background:'#000',border:`1px solid ${color}22`,overflow:'hidden'}}>
+        <div ref={ref} style={{height:'100%',width:0,background:`linear-gradient(90deg,${color}66,${color})`,boxShadow:`0 0 6px ${color}55`,transition:'width 1.6s cubic-bezier(.4,0,.2,1)'}}/>
+      </div>
+    </div>
+  );
+}
+function StatRow({label,val,color}) {
+  return (
+    <div style={{display:'flex',justifyContent:'space-between',fontFamily:"'Share Tech Mono',monospace",fontSize:11,marginBottom:3}}>
+      <span style={{color:'rgba(232,244,255,.3)'}}>{label}</span>
+      <span style={{color:color||'rgba(232,244,255,.6)'}}>{val}</span>
+    </div>
+  );
+}
+function CTFStats() {
+  return (
+    <div style={{display:'flex',flexDirection:'column',gap:10}}>
+      <div style={{background:'rgba(0,0,0,.5)',border:'1px solid rgba(0,255,65,.2)',padding:'10px 12px'}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:8}}>
+          <span style={{fontFamily:"'Press Start 2P',monospace",fontSize:'6px',color:'#00ff41',letterSpacing:2,textShadow:'0 0 8px rgba(0,255,65,.6)'}}>[ HTB ]</span>
+          <span style={{fontFamily:"'Press Start 2P',monospace",fontSize:'5px',color:'#ffe600',letterSpacing:1}}>BRONZE TIER</span>
+        </div>
+        <StatRow label="RANK"    val="Script Kiddie" color="#00ff41"/>
+        <StatRow label="GLOBAL"  val="#913"          color="#00ffff"/>
+        <StatRow label="SEASON"  val="#6631"         color="#ffe600"/>
+        <div style={{height:1,background:'rgba(0,255,65,.1)',margin:'6px 0'}}/>
+        <CTFBar label="POINTS  19pts" pct={14} color="#00ff41"/>
+        <CTFBar label="FLAGS   32"    pct={32} color="#ffe600"/>
+        <CTFBar label="FLAGS S10  2/26" pct={8} color="#ff2d78"/>
+      </div>
+      <div style={{background:'rgba(0,0,0,.5)',border:'1px solid rgba(255,45,120,.2)',padding:'10px 12px'}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:8}}>
+          <span style={{fontFamily:"'Press Start 2P',monospace",fontSize:'6px',color:'#ff2d78',letterSpacing:2,textShadow:'0 0 8px rgba(255,45,120,.6)'}}>[ THM ]</span>
+          <span style={{fontFamily:"'Press Start 2P',monospace",fontSize:'5px',color:'#00ffff',letterSpacing:1}}>TOP 2%</span>
+        </div>
+        <StatRow label="TITLE"  val="[0xD][LEGEND]" color="#ff2d78"/>
+        <StatRow label="RANK"   val="#27395"        color="#ffe600"/>
+        <StatRow label="BADGES" val="24"            color="#bf5fff"/>
+        <StatRow label="ROOMS"  val="186"           color="#00ffff"/>
+        <div style={{height:1,background:'rgba(255,45,120,.1)',margin:'6px 0'}}/>
+        <CTFBar label="ROOMS DONE" pct={74} color="#ff2d78"/>
+        <CTFBar label="BADGES"     pct={48} color="#bf5fff"/>
+      </div>
+    </div>
+  );
+}
 
-  <!-- Background layers + status bars -->
-  <script>
-    (function(){
-      var canvas=document.getElementById('matrix-canvas');
-      if(!canvas)return;
-      var ctx=canvas.getContext('2d');
-      var chars='0123456789ABCDEF<>[]{}ROOTEXPLOITHACK';
-      var fontSize=14,drops=[];
-      function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;drops=Array(Math.floor(canvas.width/fontSize)).fill(1);}
-      resize();window.addEventListener('resize',resize);
-      setInterval(function(){
-        ctx.fillStyle='rgba(0,0,0,0.04)';ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.font=fontSize+'px monospace';
-        drops.forEach(function(y,i){
-          var ch=chars[Math.floor(Math.random()*chars.length)];
-          if(y===1)ctx.fillStyle='#ff2200';else if(y<4)ctx.fillStyle='#cc0000';else ctx.fillStyle='rgba(140,0,0,0.4)';
-          ctx.fillText(ch,i*fontSize,y*fontSize);
-          if(y*fontSize>canvas.height&&Math.random()>0.975)drops[i]=0;
-          drops[i]++;
-        });
-      },50);
-    })();
-    (function(){
-      var el=document.getElementById('classified-watermark');
-      if(!el)return;
-      var words=['CLASSIFIED','TOP SECRET','CONFIDENTIAL','RESTRICTED','NOFORN','EYES ONLY'];
-      var html='';
-      for(var r=0;r<14;r++)for(var c=0;c<7;c++){var w=words[(r+c)%words.length];html+='<span style="top:'+(r*8-2)+'%;left:'+(c*16-2)+'%">'+w+'</span>';}
-      el.innerHTML=html;
-    })();
-    (function(){
-      var clockEl=document.getElementById('status-clock');
-      var encEl=document.getElementById('enc-label');
-      var pktEl=document.getElementById('pkt');
-      if(clockEl)setInterval(function(){var now=new Date(),pad=function(n){return String(n).padStart(2,'0');};clockEl.textContent=pad(now.getUTCHours())+':'+pad(now.getUTCMinutes())+':'+pad(now.getUTCSeconds())+' UTC | NODE: TOR-'+String(Math.floor(Math.random()*9000+1000));},1000);
-      if(encEl)setInterval(function(){encEl.style.opacity=encEl.style.opacity==='0.25'?'1':'0.25';},800);
-      if(pktEl){var p=0;setInterval(function(){p+=Math.floor(Math.random()*120+40);pktEl.textContent=p.toLocaleString();},300);}
-    })();
-  </script>
+/* NEOFETCH */
+function Neofetch() {
+  const [time,setTime]=useState(new Date());
+  useEffect(()=>{const iv=setInterval(()=>setTime(new Date()),1000);return()=>clearInterval(iv);},[]);
+  const pad=n=>String(n).padStart(2,'0');
+  const utc=`${pad(time.getUTCHours())}:${pad(time.getUTCMinutes())}:${pad(time.getUTCSeconds())} UTC`;
+  return (
+    <div style={{background:'rgba(0,0,0,.7)',border:'1px solid rgba(0,255,255,.12)',padding:'12px',fontFamily:"'Share Tech Mono',monospace",fontSize:11}}>
+      <div style={{color:'#00ff41',marginBottom:8,fontSize:12}}>
+        <span style={{color:'#00ffff'}}>buda-sys</span><span style={{color:'rgba(232,244,255,.3)'}}>@</span><span style={{color:'#ff2d78'}}>kali</span><span style={{color:'rgba(232,244,255,.3)'}}> ~ $ </span><span style={{color:'rgba(232,244,255,.5)'}}>neofetch</span>
+      </div>
+      {[['OS','Kali Linux x86_64','#ff2d78'],['KERNEL','6.11.2-amd64','#ffe600'],['SHELL','zsh 5.9','#00ffff'],['TERMINAL','kitty','#00ffff'],['DE','i3wm','#bf5fff'],['CPU','Intel i5 @ 2.40GHz','#ffe600'],['MEMORY','6GB / 16GB','#00ff41'],['TIME',utc,'rgba(232,244,255,.4)']].map(([k,v,c])=>(
+        <div key={k} style={{display:'flex',gap:6,lineHeight:1.65,marginBottom:1}}>
+          <span style={{color:'#00ffff',minWidth:52,fontSize:11}}>{k}</span>
+          <span style={{color:'rgba(232,244,255,.25)'}}>│</span>
+          <span style={{color:c,fontSize:11}}>{v}</span>
+        </div>
+      ))}
+      <div style={{display:'flex',gap:3,marginTop:10,paddingTop:8,borderTop:'1px solid rgba(0,255,255,.08)'}}>
+        {['#ff2d78','#ffe600','#00ff41','#00ffff','#bf5fff','#ff2d78','#ffe600','#00ff41'].map((c,i)=>(
+          <div key={i} style={{width:16,height:12,background:c,boxShadow:`0 0 4px ${c}66`}}/>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-  <!-- Vercel Analytics -->
-  <script defer src="/_vercel/insights/script.js"></script>
+/* MARQUEE */
+function MarqueeBar() {
+  const t='★ OPERATOR PROFILE LOADED ★ BUDA-SYS // PENTESTER ★ RED TEAM ACTIVE ★ HTB // THM ★ PYTHON & RUST SCRIPTING ★ OSINT INITIALIZED ★ CLASSIFIED SECTOR UNLOCKED ★ ';
+  return (
+    <div style={{position:'sticky',top:0,zIndex:1000,height:28,background:'#000',borderBottom:'2px solid #00ffff',boxShadow:'0 0 12px #00ffff',display:'flex',alignItems:'center',overflow:'hidden'}}>
+      <div style={{background:'#00ffff',color:'#000',fontFamily:"'Press Start 2P',monospace",fontSize:7,padding:'0 12px',height:'100%',display:'flex',alignItems:'center',flexShrink:0,letterSpacing:1,boxShadow:'4px 0 0 #000'}}>ABOUT</div>
+      <div style={{overflow:'hidden',flex:1}}>
+        <div style={{fontFamily:"'Press Start 2P',monospace",fontSize:7,color:'#00ffff',whiteSpace:'nowrap',animation:'marquee 30s linear infinite',textShadow:'0 0 8px #00ffff',padding:'0 20px'}}>{t+t}</div>
+      </div>
+    </div>
+  );
+}
 
+/* COIN BAR */
+function CoinBar({score}) {
+  return (
+    <div style={{position:'sticky',top:28,zIndex:999,height:36,background:'#000',borderBottom:'2px solid #ff2d78',boxShadow:'0 0 12px #ff2d78',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 16px',fontFamily:"'Press Start 2P',monospace",fontSize:7,animation:'crt-flicker 8s infinite'}}>
+      <div style={{display:'flex',gap:20}}>
+        {[['SCORE',String(score).padStart(6,'0')],['HI-SCORE','999999']].map(([l,v])=>(
+          <div key={l} style={{display:'flex',flexDirection:'column',gap:1}}>
+            <span style={{color:'rgba(232,244,255,.18)',fontSize:'5.5px',letterSpacing:1}}>{l}</span>
+            <span style={{color:'#ffe600',textShadow:'0 0 8px #ffe600',fontSize:8}}>{v}</span>
+          </div>
+        ))}
+      </div>
+      <div style={{color:'#ff2d78',textShadow:'0 0 10px #ff2d78',letterSpacing:2,animation:'blink-slow 1.5s step-end infinite'}}>— BUDA HACK SECURITY —</div>
+      <div style={{display:'flex',gap:12,alignItems:'center'}}>
+        <div style={{display:'flex',flexDirection:'column',gap:1,alignItems:'flex-end'}}>
+          <span style={{color:'rgba(232,244,255,.18)',fontSize:'5.5px',letterSpacing:1}}>STAGE</span>
+          <span style={{color:'#ffe600',textShadow:'0 0 8px #ffe600',fontSize:8}}>02</span>
+        </div>
+        {['♥','♥','♥'].map((h,i)=><span key={i} style={{color:'#ff2d78',textShadow:'0 0 6px #ff2d78',fontSize:10}}>{h}</span>)}
+      </div>
+    </div>
+  );
+}
+
+/* NAVBAR */
+function Navbar() {
+  return (
+    <nav style={{position:'sticky',top:64,zIndex:900,height:52,background:'rgba(0,0,0,.92)',borderBottom:'1px solid rgba(0,255,255,.2)',backdropFilter:'blur(4px)',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 16px'}}>
+      <a href="index.html" style={{fontFamily:"'Press Start 2P',monospace",fontSize:9,color:'#00ffff',textShadow:'0 0 10px #00ffff',textDecoration:'none',display:'flex',alignItems:'center',gap:10}}>
+        <img src="assets/img/la.png" alt="Logo" style={{width:32,height:32,borderRadius:2,border:'1px solid #00ffff',boxShadow:'0 0 8px rgba(0,255,255,.4)'}}/>BUDAHACK
+      </a>
+      <div style={{display:'flex',height:52}}>
+        {[['HOME','index.html',false],['ABOUT','about.html',true],['GALLERY','gallery.html',false]].map(([l,h,a])=>(
+          <a key={l} href={h} style={{fontFamily:"'Press Start 2P',monospace",fontSize:7,color:a?'#00ffff':'rgba(232,244,255,.18)',textDecoration:'none',display:'flex',alignItems:'center',padding:'0 14px',borderBottom:a?'2px solid #00ffff':'2px solid transparent',textShadow:a?'0 0 8px #00ffff':'none',transition:'color .15s'}}>{l}</a>
+        ))}
+      </div>
+    </nav>
+  );
+}
+
+/* STAR CANVAS */
+function StarCanvas() {
+  const ref=useRef();
+  useEffect(()=>{
+    const sc=ref.current; if(!sc)return;
+    const ctx=sc.getContext('2d');
+    const resize=()=>{sc.width=sc.offsetWidth;sc.height=sc.offsetHeight;};
+    resize(); window.addEventListener('resize',resize);
+    const cols=['rgba(0,255,255,','rgba(255,45,120,','rgba(255,230,0,','rgba(255,255,255,'];
+    const stars=Array.from({length:110},()=>({x:Math.random()*sc.width,y:Math.random()*sc.height,s:Math.random()>.85?2:1,b:Math.random()*Math.PI*2,sp:Math.random()*.015+.005,c:cols[Math.random()*4|0]}));
+    let raf;
+    const draw=()=>{ctx.clearRect(0,0,sc.width,sc.height);stars.forEach(s=>{s.b+=s.sp;const a=.15+.6*Math.abs(Math.sin(s.b));ctx.fillStyle=s.c+a+')';ctx.fillRect(s.x,s.y,s.s,s.s);});raf=requestAnimationFrame(draw);};
+    draw();
+    return()=>{window.removeEventListener('resize',resize);cancelAnimationFrame(raf);};
+  },[]);
+  return <canvas ref={ref} style={{position:'absolute',inset:0,width:'100%',height:'100%',pointerEvents:'none'}}/>;
+}
+
+/* TYPEWRITER */
+function Typewriter({text}) {
+  const [idx,setIdx]=useState(0);
+  useEffect(()=>{
+    setIdx(0);
+    const iv=setInterval(()=>setIdx(i=>{if(i<text.length)return i+1;clearInterval(iv);return i;}),110);
+    return()=>clearInterval(iv);
+  },[text]);
+  return <span>{text.slice(0,idx)}<span style={{animation:'blink-slow .8s step-end infinite',color:'#00ffff'}}>_</span></span>;
+}
+
+/* PIXEL CORNER */
+function Corner({pos}) {
+  const rot={tl:'0deg',tr:'90deg',bl:'270deg',br:'180deg'}[pos];
+  const s={tl:{top:8,left:8},tr:{top:8,right:8},bl:{bottom:8,left:8},br:{bottom:8,right:8}}[pos];
+  return (
+    <div style={{position:'absolute',width:20,height:20,pointerEvents:'none',zIndex:7,transform:`rotate(${rot})`,...s}}>
+      <div style={{position:'absolute',width:'100%',height:2,top:0,left:0,background:'#00ffff',boxShadow:'0 0 8px #00ffff'}}/>
+      <div style={{position:'absolute',width:2,height:'100%',top:0,left:0,background:'#00ffff',boxShadow:'0 0 8px #00ffff'}}/>
+    </div>
+  );
+}
+
+/* HERO */
+function Hero({score}) {
+  return (
+    <div style={{position:'relative',overflow:'hidden',margin:'16px 0 0',background:'#000',boxShadow:'0 0 0 2px #00ffff,0 0 0 4px #000,0 0 0 6px #ff2d78,0 0 40px rgba(0,255,255,.2)'}}>
+      <div style={{position:'absolute',top:0,left:0,right:0,height:4,background:RAINBOW,backgroundSize:'200% 100%',animation:'rainbow-shift 3s linear infinite',zIndex:6}}/>
+      <div style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:5,background:'repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.1) 2px,rgba(0,0,0,.1) 4px)'}}/>
+      <StarCanvas/>
+      {['tl','tr','bl','br'].map(p=><Corner key={p} pos={p}/>)}
+      <div style={{position:'absolute',top:14,right:20,zIndex:8,textAlign:'right'}}>
+        <div style={{fontFamily:"'Press Start 2P',monospace",fontSize:6,color:'rgba(232,244,255,.18)',letterSpacing:1,marginBottom:2}}>SCORE</div>
+        <div style={{fontFamily:"'Press Start 2P',monospace",fontSize:11,color:'#ffe600',textShadow:'0 0 12px #ffe600'}}>{String(score).padStart(6,'0')}</div>
+      </div>
+      <div style={{position:'absolute',top:'50%',left:44,transform:'translateY(-50%)',zIndex:8,display:'flex',flexDirection:'column',alignItems:'center',gap:6}}>
+        <div style={{border:'2px solid #00ffff',boxShadow:'0 0 16px rgba(0,255,255,.4)',padding:3,background:'#0a0f1a'}}>
+          <img src="assets/img/avatar.png" alt="Buda-sys" style={{display:'block',width:78,height:78,objectFit:'cover'}}/>
+        </div>
+        <span style={{fontFamily:"'Press Start 2P',monospace",fontSize:6,color:'#00ffff',textShadow:'0 0 8px #00ffff',letterSpacing:1}}>BUDA-SYS</span>
+        <span style={{fontFamily:"'Press Start 2P',monospace",fontSize:5,color:'#ff2d78',letterSpacing:1,animation:'blink-slow 2s step-end infinite'}}>● PENTESTER</span>
+      </div>
+      <div style={{position:'relative',zIndex:8,padding:'52px 48px 56px',textAlign:'center'}}>
+        <div style={{display:'inline-flex',alignItems:'center',gap:8,fontFamily:"'Press Start 2P',monospace",fontSize:7,letterSpacing:2,color:'#000',background:'#ff2d78',padding:'5px 16px',marginBottom:24,boxShadow:'3px 3px 0 rgba(0,0,0,.8)',animation:'player-flash 4s step-end infinite'}}>
+          ▶ PLAYER PROFILE — STAGE 02
+        </div>
+        <h1 style={{fontFamily:"'Press Start 2P',monospace",fontSize:'clamp(.85rem,2.4vw,1.7rem)',lineHeight:1.6,letterSpacing:3,color:'#fff',textShadow:'0 0 10px rgba(255,255,255,.5),3px 0 0 #00ffff,-3px 0 0 #ff2d78',marginBottom:14}}>
+          <Typewriter text="I am Buda-sys"/>
+        </h1>
+        <p style={{fontFamily:"'VT323',monospace",fontSize:22,letterSpacing:4,color:'rgba(232,244,255,.35)'}}>CYBERSECURITY · RED TEAM · OFFENSIVE RESEARCH</p>
+      </div>
+    </div>
+  );
+}
+
+/* SKILL BAR */
+function SkillBar({name,val,color,grad}) {
+  const ref=useRef();
+  useEffect(()=>{setTimeout(()=>{if(ref.current)ref.current.style.width=val+'%';},500);},[val]);
+  return (
+    <div style={{marginBottom:10}}>
+      <div style={{fontFamily:"'Press Start 2P',monospace",fontSize:'5px',letterSpacing:1,display:'flex',justifyContent:'space-between',marginBottom:3}}>
+        <span style={{color}}>{name}</span><span style={{color}}>{val}%</span>
+      </div>
+      <div style={{height:5,background:'#000',border:'1px solid rgba(255,255,255,.08)',overflow:'hidden'}}>
+        <div ref={ref} style={{height:'100%',width:0,background:`linear-gradient(90deg,${grad})`,boxShadow:`0 0 5px ${color}`,transition:'width 1.6s cubic-bezier(.4,0,.2,1)'}}/>
+      </div>
+    </div>
+  );
+}
+
+/* TOOL TAG */
+function ToolTag({children}) {
+  const [h,sH]=useState(false);
+  return (
+    <span onMouseEnter={()=>sH(true)} onMouseLeave={()=>sH(false)} style={{fontFamily:"'Share Tech Mono',monospace",fontSize:11,color:h?'#00ffff':'rgba(232,244,255,.35)',background:h?'rgba(0,255,255,.12)':'rgba(0,255,255,.05)',border:`1px solid ${h?'#00ffff':'rgba(0,255,255,.2)'}`,padding:'2px 7px',cursor:'default',transition:'all .2s',boxShadow:h?'0 0 6px rgba(0,255,255,.3)':'none',transform:h?'translateY(-1px)':'none',whiteSpace:'nowrap'}}>
+      {children}
+    </span>
+  );
+}
+
+/* LAB LINK */
+function LabLink({icon,color,label,handle,url}) {
+  const [h,sH]=useState(false);
+  return (
+    <a href={url} target="_blank" rel="noreferrer" onMouseEnter={()=>sH(true)} onMouseLeave={()=>sH(false)}
+      style={{display:'flex',alignItems:'center',gap:8,fontFamily:"'Share Tech Mono',monospace",fontSize:12,color:h?'#00ffff':'rgba(232,244,255,.35)',textDecoration:'none',padding:'5px 8px',border:`1px solid ${h?'#00ffff':'rgba(0,255,255,.12)'}`,marginBottom:5,background:h?'rgba(0,255,255,.06)':'transparent',transition:'all .2s'}}>
+      <i className={`bi ${icon}`} style={{color}}/>{label}: <strong style={{color:'#ffe600'}}>{handle}</strong>
+    </a>
+  );
+}
+
+const SbTitle = ({children,color='#00ffff'}) => (
+  <div style={{fontFamily:"'Press Start 2P',monospace",fontSize:6,color,textShadow:`0 0 8px ${color}`,letterSpacing:2,marginBottom:10}}>■ {children}</div>
+);
+const Sep = () => <div style={{height:1,background:'linear-gradient(90deg,rgba(0,255,255,.25),transparent)',margin:'14px 0'}}/>;
+
+/* SIDEBAR */
+function Sidebar() {
+  return (
+    <aside style={{position:'sticky',top:85,alignSelf:'start',maxHeight:'calc(100vh - 90px)',overflowY:'auto',overflowX:'hidden'}}>
+      <div style={{background:'#0a0f1a',border:'2px solid rgba(0,255,255,.25)',boxShadow:'3px 3px 0 rgba(0,255,255,.15)',position:'relative',overflow:'hidden'}}>
+        <div style={{position:'absolute',top:0,left:0,right:0,height:3,background:RAINBOW,backgroundSize:'200% 100%',animation:'rainbow-shift 3s linear infinite'}}/>
+        <div style={{background:'#00ffff',padding:'8px 12px',marginTop:3}}>
+          <span style={{fontFamily:"'Press Start 2P',monospace",fontSize:6,color:'#000',letterSpacing:1}}>▶ OPERATOR STATS</span>
+        </div>
+        <div style={{padding:16}}>
+          {/* ASCII BANNER — solo aquí */}
+          <SbTitle>ID // HANDLE</SbTitle>
+          <AsciiBanner/>
+          <Sep/>
+          <SbTitle color='#00ff41'>STATUS</SbTitle>
+          <StatusBadge/>
+          <Sep/>
+          <SbTitle color='#ffe600'>CTF STATS</SbTitle>
+          <CTFStats/>
+          <Sep/>
+          <SbTitle>SKILLS</SbTitle>
+          {SKILLS.map(s=><SkillBar key={s.name} {...s}/>)}
+          <Sep/>
+          <SbTitle>TOOLS</SbTitle>
+          {Object.entries(TOOLS).map(([cat,items])=>(
+            <div key={cat}>
+              <div style={{fontFamily:"'Press Start 2P',monospace",fontSize:'5px',color:'#ff2d78',letterSpacing:1,marginBottom:6,marginTop:8}}>{cat}</div>
+              <div style={{display:'flex',flexWrap:'wrap',gap:5,marginBottom:4}}>{items.map(t=><ToolTag key={t}>{t}</ToolTag>)}</div>
+            </div>
+          ))}
+          <Sep/>
+          <SbTitle>LABS & TRAINING</SbTitle>
+          {LABS.map(l=><LabLink key={l.label} {...l}/>)}
+          <Sep/>
+          <SbTitle color='#bf5fff'>SYSTEM INFO</SbTitle>
+          <Neofetch/>
+        </div>
+      </div>
+    </aside>
+  );
+}
+
+/* SECTION PANEL */
+function SectionPanel({label,badge,badgeColor='#00ff41',children}) {
+  return (
+    <div style={{background:'#0a0f1a',border:'2px solid rgba(0,255,255,.2)',boxShadow:'3px 3px 0 rgba(0,255,255,.1)',position:'relative',overflow:'hidden',marginBottom:20}}>
+      <div style={{position:'absolute',top:0,left:0,right:0,height:2,background:RAINBOW,backgroundSize:'200% 100%',animation:'rainbow-shift 4s linear infinite'}}/>
+      <div style={{background:'#000',borderBottom:'1px solid rgba(0,255,255,.15)',padding:'8px 14px',display:'flex',alignItems:'center',justifyContent:'space-between',marginTop:2}}>
+        <span style={{fontFamily:"'Press Start 2P',monospace",fontSize:7,color:'#00ffff',textShadow:'0 0 8px #00ffff',letterSpacing:1}}>▶ {label}</span>
+        {badge&&<span style={{fontFamily:"'Press Start 2P',monospace",fontSize:'5.5px',color:badgeColor,border:`1px solid ${badgeColor}`,background:'rgba(0,0,0,.4)',padding:'2px 7px',animation:'blink-slow 1.4s step-end infinite'}}>{badge}</span>}
+      </div>
+      <div style={{padding:16}}>{children}</div>
+    </div>
+  );
+}
+
+/* PROJECT CARD */
+function ProjectCard({id,icon,title,fill,fillC,desc,repo,danger=false}) {
+  const [h,sH]=useState(false);
+  const ac=danger?'#ff2d78':'#00ffff';
+  return (
+    <div onMouseEnter={()=>sH(true)} onMouseLeave={()=>sH(false)} style={{background:'rgba(0,0,0,.5)',border:`1px solid ${h?ac+'66':ac+'22'}`,marginBottom:12,transition:'all .2s',position:'relative',overflow:'hidden',transform:h?'translate(-1px,-2px)':'none',boxShadow:h?`2px 2px 0 ${ac}44`:'none'}}>
+      <div style={{background:'#000',borderBottom:`1px solid ${ac}1a`,padding:'6px 14px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+        <span style={{fontFamily:"'Press Start 2P',monospace",fontSize:'6.5px',color:ac,textShadow:`0 0 6px ${ac}66`,letterSpacing:1}}>
+          <i className={`bi ${icon}`} style={{marginRight:6}}/>{title}
+        </span>
+        <span style={{fontFamily:"'Press Start 2P',monospace",fontSize:'5px',color:danger?'#ff2d78':'#ffe600',letterSpacing:1}}>{id}</span>
+      </div>
+      <div style={{padding:'12px 14px'}}>
+        <p style={{fontFamily:"'Share Tech Mono',monospace",fontSize:13,color:h?'rgba(232,244,255,.7)':'rgba(232,244,255,.45)',lineHeight:1.7,margin:0}}>{desc}</p>
+        {fill&&<FillBar val={fill} color={fillC}/>}
+        {repo&&<RepoBtnC url={repo}/>}
+      </div>
+    </div>
+  );
+}
+function FillBar({val,color}) {
+  const ref=useRef();
+  useEffect(()=>{setTimeout(()=>{if(ref.current)ref.current.style.width=val+'%';},700);},[val]);
+  return (
+    <div style={{height:3,background:'#000',border:'1px solid rgba(0,255,255,.12)',overflow:'hidden',marginTop:10}}>
+      <div ref={ref} style={{height:'100%',width:0,background:`linear-gradient(90deg,${color})`,transition:'width 1.5s ease'}}/>
+    </div>
+  );
+}
+function RepoBtnC({url}) {
+  const [h,sH]=useState(false);
+  return (
+    <a href={url} target="_blank" rel="noreferrer" onMouseEnter={()=>sH(true)} onMouseLeave={()=>sH(false)}
+      style={{display:'inline-flex',alignItems:'center',gap:6,fontFamily:"'Press Start 2P',monospace",fontSize:6,color:'#000',background:h?'#00ffff':'#00ff41',padding:'6px 14px',textDecoration:'none',boxShadow:h?'3px 3px 0 rgba(0,0,0,.8)':'2px 2px 0 rgba(0,0,0,.8)',marginTop:10,transition:'all .15s',transform:h?'translate(-1px,-1px)':'none'}}>
+      ▶ <i className="bi bi-github" style={{marginRight:4}}/> VIEW REPOSITORY
+    </a>
+  );
+}
+
+/* DIVIDER */
+function Divider({children}) {
+  return (
+    <div style={{display:'flex',alignItems:'center',gap:12,fontFamily:"'Press Start 2P',monospace",fontSize:7,letterSpacing:2,color:'#00ffff',textShadow:'0 0 8px #00ffff',margin:'28px 0 16px'}}>
+      <div style={{flex:1,height:2,background:'linear-gradient(90deg,transparent,#00ffff)'}}/>
+      {children}
+      <div style={{flex:1,height:2,background:'linear-gradient(90deg,#00ffff,transparent)'}}/>
+    </div>
+  );
+}
+
+/* FOOTER */
+function SocialBtn({icon,url}) {
+  const [h,sH]=useState(false);
+  return (
+    <a href={url} target="_blank" rel="noreferrer" onMouseEnter={()=>sH(true)} onMouseLeave={()=>sH(false)}
+      style={{width:40,height:40,border:`2px solid ${h?'#00ffff':'rgba(0,255,255,.3)'}`,background:h?'rgba(0,255,255,.1)':'#0a0f1a',display:'flex',alignItems:'center',justifyContent:'center',color:h?'#00ffff':'rgba(232,244,255,.35)',fontSize:15,textDecoration:'none',transition:'all .15s',transform:h?'translate(-1px,-1px)':'none'}}>
+      <i className={`bi ${icon}`}/>
+    </a>
+  );
+}
+function Footer() {
+  return (
+    <footer style={{background:'#000',borderTop:'3px solid #00ffff',boxShadow:'0 -8px 24px rgba(0,255,255,.15)',padding:'40px 24px 64px',textAlign:'center',marginTop:24}}>
+      <div style={{fontFamily:"'Press Start 2P',monospace",fontSize:7,letterSpacing:3,color:'#ffe600',textShadow:'0 0 10px #ffe600',marginBottom:24,animation:'blink-slow 1.5s step-end infinite'}}>● INSERT COIN TO CONTINUE ●</div>
+      <h5 style={{fontFamily:"'Press Start 2P',monospace",fontSize:10,letterSpacing:2,color:'#00ffff',textShadow:'0 0 10px #00ffff',marginBottom:4}}>BUDA HACK SECURITY</h5>
+      <p style={{fontFamily:"'VT323',monospace",fontSize:18,letterSpacing:2,color:'rgba(232,244,255,.18)',margin:'8px 0'}}>PENTEST EXPLORATIONS · LABS · WRITE-UPS</p>
+      <div style={{display:'flex',justifyContent:'center',gap:10,margin:'16px 0'}}>
+        {[['bi-github','https://github.com/buda-sys/buda-sys'],['bi-discord','https://discord.gg/mqXsQYN3'],['bi-envelope','contact.html'],['bi-shield-check','disclaimer.html']].map(([i,u])=><SocialBtn key={i} icon={i} url={u}/>)}
+      </div>
+      <p style={{fontFamily:"'Press Start 2P',monospace",fontSize:6,letterSpacing:1,color:'rgba(232,244,255,.18)',marginTop:12}}>
+        © 2025 <span style={{color:'#ff2d78',textShadow:'0 0 6px #ff2d78'}}>BUDA HACK SECURITY</span> · ALL RIGHTS RESERVED
+      </p>
+    </footer>
+  );
+}
+
+/* CERT BOX */
+function CertBox() {
+  return (
+    <div style={{background:'rgba(0,0,0,.6)',border:'2px solid rgba(255,45,120,.3)',padding:40,textAlign:'center',boxShadow:'3px 3px 0 rgba(255,45,120,.2)'}}>
+      <i className="bi bi-hourglass-split" style={{fontSize:'2.5rem',color:'rgba(255,45,120,.5)',display:'block',marginBottom:12}}/>
+      <h4 style={{fontFamily:"'Press Start 2P',monospace",fontSize:14,color:'#ff2d78',textShadow:'0 0 12px #ff2d78',animation:'pulse-pink 2.5s ease-in-out infinite',letterSpacing:2}}>COMING SOON...</h4>
+      <p style={{fontFamily:"'Press Start 2P',monospace",fontSize:'5.5px',letterSpacing:4,color:'rgba(255,45,120,.3)',marginTop:12}}>ACCESS LOCKED</p>
+    </div>
+  );
+}
+
+/* APP */
+function App() {
+  const [score,setScore]=useState(0);
+  useEffect(()=>{
+    const iv=setInterval(()=>setScore(s=>Math.min(s+Math.floor(Math.random()*80+10),999999)),600);
+    return()=>clearInterval(iv);
+  },[]);
+
+  return (
+    <>
+      <MarqueeBar/>
+      <CoinBar score={score}/>
+      <div style={{position:'relative',zIndex:10}}>
+        <Navbar/>
+        {/* NO fullWidth ASCII banner aqui — solo en sidebar */}
+        <Hero score={score}/>
+        <div style={{display:'grid',gridTemplateColumns:'300px 1fr',gap:20,padding:'20px 16px 0',maxWidth:1400,margin:'0 auto'}}>
+          <Sidebar/>
+          <main>
+            <Divider>[ OPERATOR DOSSIER ]</Divider>
+            <div style={{background:'#0a0f1a',borderLeft:'3px solid #00ffff',padding:'16px 20px',marginBottom:20,fontFamily:"'Share Tech Mono',monospace",fontSize:14,color:'rgba(232,244,255,.6)',lineHeight:1.85,boxShadow:'0 0 14px rgba(0,255,255,.06)'}}>
+              I am <strong style={{color:'#00ffff'}}>Buda-sys</strong>, a pentester and cybersecurity undergraduate student, focused on{' '}
+              <strong style={{color:'#ff2d78'}}>red team operations</strong>. I am passionate about vulnerability research, offensive automation, and building lab environments to develop and test security tools.{' '}
+              <strong style={{color:'#ffe600'}}>Buda Hack Security</strong> is my personal space to share learning experiences, write-ups, exploits, and technical reflections on offensive security.
+            </div>
+            <SectionPanel label="CURRENT PROJECTS" badge="● ACTIVE">
+              {CURRENT.map(p=><ProjectCard key={p.id} {...p}/>)}
+            </SectionPanel>
+            <SectionPanel label="FUTURE PROJECTS" badge="● QUEUED" badgeColor="#ffe600">
+              {FUTURE.map(p=><ProjectCard key={p.id} {...p}/>)}
+            </SectionPanel>
+            <SectionPanel label="PROFESSIONAL CERTIFICATIONS" badge="● LOCKED" badgeColor="#ff2d78">
+              <CertBox/>
+            </SectionPanel>
+            <Footer/>
+          </main>
+        </div>
+      </div>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+<!-- Buy Me a Coffee -->
+<script data-name="BMC-Widget" data-cfasync="false"
+  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+  data-id="krav0" data-description="Apoya a Buda Hack Security"
+  data-message="Gracias por el apoyo ☕" data-color="#FF0033"
+  data-position="Right" data-x_margin="18" data-y_margin="18">
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
