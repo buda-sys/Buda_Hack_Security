@@ -395,16 +395,17 @@ body::after {
 }
 #markdown-container a:hover { color: var(--yellow); border-bottom-color: var(--yellow); text-shadow: 0 0 10px var(--yellow); }
 
-/* Strong / em */
-#markdown-container strong { color: var(--yellow); font-family: var(--pixel); font-size: .78em; letter-spacing: 1px; }
+/* Strong / em — SIN text-transform uppercase */
+#markdown-container strong { color: var(--yellow); font-family: var(--pixel); font-size: 13px; letter-spacing: 1px; text-transform: none; font-weight: bold; }
 #markdown-container em { color: var(--pink2); font-style: normal; }
 
-/* Inline code */
+/* Inline code — SIN text-transform uppercase */
 #markdown-container :not(pre) > code {
-  font-family: var(--mono); font-size: 15px;
+  font-family: var(--mono); font-size: 13px;
   color: var(--green); background: rgba(0,255,65,.08);
   border: 1px solid rgba(0,255,65,.3); padding: 2px 9px;
   text-shadow: 0 0 6px rgba(0,255,65,.4);
+  text-transform: none;
 }
 
 /* ── CODE BLOCKS ── */
