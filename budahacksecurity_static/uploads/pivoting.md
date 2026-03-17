@@ -170,7 +170,7 @@ This is when **we (attacker/client)** want to access a service running **interna
 
 **We start by scanning the target machine**
 
-```powershell
+```
  scapot -t 172.17.0.2 -m top -b
 
 
