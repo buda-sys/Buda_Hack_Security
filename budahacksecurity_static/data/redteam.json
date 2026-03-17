@@ -28,5 +28,26 @@
     "tags": "web exploitation command injection rce filter bypass linux",
     "date": "2026-02-25",
     "difficulty": "Medium"
-}
+},
+
+  {
+    "slug": "pivoting",
+    "title": "Red Team | Pivoting Techniques",
+    "type": "pentester",
+    "description": "Pivoting, tunneling and lateral movement across internal networks. Using SSH, Chisel, Ligolo-ng and Metasploit to reach otherwise inaccessible network segments.",
+    "duration": "45–60 min",
+    "tools": "Kali Linux",
+    "thumb": "assets/img/labs/pivoting.png",
+    "link": "uploads/pivoting.md",
+    "tags": "pivoting tunneling lateral movement ssh chisel ligolo metasploit red team network",
+    "date": "2026-03-16",
+    "difficulty": "Medium"
+  }
+
+
+
+
+
+
+
 ]
