@@ -13,7 +13,7 @@
 
 ----
 
-# NIC and IP Identification in Pivoting
+### NIC and IP Identification in Pivoting
 
 **What is a NIC?**
 
@@ -287,7 +287,7 @@ ssh -L 1234:localhost:8080 kain@172.17.0.2
 | `localhost:8080`  | Final destination as seen **from the target machine**     |
 | `kain@172.17.0.2` | Username and IP of the **target machine**                 |
 
-##  Visual flow:
+###  Visual flow:
 ```
 [Your Machine]          [Target Machine]
 localhost:80  --SSH-->  localhost:8080
@@ -397,7 +397,7 @@ As we can observe in the following image, we managed to **ping** the internal ma
 
 We observe that with our **scapot** tool, **2 open ports** were found on the internal machine:
 
-```powershell
+```
 ═══════════════════════════════════════════════════
  Scan completed | 2 open port(s)
 ═══════════════════════════════════════════════════
@@ -452,7 +452,7 @@ Thanks to SSH **dynamic port forwarding**, all traffic we route through proxycha
 ---
 
 
-## Remote Port Forwarding
+### Remote Port Forwarding
 
 **Remote Port Forwarding** (`-R`) is a pivoting technique that allows redirecting connections from a remote host toward our attacker machine. Unlike Dynamic Port Forwarding, here we are not the ones initiating connections toward the internal network, but rather **we force the victim to connect to us** through the pivot host.
 
@@ -739,7 +739,7 @@ With this, any connection arriving at port `1234` of the victim will be redirect
 
 ---
 
-## SOCAT 
+### SOCAT 
 
 **SOCAT** is a Linux terminal tool that allows creating bidirectional communication channels between two network endpoints. It acts as a redirector that can listen on a host and port, and forward that data to another IP address and port. Unlike `netcat`, SOCAT is much more versatile and supports:
 
@@ -771,7 +771,7 @@ chmod +x socat
 
 ---
 
-## Setting Up SOCAT Listener — Pivoting with Reverse Shell
+**Setting Up SOCAT Listener — Pivoting with Reverse Shell**
 
 In this scenario we will use the target machine as a pivot to receive a reverse shell from the internal machine, which is not directly accessible from our attacker machine.
 
@@ -858,7 +858,7 @@ We can observe that we have a connection with the internal machine `10.10.10.3`.
 
 ---
 
-## Setting Up SOCAT Connect — Pivoting with Bind Shell
+**Setting Up SOCAT Connect — Pivoting with Bind Shell**
 
 In this scenario the internal machine exposes a shell on a fixed port, the target machine acts as a pivot forwarding traffic toward it, and the attacker connects to gain access. Unlike the reverse shell where the victim initiates the connection, in the bind shell it is the attacker who connects.
 
