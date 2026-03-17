@@ -32,7 +32,7 @@
 
   {
     "slug": "pivoting",
-    "title": "Red Team | Pivoting Techniques",
+    "title": "Pivoting",
     "type": "pentester",
     "description": "Pivoting, tunneling and lateral movement across internal networks. Using SSH, Chisel, Ligolo-ng and Metasploit to reach otherwise inaccessible network segments.",
     "duration": "45–60 min",
