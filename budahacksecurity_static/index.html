@@ -153,6 +153,45 @@
     </div>
   </nav>
 
+  <!-- HERO -->
+  <div class="container my-3">
+    <div class="hero-arcade">
+      <canvas id="star-canvas"></canvas>
+      <div class="hero-crt"></div>
+      <div class="px-corner pc-tl"></div><div class="px-corner pc-tr"></div>
+      <div class="px-corner pc-bl"></div><div class="px-corner pc-br"></div>
+      <div class="hero-score-display"><div class="hsd-label">SCORE</div><div class="hsd-val" id="hero-score-val">000000</div></div>
+      <div class="hero-content">
+        <div class="insert-coin-tag">▶ CLASSIFIED SECTOR UNLOCKED</div>
+        <h1 class="hero-title-arcade">Welcome to Buda Hack Security</h1>
+        <p class="hero-subtitle">PENTEST EXPLORATIONS · LABS · WRITE-UPS</p>
+        <div class="hero-stats">
+          <div class="hstat"><span class="hstat-label">FIREWALL STATUS</span><span class="hstat-val">BYPASSED</span><div class="hstat-bar"><div class="hstat-fill" style="width:88%"></div></div></div>
+          <div class="hstat"><span class="hstat-label">ACCESS LEVEL</span><span class="hstat-val">ROOT</span><div class="hstat-bar"><div class="hstat-fill" style="width:100%;background:linear-gradient(90deg,var(--pink),var(--purple))"></div></div></div>
+          <div class="hstat"><span class="hstat-label">KNOWLEDGE</span><span class="hstat-val">LOADING...</span><div class="hstat-bar"><div class="hstat-fill" id="know-bar" style="width:0%;background:linear-gradient(90deg,var(--yellow),var(--green))"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARDS -->
+  <div class="container my-4">
+    <div class="section-divider-arcade">[ AUTHORIZED MODULES ]</div>
+    <div class="row justify-content-center mt-3">
+      <div class="col-md-4 mb-4"><div class="card-arcade h-100"><div class="card-arcade-chrome"><span class="cac-label">MALWARE LABS</span><span class="cac-badge">STAGE 01</span></div><div class="card-arcade-img-wrap"><img src="assets/img/logi.png" class="card-arcade-img" alt="Malware Labs"></div><div class="card-arcade-body"><div class="cam-bar"><div class="cam-fill" style="width:72%"></div></div><p class="card-arcade-text">Step-by-step labs on attack techniques and malware development for educational purposes.</p><a href="malwarelabs.html" class="btn-arcade">ENTER</a></div></div></div>
+      <div class="col-md-4 mb-4"><div class="card-arcade h-100"><div class="card-arcade-chrome" style="background:var(--pink)"><span class="cac-label">RED TEAM DOCS</span><span class="cac-badge">STAGE 02</span></div><div class="card-arcade-img-wrap"><img src="assets/img/logo.png" class="card-arcade-img" alt="Red Team"></div><div class="card-arcade-body"><div class="cam-bar"><div class="cam-fill" style="width:85%;background:linear-gradient(90deg,var(--cyan),#0af)"></div></div><p class="card-arcade-text">Practical documentation for pentesting and Red Teams (guides and procedures).</p><a href="redteam.html" class="btn-arcade" style="background:var(--pink)">ENTER</a></div></div></div>
+      <div class="col-md-4 mb-4"><div class="card-arcade h-100"><div class="card-arcade-chrome" style="background:var(--yellow)"><span class="cac-label">CTF WRITE-UPS</span><span class="cac-badge">STAGE 03</span></div><div class="card-arcade-img-wrap"><img src="assets/img/write.png" class="card-arcade-img" alt="CTF"></div><div class="card-arcade-body"><div class="cam-bar"><div class="cam-fill" style="width:60%;background:linear-gradient(90deg,var(--yellow),var(--green))"></div></div><p class="card-arcade-text">CTF machine write-ups (TryHackMe, Hack The Box, DockerLabs) with step-by-step solutions.</p><a href="writeups.html" class="btn-arcade" style="background:var(--yellow)">ENTER</a></div></div></div>
+    </div>
+  </div>
+
+  <!-- ALERT -->
+  <div class="container mb-5">
+    <div class="alert-arcade" role="alert">
+      <strong>⚠️ WARNING:</strong> All content on this site is for <b>educational and ethical</b> informational purposes only. I am not responsible for the misuse of the information learned.
+    </div>
+  </div>
+
+  <!-- SKILL MATRIX — movido al final -->
   <section class="radar-section">
     <div class="container-fluid px-3">
       <div class="radar-wrapper">
@@ -178,41 +217,6 @@
       </div>
     </div>
   </section>
-
-  <div class="container my-3">
-    <div class="hero-arcade">
-      <canvas id="star-canvas"></canvas>
-      <div class="hero-crt"></div>
-      <div class="px-corner pc-tl"></div><div class="px-corner pc-tr"></div>
-      <div class="px-corner pc-bl"></div><div class="px-corner pc-br"></div>
-      <div class="hero-score-display"><div class="hsd-label">SCORE</div><div class="hsd-val" id="hero-score-val">000000</div></div>
-      <div class="hero-content">
-        <div class="insert-coin-tag">▶ CLASSIFIED SECTOR UNLOCKED</div>
-        <h1 class="hero-title-arcade">Welcome to Buda Hack Security</h1>
-        <p class="hero-subtitle">PENTEST EXPLORATIONS · LABS · WRITE-UPS</p>
-        <div class="hero-stats">
-          <div class="hstat"><span class="hstat-label">FIREWALL STATUS</span><span class="hstat-val">BYPASSED</span><div class="hstat-bar"><div class="hstat-fill" style="width:88%"></div></div></div>
-          <div class="hstat"><span class="hstat-label">ACCESS LEVEL</span><span class="hstat-val">ROOT</span><div class="hstat-bar"><div class="hstat-fill" style="width:100%;background:linear-gradient(90deg,var(--pink),var(--purple))"></div></div></div>
-          <div class="hstat"><span class="hstat-label">KNOWLEDGE</span><span class="hstat-val">LOADING...</span><div class="hstat-bar"><div class="hstat-fill" id="know-bar" style="width:0%;background:linear-gradient(90deg,var(--yellow),var(--green))"></div></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container my-4">
-    <div class="section-divider-arcade">[ AUTHORIZED MODULES ]</div>
-    <div class="row justify-content-center mt-3">
-      <div class="col-md-4 mb-4"><div class="card-arcade h-100"><div class="card-arcade-chrome"><span class="cac-label">MALWARE LABS</span><span class="cac-badge">STAGE 01</span></div><div class="card-arcade-img-wrap"><img src="assets/img/logi.png" class="card-arcade-img" alt="Malware Labs"></div><div class="card-arcade-body"><div class="cam-bar"><div class="cam-fill" style="width:72%"></div></div><p class="card-arcade-text">Step-by-step labs on attack techniques and malware development for educational purposes.</p><a href="malwarelabs.html" class="btn-arcade">ENTER</a></div></div></div>
-      <div class="col-md-4 mb-4"><div class="card-arcade h-100"><div class="card-arcade-chrome" style="background:var(--pink)"><span class="cac-label">RED TEAM DOCS</span><span class="cac-badge">STAGE 02</span></div><div class="card-arcade-img-wrap"><img src="assets/img/logo.png" class="card-arcade-img" alt="Red Team"></div><div class="card-arcade-body"><div class="cam-bar"><div class="cam-fill" style="width:85%;background:linear-gradient(90deg,var(--cyan),#0af)"></div></div><p class="card-arcade-text">Practical documentation for pentesting and Red Teams (guides and procedures).</p><a href="redteam.html" class="btn-arcade" style="background:var(--pink)">ENTER</a></div></div></div>
-      <div class="col-md-4 mb-4"><div class="card-arcade h-100"><div class="card-arcade-chrome" style="background:var(--yellow)"><span class="cac-label">CTF WRITE-UPS</span><span class="cac-badge">STAGE 03</span></div><div class="card-arcade-img-wrap"><img src="assets/img/write.png" class="card-arcade-img" alt="CTF"></div><div class="card-arcade-body"><div class="cam-bar"><div class="cam-fill" style="width:60%;background:linear-gradient(90deg,var(--yellow),var(--green))"></div></div><p class="card-arcade-text">CTF machine write-ups (TryHackMe, Hack The Box, DockerLabs) with step-by-step solutions.</p><a href="writeups.html" class="btn-arcade" style="background:var(--yellow)">ENTER</a></div></div></div>
-    </div>
-  </div>
-
-  <div class="container mb-5">
-    <div class="alert-arcade" role="alert">
-      <strong>⚠️ WARNING:</strong> All content on this site is for <b>educational and ethical</b> informational purposes only. I am not responsible for the misuse of the information learned.
-    </div>
-  </div>
 
   <footer class="footer text-center py-4">
     <div class="container">
