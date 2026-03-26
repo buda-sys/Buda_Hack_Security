@@ -3,13 +3,13 @@
 ## Skill Assesstment Pivoting
 
 
-## Scenario
+**Scenario**
 
 A team member started a Penetration Test against the Inlanefreight environment but was moved to another project at the last minute. Luckily for us, they left a `web shell` in place for us to get back into the network so we can pick up where they left off. We need to leverage the web shell to continue enumerating the hosts, identifying common services, and using those services/protocols to pivot into the internal networks of Inlanefreight. Our detailed objectives are `below`:
 
 ---
 
-## Objectives
+ **Objectives**
 
 - Start from external (`Pwnbox or your own VM`) and access the first system via the web shell left in place.
 - Use the web shell access to enumerate and pivot to an internal host.

@@ -7,7 +7,7 @@
 
 ## Reconnaissance
 
-### Port Enumeration
+**Port Enumeration**
 
 We begin with a full TCP port scan using **Nmap**:
 
@@ -187,7 +187,7 @@ evil-winrm -i <TARGET_IP> -u 'support' -p 'Ironside47pleasure40Watchful'
 
 ---
 
-## Privilege Escalation
+#### Privilege Escalation
 
 ### BloodHound Enumeration
 
