@@ -272,6 +272,52 @@
   "date": "2025-07-15",
   "thumb": "assets/img/autothumbs/tryhackme.png",
   "description": "Detailed walkthrough of the Mr. Robot machine covering enumeration, WordPress exploitation, credential discovery, and privilege escalation."
+},
+
+{
+  "slug": "Retro",
+  "file": "uploads/retro.md",
+  "title": "TryHackMe - Retro Writeup",
+  "category": "TryHackMe",
+  "difficulty": "Hard",
+  "date": "2026-03-25",
+  "thumb": "assets/img/autothumbs/tryhackme.png",
+  "description": "Detailed walkthrough of the Retro Enumeration web and privilege escalation."
+},
+
+{
+  "slug": "Nightblade",
+  "file": "uploads/nightblade.md",
+  "title": "Dockerlabs - Nightblade Writeup",
+  "category": "Dockerlabs",
+  "difficulty": "Medium",
+  "date": "2026-03-25",
+  "thumb": "assets/img/autothumbs/dockerlabs.png",
+  "description": "Detailed walkthrough of the Nightblade Enumeration WordPress, Brute Force, privilege escalation and pivoting."
+},
+
+{
+  "slug": "Skill_Assessment_Pivoting",
+  "file": "uploads/skill_pivoting.md",
+  "title": "HTB Academy - Skill Assessment Pivoting Writeup",
+  "category": "HackTheBox",
+  "difficulty": "Easy",
+  "date": "2026-03-25",
+  "thumb": "assets/img/autothumbs/htb.png",
+  "description": "Detailed walkthrough of the Skill Assessment Pivoting pivoting and double pivoting."
+},
+
+{
+  "slug": "support",
+  "file": "uploads/support.md",
+  "title": "HTB Labs - Support Writeup",
+  "category": "HackTheBox",
+  "difficulty": "Easy",
+  "date": "2026-03-25",
+  "thumb": "assets/img/autothumbs/htb.png",
+  "description": "Detailed walkthrough of the Support machine covering SMB enumeration, LDAP enumeration and credential extraction, Active Directory reconnaissance with BloodHound, Kerberoasting, WinRM access, and privilege escalation via Active Directory abuse."
 }
 
 ]
+
+
