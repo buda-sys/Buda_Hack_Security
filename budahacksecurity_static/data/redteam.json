@@ -61,7 +61,7 @@
 {
   "slug": "llmnr-nbtns-mitigation",
   "title": "LLMNR & NBT-NS Mitigation",
-  "type": "mitigation",
+  "type": "mitigations",
   "description": "Hardening Windows environments against LLMNR, NBT-NS and mDNS poisoning attacks. Disabling fallback name resolution protocols via Group Policy and registry, with verification that the mitigations fully block NTLMv2 hash capture.",
   "duration": "15–20 min",
   "tools": "Windows 10 / Kali Linux",
