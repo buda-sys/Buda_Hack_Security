@@ -42,12 +42,35 @@
     "tags": "pivoting tunneling lateral movement ssh chisel ligolo metasploit red team network",
     "date": "2026-03-16",
     "difficulty": "Medium"
-  }
+  },
 
+  {
+  "slug": "llmnr-nbtns-poisoning",
+  "title": "LLMNR & NBT-NS Poisoning",
+  "type": "pentester",
+  "description": "Exploiting LLMNR and NBT-NS fallback resolution in Windows environments to capture NTLMv2 hashes. Using Responder from Linux and Inveigh from Windows, followed by offline cracking with Hashcat and John the Ripper.",
+  "duration": "30–45 min",
+  "tools": "Kali Linux",
+  "thumb": "assets/img/labs/llmnr-poisoning.png",
+  "link": "uploads/llmnr-poisoning.md",
+  "tags": "llmnr nbtns poisoning responder inveigh ntlmv2 hashcat john-the-ripper credential-capture windows active-directory",
+  "date": "2026-03-29",
+  "difficulty": "Easy"
+},
 
-
-
-
+{
+  "slug": "llmnr-nbtns-mitigation",
+  "title": "LLMNR & NBT-NS Mitigation",
+  "type": "mitigation",
+  "description": "Hardening Windows environments against LLMNR, NBT-NS and mDNS poisoning attacks. Disabling fallback name resolution protocols via Group Policy and registry, with verification that the mitigations fully block NTLMv2 hash capture.",
+  "duration": "15–20 min",
+  "tools": "Windows 10 / Kali Linux",
+  "thumb": "assets/img/labs/llmnr-mitigation.png",
+  "link": "uploads/llmnr-mitigation.md",
+  "tags": "llmnr nbtns mdns mitigation hardening group-policy smb-signing windows active-directory blue-team defense",
+  "date": "2026-03-29",
+  "difficulty": "Easy"
+}
 
 
 ]
