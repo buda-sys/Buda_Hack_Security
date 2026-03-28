@@ -608,7 +608,7 @@ We run **pspy64** to monitor running processes. First, we transfer it from our a
 
 Once the tool is running, we observe that a `.sh` script is executed as root every minute:
 
-<img src="/budahacksecurity/uploads/md_images/nightblade/ng22png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/nightblade/ng22.png" style="max-width:100%; border-radius:8px;">
 
 We verify the script's permissions:
 
