@@ -81,16 +81,7 @@
   "tools": ["Windows 10", "Kali Linux"],
   "thumb": "assets/img/labs/pentester.png",
   "link": "uploads/pentester.md",
-  "tags": [
-    "pentesting",
-    "reconnaissance",
-    "scanning",
-    "enumeration",
-    "exploitation",
-    "network",
-    "basics",
-    "red-team"
-  ],
+  "tags": "",
   "date": "2026-04-16",
   "difficulty": "easy"
 }
