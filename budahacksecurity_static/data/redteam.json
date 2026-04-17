@@ -70,7 +70,22 @@
   "tags": "llmnr nbtns mdns mitigation hardening group-policy smb-signing windows active-directory blue-team defense",
   "date": "2026-03-29",
   "difficulty": "Easy"
+},
+
+{
+  "slug": "pentester-tests",
+  "title": "Introduction to Penetration Testing",
+  "type": "pentester",
+  "description": "Learn the fundamentals of penetration testing by exploring basic reconnaissance, scanning, and exploitation techniques in a controlled lab environment. Understand how attackers identify targets, gather information, and discover vulnerabilities in systems.",
+  "duration": "5–10 min",
+  "tools": "Windows 10 / Kali Linux",
+  "thumb": "assets/img/labs/pentester.png",
+  "link": "uploads/pentester.md",
+  "tags": "reconnaissance nmap exploitation vulnerability-scanning penetration-testing-basics information-gathering ethical-hacking",
+  "date": "2026-04-16",
+  "difficulty": "Easy"
 }
+
 
 
 ]
