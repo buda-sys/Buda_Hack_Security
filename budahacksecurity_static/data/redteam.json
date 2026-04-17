@@ -74,17 +74,16 @@
 
 {
   "slug": "pentester-tests",
-  "title": "Introduction to Penetration Testing (Pentesting)",
+  "title": "Introduction to Penetration Testing",
   "type": "pentester",
   "description": "Learn the fundamentals of penetration testing by exploring basic reconnaissance, scanning, and exploitation techniques in a controlled lab environment. Understand how attackers identify targets, gather information, and discover vulnerabilities in systems.",
-  "duration": "5-10 min",
-  "tools": ["Windows 10", "Kali Linux"],
+  "duration": "45–60 min",
+  "tools": "Windows 10 / Kali Linux",
   "thumb": "assets/img/labs/pentester.png",
   "link": "uploads/pentester.md",
-  "tags": "",
+  "tags": "reconnaissance nmap exploitation vulnerability-scanning penetration-testing-basics information-gathering ethical-hacking",
   "date": "2026-04-16",
-  "difficulty": "easy"
+  "difficulty": "Easy"
 }
-
 
 ]
