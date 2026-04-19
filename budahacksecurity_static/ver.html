@@ -734,6 +734,36 @@ document.addEventListener("DOMContentLoaded", function () {
   Do NOT duplicate any of those here.
 -->
 <script src="assets/js/writeup_superpro_static.js"></script>
+<!-- MathJax re-render para contenido dinámico (marked.js) -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  function renderMath() {
+    if (typeof MathJax !== "undefined" && typeof MathJax.typesetPromise === "function") {
+      MathJax.typesetPromise()
+        .catch(function(err) {
+          console.warn("MathJax render error:", err);
+        });
+    }
+  }
+
+  // Intentos múltiples para asegurar que se renderice después del markdown
+  setTimeout(renderMath, 400);
+  setTimeout(renderMath, 800);
+  setTimeout(renderMath, 1500);
+
+  // Observador para cambios en el contenedor
+  const container = document.getElementById("markdown-container");
+  if (container) {
+    const observer = new MutationObserver(function() {
+      setTimeout(renderMath, 150);
+    });
+    observer.observe(container, { 
+      childList: true, 
+      subtree: true 
+    });
+  }
+});
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
