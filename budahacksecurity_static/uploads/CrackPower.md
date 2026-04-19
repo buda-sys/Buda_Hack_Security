@@ -1,5 +1,6 @@
 
 **Level:** Medium
+
 **Category:** Cryptography
 
 ### 1. Challenge Description
@@ -45,13 +46,12 @@ Since the message raised to the 20th power did not exceed the limit imposed by t
 
 Resolution Algorithm:
 
-Data Loading: Import ciphertext and exponent into a high-precision Python environment.
 
-Root Calculation: Use the gmpy2.iroot function to find the 20th root.
+Root Calculation: Use the `gmpy2.iroot` function to find the 20th root.
 
 Decoding: Convert the resulting integer back into a human-readable string.
 
-### 4. Exploit Implementation (Python)
+### 4. Exploit Implementation
 
 ```python
 import gmpy2
@@ -63,10 +63,10 @@ e = 20
 m, exact = gmpy2.iroot(c, e)
 
 if exact:
-    print(f"Perfect Root Found -> {m}")
+    print(f"Raiz exacta -> {m}")
     try:
         flag = long_to_bytes(int(m)).decode()
-        print(f"Flag -> {flag}")
+        print(f"flag -> {flag}")
     except:
         print("Integer recovered but decoding failed.")
 else:
