@@ -316,6 +316,17 @@
   "date": "2026-03-25",
   "thumb": "assets/img/autothumbs/htb.png",
   "description": "Detailed walkthrough of the Support machine covering SMB enumeration, LDAP enumeration and credential extraction, Active Directory reconnaissance with BloodHound, Kerberoasting, WinRM access, and privilege escalation via Active Directory abuse."
+},
+
+{
+  "slug": "crack_power",
+  "file": "uploads/CrackPower.md",
+  "title": "Crypto Labs - Crack The Power",
+  "category": "Cryptography",
+  "difficulty": "Medium",
+  "date": "2026-04-19",
+  "thumb": "assets/img/autothumbs/picoctf.png",
+  "description": "Exploiting an RSA encryption flaw where a low public exponent (e=20) allowed message recovery via direct 20th root calculation, bypassing the need for modulus factorization."
 }
 
 ]
