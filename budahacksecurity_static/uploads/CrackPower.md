@@ -16,58 +16,68 @@ c = 6406374308104068575005667020962740801237237482076864203815794752730593780764
 
 To solve the challenge, the following cryptographic auditing steps were performed:
 
-1. **Parameter Extraction:** Extracted the values of $n$, $e$, and $c$ from the source file.
-2. **Modulus Lookup:** Used the **FactorDB** public database to check if $n$ had been previously factored.
+Parameter Extraction: Extracted the values of n, e, and c from the source file.
 
-    - **Result:** `Status: Composite`. The number is confirmed to be non-prime, but its factors $p$ and $q$ are not indexed.
+Modulus Lookup: Used the FactorDB public database to check if n had been previously factored.
 
-<img src="/budahacksecurity/uploads/md_images/crackp/crackP.png" style="max-width:100%; border-radius:8px;">
+Result: Status: Composite. The number is confirmed to be non-prime, but its factors are not indexed.
 
-3. **Exponent Evaluation:** A value of $e=20$ indicates the system is highly vulnerable to a **Direct Root Attack** (Small Exponent Attack). In this scenario, the modular operation $c \equiv m^e \pmod{n}$ simplifies to a standard power $c = m^e$  if  $m^e < n$.
+<img src="/budahacksecurity/uploads/md_images/crackp/crackP.png" style="max-width:100%; border-radius:8px; border: 1px solid #333;">
 
+Exponent Evaluation: A value of e = 20 indicates a high vulnerability to a Direct Root Attack.
+
+<p style="background-color: #1a1a1a; padding: 15px; border-left: 4px solid #00ff00; color: #e0e0e0; font-family: 'Courier New', monospace;">
+<strong>Technical Logic:</strong>
+
+
+In RSA, if the message (m) raised to the power of (e) is smaller than the modulus (n), the mathematical "wrap-around" never happens.
+
+
+
+Condition: <em>m<sup>e</sup> < n</em>
+
+
+Simplified: <strong>c = m<sup>20</sup></strong>
+</p>
 
 ### 3. Exploitation Methodology
+Since the message raised to the 20th power did not exceed the limit imposed by the modulus n, the encryption is just a standard mathematical power. We can recover the message by simply reversing the operation using the 20th root of c.
 
-Since the message raised to the 20th power did not exceed the limit imposed by the modulus $n$, the "clock" (modular arithmetic) never ticked over. Therefore, we can recover the message by simply reversing the power using the **20th root** of $c$.
+Resolution Algorithm:
 
-**Resolution Algorithm:**
+Data Loading: Import ciphertext and exponent into a high-precision Python environment.
 
-1. **Data Loading:** Import $c$ and $e$ into a high-precision environment.
-2. **Root Calculation:** Apply the function $\sqrt[e]{c}$ using the `gmpy2` library for arbitrary-precision arithmetic.
-3. **Decoding:** Transform the resulting integer ($m$) into ASCII format (Long to Bytes conversion).
+Root Calculation: Use the gmpy2.iroot function to find the 20th root.
+
+Decoding: Convert the resulting integer back into a human-readable string.
 
 ### 4. Exploit Implementation (Python)
-
-Python
 
 ```python
 import gmpy2
 from Crypto.Util.number import long_to_bytes
 
-c = 640637430810406857500566702096274080123723748207686420381579475273059378076458958252646084522104121379647765184090310031680930194784521633906596392080006536717015167769872384003892043769501066336180246002918140657967387286628754967423432424340646270680815827102181180538191523822602754203251639310292509074764258470361192362596602819424227295188838843539602419593628734378881387238773996415874888485018026113499096600195258443920408381725179342927135200126403272581991194171190584620752520868678346998178035251134384552972307837244436646980440882223690128670605368587367306801637214420844094483615132548401305357420722727945198947271045632959634978821988836146980445842667625977221494728446927005410724818250861788957930250004614242458767767567224411817312989766181256455892433966400264046095387257086975640996977691201205917336879652796306957800575050367004669506403264549786269619267919784618254466270915214706083766251533119147115113809006753825675686446644287699596100804689130844525574932938877038017120516829937107559335912106997499576625102129926770002207474776895070149693640635903258898583748738270737773619792409935988249465150729426074001
+c = 640637...001 # Full ciphertext
 e = 20
 
 m, exact = gmpy2.iroot(c, e)
 
 if exact:
-    print(f"Raiz exacta -> {m}")
+    print(f"Perfect Root Found -> {m}")
     try:
         flag = long_to_bytes(int(m)).decode()
-        print(f"flag -> {flag}")
+        print(f"Flag -> {flag}")
     except:
-        print("El numero se recupero, pero no se puede decodificar como texto")
-
+        print("Integer recovered but decoding failed.")
 else:
-    print("La raiz no es exacta")
-
+    print("Attack failed: The root is not a perfect integer.")
 ```
 
-<img src="/budahacksecurity/uploads/md_images/crackp/crackP2.png" style="max-width:100%; border-radius:8px;">
+<img src="/budahacksecurity/uploads/md_images/crackp/crackP2.png" style="max-width:100%; border-radius:8px; border: 1px solid #333;">
 
 ### 5. Conclusion & Remediation
+This challenge proves that a massive key length (4096-bit Modulus) is useless if the encryption parameters are chosen poorly.
 
-This challenge highlights that a robust key length (Modulus $n$) is irrelevant if the encryption parameters ($e$) are chosen poorly relative to the message size.
+Recommended Mitigation: Always use the standard exponent e = 65537. This ensures the power always exceeds the modulus, making the root attack impossible.
 
-- **Recommended Mitigation:** Always use the standard exponent $e = 65537$ ($2^{16} + 1$). This value is large enough to prevent root attacks while remaining computationally efficient.
-    
-- **Padding Implementation:** RSA should always be implemented with **OAEP** (Optimal Asymmetric Encryption Padding) to add randomness and prevent mathematical exploitation.
+Padding Implementation: RSA should always include OAEP (Optimal Asymmetric Encryption Padding) to ensure the message is long and randomized before the power operation.
