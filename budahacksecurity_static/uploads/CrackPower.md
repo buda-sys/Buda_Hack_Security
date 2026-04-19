@@ -2,7 +2,7 @@
 **Level:** Medium
 **Category:** Cryptography
 
-#### 1. Challenge Description
+### 1. Challenge Description
 
 We received an encrypted message. The modulus is built from primes large enough that factoring them isn’t an option, at least not today. See if you can make sense of the numbers and reveal the flag Download the message
 
@@ -12,7 +12,7 @@ e = 20
 c = 640637430810406857500566702096274080123723748207686420381579475273059378076458958252646084522104121379647765184090310031680930194784521633906596392080006536717015167769872384003892043769501066336180246002918140657967387286628754967423432424340646270680815827102181180538191523822602754203251639310292509074764258470361192362596602819424227295188838843539602419593628734378881387238773996415874888485018026113499096600195258443920408381725179342927135200126403272581991194171190584620752520868678346998178035251134384552972307837244436646980440882223690128670605368587367306801637214420844094483615132548401305357420722727945198947271045632959634978821988836146980445842667625977221494728446927005410724818250861788957930250004614242458767767567224411817312989766181256455892433966400264046095387257086975640996977691201205917336879652796306957800575050367004669506403264549786269619267919784618254466270915214706083766251533119147115113809006753825675686446644287699596100804689130844525574932938877038017120516829937107559335912106997499576625102129926770002207474776895070149693640635903258898583748738270737773619792409935988249465150729426074001
 
 ```
-#### 2. Reconnaissance & Analysis
+### 2. Reconnaissance & Analysis
 
 To solve the challenge, the following cryptographic auditing steps were performed:
 
@@ -26,17 +26,17 @@ To solve the challenge, the following cryptographic auditing steps were performe
 3. **Exponent Evaluation:** A value of $e=20$ indicates the system is highly vulnerable to a **Direct Root Attack** (Small Exponent Attack). In this scenario, the modular operation $c \equiv m^e \pmod{n}$ simplifies to a standard power $c = m^e$  if  $m^e < n$.
 
 
-#### 3. Exploitation Methodology
+### 3. Exploitation Methodology
 
 Since the message raised to the 20th power did not exceed the limit imposed by the modulus $n$, the "clock" (modular arithmetic) never ticked over. Therefore, we can recover the message by simply reversing the power using the **20th root** of $c$.
 
-### Resolution Algorithm:
+**Resolution Algorithm:**
 
 1. **Data Loading:** Import $c$ and $e$ into a high-precision environment.
 2. **Root Calculation:** Apply the function $\sqrt[e]{c}$ using the `gmpy2` library for arbitrary-precision arithmetic.
 3. **Decoding:** Transform the resulting integer ($m$) into ASCII format (Long to Bytes conversion).
 
-#### 4. Exploit Implementation (Python)
+### 4. Exploit Implementation (Python)
 
 Python
 
