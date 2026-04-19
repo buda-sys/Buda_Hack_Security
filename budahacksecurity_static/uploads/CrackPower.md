@@ -63,7 +63,8 @@ else:
 ```
 
 <img src="/budahacksecurity/uploads/md_images/crackp/crackP2.png" style="max-width:100%; border-radius:8px;">
-#### 5. Conclusion & Remediation
+
+### 5. Conclusion & Remediation
 
 This challenge highlights that a robust key length (Modulus $n$) is irrelevant if the encryption parameters ($e$) are chosen poorly relative to the message size.
 
