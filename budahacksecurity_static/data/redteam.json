@@ -94,7 +94,7 @@
   "duration": "20–30 min",
   "tools": "Kali Linux / Arch Linux / Wireless Adapter",
   "thumb": "assets/img/labs/aircrack.png",
-  "link": "uploads/aircrack-ng.md",
+  "link": "uploads/air.md",
   "tags": "aircrack-ng wireless wifi wpa2 wep monitor-mode packet-capture handshake deauthentication mac-spoofing hidden-ssid airodump aireplay airmon",
   "date": "2026-05-04",
   "difficulty": "Medium"
