@@ -485,9 +485,13 @@ aircrack-ng captura_ByteZero-01.cap -w /usr/share/wordlists/passwords.txt -b AA:
 
 ### 7. Finding Hidden SSIDs
 
+> The following exercises were performed in a controlled lab environment provided by Hack The Box (HTB). All targets and networks used are part of HTB's official platform and are intended exclusively for ethical hacking practice.
+
 In Wi-Fi networks, the Service Set Identifier (`SSID`) is the name that identifies a particular wireless network. Most networks broadcast their SSID to facilitate device connections; however, some networks choose to hide it as a security measure. This does not mean it is impossible to discover — hiding the SSID is only a superficial layer of protection.
 
 Below we will see how to find those hidden SSIDs using the tools of the **Aircrack-ng** suite.
+
+
 
 ###### Scanning
 
@@ -566,6 +570,8 @@ sudo mdk3 wlan0mon p -f /opt/wordlist.txt -t D2:A3:32:1B:29:D5
 
 
 ### 8. Bypassing MAC Filtering
+
+> The following exercises were performed in a controlled lab environment provided by Hack The Box (HTB). All targets and networks used are part of HTB's official platform and are intended exclusively for ethical hacking practice.
 
 MAC filtering is a security measure implemented on wireless routers to restrict network access exclusively to devices whose MAC addresses are on an allowed list. Obtaining the network password is an important step, but if the router has this filtering active, we will not be able to connect even with the correct key — we will need to spoof an authorized MAC address.
 
