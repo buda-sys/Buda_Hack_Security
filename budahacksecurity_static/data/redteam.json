@@ -90,7 +90,7 @@
   "slug": "aircrack-ng-wireless-auditing",
   "title": "Wireless Network Auditing with Aircrack-ng",
   "type": "pentester",
-  "description": "Master the Aircrack-ng suite by learning how to capture Wi-Fi traffic, perform deauthentication attacks, crack WEP and WPA2 keys, bypass MAC filtering, and discover hidden SSIDs in a controlled lab environment.",
+  "description": "the Aircrack-ng suite by learning how to capture Wi-Fi traffic, perform deauthentication attacks, crack WEP and WPA2 keys, bypass MAC filtering, and discover hidden SSIDs in a controlled lab environment.",
   "duration": "20–30 min",
   "tools": "Kali Linux / Arch Linux / Wireless Adapter",
   "thumb": "assets/img/labs/aircrack.png",
