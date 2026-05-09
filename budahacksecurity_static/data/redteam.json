@@ -102,7 +102,7 @@
 
 {
   "slug": "cryptography-fundamentals",
-  "title": "Cryptography Fundamentals & Password Attacks",
+  "title": "Cryptography Fundamentals",
   "type": "pentester",
   "description": "Explore the foundations of cryptography from classical ciphers (Caesar, Atbash, Vigenère, Rail Fence) to modern algorithms (AES, RSA, SHA). Learn how hash functions work, perform rainbow table and dictionary attacks with John The Ripper, extract Linux shadow hashes using unshadow, and hide data inside images using steganography with Steghide.",
   "duration": "30–45 min",
