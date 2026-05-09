@@ -98,8 +98,20 @@
   "tags": "aircrack-ng wireless wifi wpa2 wep monitor-mode packet-capture handshake deauthentication mac-spoofing hidden-ssid airodump aireplay airmon",
   "date": "2026-05-04",
   "difficulty": "Medium"
+},
+
+{
+  "slug": "cryptography-fundamentals",
+  "title": "Cryptography Fundamentals & Password Attacks",
+  "type": "educational",
+  "description": "Explore the foundations of cryptography from classical ciphers (Caesar, Atbash, Vigenère, Rail Fence) to modern algorithms (AES, RSA, SHA). Learn how hash functions work, perform rainbow table and dictionary attacks with John The Ripper, extract Linux shadow hashes using unshadow, and hide data inside images using steganography with Steghide.",
+  "duration": "30–45 min",
+  "tools": "Kali Linux / John The Ripper / Steghide / Hashcat",
+  "thumb": "assets/img/labs/cryptography.png",
+  "link": "uploads/cryptography.md",
+  "tags": "cryptography hashing md5 sha256 aes rsa caesar vigenere rainbow-tables john-the-ripper steghide steganography unshadow shadow password-cracking salt lsb",
+  "date": "2026-05-08",
+  "difficulty": "Easy"
 }
-
-
 
 ]
