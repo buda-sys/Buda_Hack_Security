@@ -112,6 +112,21 @@
   "tags": "cryptography hashing md5 sha256 aes rsa caesar vigenere rainbow-tables john-the-ripper steghide steganography unshadow shadow password-cracking salt lsb",
   "date": "2026-05-08",
   "difficulty": "Easy"
+},
+
+{
+  "slug": "metasploit-framework",
+  "title": "Metasploit Framework",
+  "type": "pentester",
+  "description": "Learn how to use the Metasploit Framework from installation and database configuration to exploitation, Meterpreter sessions, post-exploitation modules, privilege escalation techniques, payload generation with MSFVenom, encoders, scanners, pivoting, and persistence concepts in controlled environments.",
+  "duration": "60–90 min",
+  "tools": "Kali Linux / Metasploit Framework / MSFVenom / PostgreSQL / Meterpreter",
+  "thumb": "assets/img/labs/metasploit.png",
+  "link": "uploads/metasploit.md",
+  "tags": "metasploit msfconsole meterpreter msfvenom payload reverse-shell eternalblue ms17-010 smb exploitation post-exploitation kiwi hashdump privilege-escalation scanners auxiliary pivoting persistence windows pentesting",
+  "date": "2026-05-26",
+  "difficulty": "Easy"
 }
+
 
 ]
