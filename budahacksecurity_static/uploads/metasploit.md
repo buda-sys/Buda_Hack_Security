@@ -69,7 +69,7 @@ If the database is connected, Metasploit will be able to store scan results, dis
 > **Note:** For demonstration purposes, we used the **Blue** machine available on the TryHackMe platform. This is a beginner-friendly Windows-based room specifically designed to practice exploitation of the EternalBlue vulnerability (MS17-010), making it an ideal controlled environment to apply the concepts covered in this documentation.
 
 
-## **Navigating Metasploit **
+## **Navigating Metasploit**
 
 #### **Search**
 
@@ -322,7 +322,7 @@ Kiwi, based on Mimikatz, allows us to retrieve NTLM hashes, Kerberos tickets, an
 
 <img src="/budahacksecurity/uploads/md_images/meta/msf10.png" style="max-width:100%; border-radius:8px;">
 
-### **MSFVenom, Payloads and Encoders**
+## **MSFVenom, Payloads and Encoders**
 
 `msfvenom` is the successor to the older Metasploit tools MSFPayload and MSFEncode, combining both functionalities into a single standalone utility within the Metasploit Framework.
 
@@ -420,7 +420,8 @@ Once the payload is transferred to the Windows 10 machine and executed, an activ
 It is important to understand that `msfvenom` is not limited to a single platform. It can generate payloads and apply encoders targeting a wide range of operating systems and architectures — from Windows and Linux to macOS, Android, and others — covering both desktop and mobile environments.
 
 However, since Metasploit's payloads are widely known and extensively catalogued, security solutions such as antivirus software, EDR, IDS, and IPS will frequently detect them. This does not mean the payloads are ineffective — it means that in real authorized engagements, additional steps are typically required. Tools and techniques focused on obfuscation and payload packaging exist specifically to reduce the detection surface, though covering those falls outside the scope of this documentation.
-### Post-explotation
+
+## **Post-explotation**
 
 Once the vulnerability has been successfully exploited and an active Meterpreter session is established, we proceed to the post-exploitation phase. This phase focuses on gathering additional information about the compromised system, maintaining access, and understanding the full scope of what can be reached from the target all within the boundaries of the authorized engagement.
 
