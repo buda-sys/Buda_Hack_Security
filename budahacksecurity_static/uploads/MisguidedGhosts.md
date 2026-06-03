@@ -589,3 +589,10 @@ ls /mnt/host/home
 ```
 
 <img src="/budahacksecurity/uploads/md_images/ghost/ghosts11.png" style="max-width:100%; border-radius:8px;">
+
+By successfully escaping the container and gaining maximum privileges on the host system, we achieved full administrative access, allowing us to retrieve both the user and root flags.
+
+```
+cat /mnt/host/home/hayley/user.txt
+cat /mnt/host/root/root.txt
+```
