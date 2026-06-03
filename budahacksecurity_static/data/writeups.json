@@ -327,6 +327,17 @@
   "date": "2026-04-19",
   "thumb": "assets/img/autothumbs/picoctf.png",
   "description": "Exploiting an RSA encryption flaw where a low public exponent (e=20) allowed message recovery via direct 20th root calculation, bypassing the need for modulus factorization."
+},
+
+{
+  "slug": "misguided_ghosts",
+  "file": "uploads/MisguidedGhosts.md",
+  "title": "TryHackMe - Misguided Ghosts",
+  "category": "TryHackMe",
+  "difficulty": "Hard",
+  "date": "2026-06-03",
+  "thumb": "assets/img/autothumbs/tryhackme.png",
+  "description": "Compromise of a Dockerized web application through Port Knocking discovery, FTP enumeration, Stored XSS exploitation, admin session hijacking, LFI-to-RCE escalation, and privileged Docker container escape to gain access to the host system."
 }
 
 ]
