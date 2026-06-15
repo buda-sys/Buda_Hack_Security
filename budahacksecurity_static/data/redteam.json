@@ -126,6 +126,20 @@
   "tags": "metasploit msfconsole meterpreter msfvenom payload reverse-shell eternalblue ms17-010 smb exploitation post-exploitation kiwi hashdump privilege-escalation scanners auxiliary pivoting persistence windows pentesting",
   "date": "2026-05-26",
   "difficulty": "Easy"
+},
+
+{
+  "slug": "linux-privilege-escalation",
+  "title": "Linux Privilege Escalation",
+  "type": "pentester",
+  "description": "Master Linux privilege escalation from enumeration through exploitation. Learn to identify and abuse weak file permissions, SUID/SGID binaries, cron jobs, sudo misconfigurations, kernel vulnerabilities, path hijacking, LXD/Docker groups, capability abuses, shared object hijacking, and environment variable exploits. Includes practical techniques for horizontal and vertical escalation in controlled environments.",
+  "duration": "60–90 min",
+  "tools": "Kali Linux / strings / readelf / GTFOBins  / gcc",
+  "thumb": "assets/img/labs/linux-privesc.png",
+  "link": "uploads/privilege_linux.md",
+  "tags": "linux privilege-escalation enumeration suid sgid binaries weak-permissions cron-jobs sudo-exploit kernel-vulnerabilities path-hijacking  capabilities shared-object-hijacking library-hijacking ld-preload env-variables vertical-escalation horizontal-escalation pentesting post-exploitation",
+  "date": "2026-05-26",
+  "difficulty": "Intermediate"
 }
 
 
