@@ -2,7 +2,7 @@
 
 Google Dorks also known as "Google Hacking"  are advanced search techniques that use Google's special search operators to pull very precise, targeted results. In pentesting and red team work, they're used mainly during the **reconnaissance (OSINT)** phase to map out public information about a target: domains, subdomains, technologies in use, exposed files, admin panels, leaked credentials, and so on all without ever touching the target's infrastructure directly. That's what makes dorking a **passive** technique with a very low chance of being detected.
 
-The real value here is finding **forgotten or misconfigured attack vectors** that got exposed by accident — backup files, unprotected login panels, internal documents that somehow got indexed, or error messages that leak details about the tech stack. Any of these can turn into an entry point for later stages of an attack.
+The real value here is finding **forgotten or misconfigured attack vectors** that got exposed by accident  backup files, unprotected login panels, internal documents that somehow got indexed, or error messages that leak details about the tech stack. Any of these can turn into an entry point for later stages of an attack.
 
 ## 1. Basic Operators
 
@@ -21,7 +21,7 @@ The real value here is finding **forgotten or misconfigured attack vectors** tha
 |`*` (asterisk)|Wildcard, stands in for one or more words|`intitle:"index of" "*.sql"`|
 |`..` (double dot)|Numeric range|`site:example.com "2020..2024"`|
 
-**Worth knowing:** `cache:` and `link:` show up constantly in older Google Dorking guides (roughly 2010–2018), but Google has restricted or outright removed how they work over the years. They're included here because you'll still see them referenced in the GHDB and in classic write-ups, but don't rely on them the way people used to.
+
 
 ## 2. Logical / Combination Operators
 
@@ -224,7 +224,7 @@ site:example.com [dork from GHDB]
 filetype:env "DB_PASSWORD" -github.com
 ```
 
-Looks for indexed `.env` files containing the typical database credential variable — GitHub is excluded because it generates tons of false positives from code repos, rather than production sites with the file actually exposed live.
+Looks for indexed `.env` files containing the typical database credential variable  GitHub is excluded because it generates tons of false positives from code repos, rather than production sites with the file actually exposed live.
 
 **Real example** (category: _Various Online Devices_):
 
@@ -233,7 +233,7 @@ intitle:"webcamXP 5"
 intitle:"Live View / - AXIS"
 ```
 
-Classic dorks for finding IP cameras with an exposed, unauthenticated admin web interface — this is one of the most cited examples in security talks and in the GHDB itself.
+Classic dorks for finding IP cameras with an exposed, unauthenticated admin web interface.
 
 <img src="/budahacksecurity/uploads/md_images/dorks/Dorks.png" style="max-width:100%; border-radius:8px;">
 

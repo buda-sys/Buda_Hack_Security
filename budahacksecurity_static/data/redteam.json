@@ -146,7 +146,7 @@
   "slug": "google-dorks",
   "title": "Google Dorks for Pentesting and Red Team",
   "type": "pentester",
-  "description": "Master Google Dorking as a passive OSINT and reconnaissance technique for pentesting and red team engagements. Learn basic and advanced search operators, how to chain them for real-world scenarios (exposed login panels, sensitive files, misconfigured directories, leaked config files, exposed code repos), and how to leverage the Google Hacking Database (GHDB) effectively. Covers infrastructure mapping, passive technology fingerprinting, information disclosure hunting, and people-focused OSINT for social engineering prep.",
+  "description": "Master Google Dorking as a passive OSINT and reconnaissance technique for pentesting and red team engagements. Learn basic and advanced search operators, how to chain them for real-world scenarios (exposed login panels, sensitive files, misconfigured directories, leaked config files, exposed code repos), and how to leverage the Google Hacking Database (GHDB) effectively. 
   "duration": "45–60 min",
   "tools": "Google Search / Exploit-DB (GHDB) ",
   "thumb": "assets/img/labs/google-dorks.png",
